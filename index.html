@@ -21,6 +21,32 @@
           background-color: #3e8e41;
           transform: scale(0.98);
         }
+        
+        .info-box {
+          background-color: #fff;  /* 背景色为白色 */
+          border: 2px solid #4CAF50;  /* 边框颜色 */
+          border-radius: 15px;  /* 圆角效果 */
+          padding: 20px;  /* 内边距 */
+          width: 300px;  /* 固定宽度 */
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* 阴影效果，增加立体感 */
+          font-family: Arial, sans-serif;  /* 字体 */
+          color: #333;  /* 字体颜色 */
+          text-align: left;  /* 文本左对齐 */
+          margin: 20px auto;  /* 外边距，居中显示 */
+        }
+        .info-box h2 {
+          font-size: 24px;  /* 标题字体大小 */
+          color: #4CAF50;  /* 标题颜色 */
+          margin-bottom: 15px;  /* 标题和内容之间的间距 */
+        }
+        .info-box p {
+          font-size: 16px;  /* 内容字体大小 */
+          line-height: 1.6;  /* 行间距，增加可读性 */
+        }
+        .info-box strong {
+          font-weight: bold;  /* 强调文字加粗 */
+        }
+        
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
@@ -30,6 +56,13 @@
     
 <body>
     <h1>Welcome to My CS180 Portfolio!</h1>
+    <div class="info-box">
+      <h2>Author's Profile</h2>
+      <p><strong>Name：</strong>Ivan Xu</p>
+      <p><strong>Major：</strong>Computer Science</p>
+      <p><strong>Identity：</strong>UCB Undergrad</p>
+      <p><strong>E-mail：</strong>ivanxu@berkeley.edu</p>
+    </div>
     <p>From here you can view my works on this class!</p>
     <a href="./1/index.html" class="my-button">Project 0</a>
 </body>
