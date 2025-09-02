@@ -33,16 +33,35 @@
     color: #222;                          
     }
 
-    .title-box {
-    display: inline-block;            
-    background: #f2f2f2;             
-    padding: 8px 16px;                
-    border-radius: 6px;              
-    font-size: 20px;                
-    font-weight: bold;
-    color: #1E90FF;                   
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1); 
-    margin: 15px 0;                  
+    .section-title {
+      position: relative;
+      padding-left: 12px;          
+      font-size: 22px;
+      font-weight: bold;
+      color: #1E90FF;            
+      margin: 30px 0 20px;        
+    }
+    
+    .section-title::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 3px;
+      bottom: 3px;
+      width: 4px;
+      background: #1E90FF;         
+      border-radius: 2px;
+    }
+
+    .section-title::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;                
+      height: 3px;
+      width: 100%;
+      background: linear-gradient(to right, #1E90FF, transparent);
+      border-radius: 2px;
     }
         
     body {
@@ -69,7 +88,7 @@
 <body>
     <h1>CS180/280A Project0: Becoming Friends with Your Camera!</h1>
 
-    <div class="title-box">
+    <div class="section-title">
       <h2>Selfie: The Wrong Way V.S. The Right Way</h2>
     </div>
     <div class="text-box">
@@ -90,7 +109,7 @@
     <div class="title-box">
       <h2>Architectural Perspective Compression</h2>
     </div>
-    <div class="text-box">
+    <div class="section-title">
       <p>It is shown in the following two set of images that filming a street using long focal length will compress the street, while usingshort focal length the depth perceptive of the street will be better expressed. This is because that within an image captured by long focal length, the distange of items in the image to the camera varies less significant in terms of percentage compared with that of short focal length, leading to their size be equally distributed.</p>
    
       <div style="display: flex;justify-content: center; gap: 5px">
@@ -116,7 +135,7 @@
       </div>
     </div>
       
-    <div class="title-box">
+    <div class="section-title">
       <h2>The Dolly Zoom</h2>
     </div>
     <div class="text-box">
