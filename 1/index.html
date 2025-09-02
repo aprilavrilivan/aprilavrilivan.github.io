@@ -21,6 +21,17 @@
     background-color: #3e8e41;
     transform: scale(0.98);
   }
+
+  .text-box {
+  background: rgba(255, 255, 255, 0.8); /* 半透明白色背景，避免太突兀 */
+  padding: 20px;                        /* 内边距，让文字不贴边 */
+  border-radius: 12px;                  /* 圆角 */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* 阴影，提升层次感 */
+  max-width: 800px;                     /* 限制宽度，避免太宽不好读 */
+  margin: 20px auto;                    /* 居中显示，四周留点空间 */
+  line-height: 1.8;                     /* 增加行距，提高可读性 */
+  color: #222;                          /* 深灰色文字，更柔和 */
+}
     
   body {
     background: linear-gradient(135deg, #6faedc, #2c2c2c);
@@ -47,7 +58,7 @@
     <h1>CS180/280A Project0: Becoming Friends with Your Camera!</h1>
   
     <h2>Selfie: The Wrong Way V.S. The Right Way</h2>
-    <div style="max-width: 1500px">
+    <div div class="text-box">
     <p>The following are two selfies taken at different focal length, while keeping the portion of face in the picture identical. It is apparent that in the one with short focal length the face is distorted. This is because with short focal length, the camera can capture wider range of scenery, and compress the scene within one image. However, the wide range scenery usually involves large distance difference between different items. For example, the nose is much more closer to the camera than the hair. The closer the items, the larger it appears in the image. So the one with short focal length will distort the face with nose being magnified and the surrounding of the face being shrunk.</p>
     </div>  
   
@@ -63,7 +74,7 @@
     </div>
 
     <h2>Architectural Perspective Compression</h2>
-    <div style="max-width: 1500px">
+    <div class="text-box">
       <p>It is shown in the following two set of images that filming a street using long focal length will compress the street, while usingshort focal length the depth perceptive of the street will be better expressed. This is because that within an image captured by long focal length, the distange of items in the image to the camera varies less significant in terms of percentage compared with that of short focal length, leading to their size be equally distributed.</p>
     </div>
 
