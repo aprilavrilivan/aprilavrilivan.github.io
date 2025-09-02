@@ -1,84 +1,100 @@
 <!DOCTYPE html>
-<html>
-    
+<html lang="en">
 <head>
-    <title>My Portfolio</title>
-    <style>
-        .info-container {
-          display: flex;
-          justify-content: space-between;  /* 使子元素水平分布并有间隔 */
-          gap: 20px;  /* 控制两个 box 之间的间距 */
-        }
-        
-        .my-button {
-          background-color: #4CAF50;
-          color: white;
-          padding: 10px 20px;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-          font-size: 16px;
-        }
-        .my-button:hover {
-          background-color: #45a049;
-          box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
-        }
-        .my-button:active {
-          background-color: #3e8e41;
-          transform: scale(0.98);
-        }
-        
-        .info-box {
-          background-color: #fff;  /* 背景色为白色 */
-          border: 2px solid #4CAF50;  /* 边框颜色 */
-          border-radius: 15px;  /* 圆角效果 */
-          padding: 20px;  /* 内边距 */
-          width: 300px;  /* 固定宽度 */
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* 阴影效果，增加立体感 */
-          font-family: Arial, sans-serif;  /* 字体 */
-          color: #333;  /* 字体颜色 */
-          text-align: left;  /* 文本左对齐 */
-          margin: 20px auto;  /* 外边距，居中显示 */
-        }
-        .info-box h2 {
-          font-size: 24px;  /* 标题字体大小 */
-          color: #4CAF50;  /* 标题颜色 */
-          margin-bottom: 15px;  /* 标题和内容之间的间距 */
-        }
-        .info-box p {
-          font-size: 16px;  /* 内容字体大小 */
-          line-height: 1.6;  /* 行间距，增加可读性 */
-        }
-        .info-box strong {
-          font-weight: bold;  /* 强调文字加粗 */
-        }
-        
-        body {
-            background: linear-gradient(135deg, #ADD8E6, #333333);  /* 设置从左上到右下的渐变色 */
-            height: 100vh;  /* 让背景填满整个视口高度 */
-            margin: 0;
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-    </style>
-</head>
-    
-<body>
-    <h1>Welcome to My CS180 Portfolio!</h1>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #6e7dff, #b5b4ff);  /* 渐变背景 */
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
 
-    <div class="info-container">
-        <div class="info-box">
-          <h2>Author's Profile</h2>
-          <p><strong>Name：</strong>Ivan Xu</p>
-          <p><strong>Identity：</strong>UCB Visiting Student</p>
-          <p><strong>SID：</strong>3041989629</p>
-          <p><strong>E-mail：</strong>ivanxu@berkeley.edu</p>
-        </div>
-        <div class="info-box">
-            <h2>My works</h2>
-            <a href="./1/index.html" class="my-button"><strong>Project 0</a>
-        <div>
+    h1 {
+      text-align: center;
+      color: white;
+      padding: 40px;
+      font-size: 36px;
+    }
+
+    .info-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      justify-items: center;
+      margin: 20px auto;
+      width: 80%;
+    }
+
+    .info-box {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      text-align: center;
+    }
+
+    .my-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .my-button:hover {
+      background-color: #45a049;
+      transform: scale(1.1);
+      transition: transform 0.2s ease;
+    }
+
+    p {
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    h2 {
+      color: #4CAF50;
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .info-container {
+        grid-template-columns: 1fr;
+      }
+
+      .info-box {
+        width: 90%;
+        margin: 10px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to My CS180 Portfolio!</h1>
+
+  <div class="info-container">
+    <div class="info-box">
+      <h2>Author's Profile</h2>
+      <p><strong>Name: </strong>Ivan Xu</p>
+      <p><strong>Identity: </strong>UCB Visiting Student</p>
+      <p><strong>SID: </strong>3041989629</p>
+      <p><strong>E-mail: </strong>ivanxu@berkeley.edu</p>
     </div>
-</body>
     
+    <div class="info-box">
+      <h2>My works</h2>
+      <a href="./1/index.html" class="my-button"><strong>Project 0</strong></a>
+    </div>
+  </div>
+</body>
 </html>
