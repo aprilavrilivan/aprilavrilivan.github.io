@@ -4,6 +4,12 @@
 <head>
     <title>My Portfolio</title>
     <style>
+        .info-container {
+          display: flex;
+          justify-content: space-between;  /* 使子元素水平分布并有间隔 */
+          gap: 20px;  /* 控制两个 box 之间的间距 */
+        }
+        
         .my-button {
           background-color: #4CAF50;
           color: white;
@@ -56,17 +62,20 @@
     
 <body>
     <h1>Welcome to My CS180 Portfolio!</h1>
-    <div class="info-box">
-      <h2>Author's Profile</h2>
-      <p><strong>Name：</strong>Ivan Xu</p>
-      <p><strong>Identity：</strong>UCB Visiting Student</p>
-      <p><strong>SID：</strong>3041989629</p>
-      <p><strong>E-mail：</strong>ivanxu@berkeley.edu</p>
+
+    <div class="info-container">
+        <div class="info-box">
+          <h2>Author's Profile</h2>
+          <p><strong>Name：</strong>Ivan Xu</p>
+          <p><strong>Identity：</strong>UCB Visiting Student</p>
+          <p><strong>SID：</strong>3041989629</p>
+          <p><strong>E-mail：</strong>ivanxu@berkeley.edu</p>
+        </div>
+        <div class="info-box">
+            <h2>My works</h2>
+            <a href="./1/index.html" class="my-button"><strong>Project 0</a>
+        <div>
     </div>
-    <div class="info-box">
-        <h2>My works</h2>
-        <a href="./1/index.html" class="my-button"><strong>Project 0</a>
-    <div>
 </body>
     
 </html>
