@@ -1,149 +1,219 @@
-<!docktype html>
-<html>
-  
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
 <head>
-  <title>Project 0</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CS180/280A · Project 0 — Becoming Friends with Your Camera</title>
+  <meta name="description" content="Project 0: Focal length effects, perspective compression, and dolly zoom — with polished, responsive UI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    .my-button {
-            background-color: #C0C0C0;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-          }
-    .my-button:hover {
-      background-color: #45a049;
-      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    /* ------------------------------
+       Theme & Reset (matching the previous page)
+    ------------------------------ */
+    :root{
+      --bg: #0b0c10;
+      --panel: #111318;
+      --text: #e6e8ec;
+      --muted: #a6adbb;
+      --accent: #7c9cff;
+      --accent-2: #4ad6a7;
+      --bdr: #1e2230;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius-xl: 18px;
+      --radius-lg: 14px;
+      --radius-md: 12px;
+      --radius-sm: 10px;
+      --blur: saturate(120%) blur(0px);
     }
-    .my-button:active {
-      background-color: #3e8e41;
-      transform: scale(0.98);
+    [data-theme="light"]{
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --text: #0b1220;
+      --muted: #5c6475;
+      --accent: #3a66ff;
+      --accent-2: #0dbb8e;
+      --bdr: #e8ebf3;
+      --shadow: 0 16px 40px rgba(16,24,40,.08);
     }
-  
-    .text-box {
-    background: rgba(255, 255, 255, 0.8);
-    padding: 20px;                      
-    border-radius: 12px;                
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
-    max-width: 800px;                     
-    margin: 20px auto;                    
-    line-height: 1.8;                    
-    color: #222;                          
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(124,156,255,.12), transparent 60%),
+                  radial-gradient(900px 500px at 100% 0%, rgba(74,214,167,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    .section-title {
-      position: relative;
-      padding-left: 12px;          
-      font-weight: bold;
-      color: #1E90FF;            
-      margin: 30px 0 20px;        
-    }
-    .section-title::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 3px;
-      bottom: 3px;
-      width: 4px;
-      background: #1E90FF;         
-      border-radius: 2px;
-    }
-    .section-title::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -6px;                
-      height: 3px;
-      width: 100%;
-      background: linear-gradient(to right, #1E90FF, transparent);
-      border-radius: 2px;
-    }
-        
-    body {
-      background: #2c2c2c;
-      font-family: Arial, sans-serif;
-      color: #333;  
-      margin: 0;  
-      padding: 20px;  
-    }
-    h1 {
-      color: #FFFFFF; 
-      font-family: cursive;
-    }    
-    h2 {
-      color: #00BFFF; 
-      font-family: "Comic Sans MS";
-    }
-    p {
-      color: #333333; 
-      font-family: "Comic Sans MS", cursive;
-    }
+    /* ------------------------------
+       Sticky Header
+    ------------------------------ */
+    header.site { position: sticky; top: 0; z-index: 50; backdrop-filter: var(--blur); background: color-mix(in oklab, var(--bg) 70%, transparent); border-bottom: 1px solid var(--bdr); }
+    .site-inner { max-width: 1080px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+    .logo { width: 40px; height: 40px; display: grid; place-items:center; border-radius: 12px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; font-weight: 800; box-shadow: var(--shadow); letter-spacing: .5px; }
+    .brand { font-weight: 700; letter-spacing: .3px; }
+    .grow { flex: 1; }
+    .btn, a.btn { appearance: none; border: 0; cursor: pointer; text-decoration: none; color: #fff; font-weight: 600; }
+    .btn.primary { padding: 10px 14px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+    .btn.primary:hover { transform: translateY(-1px); filter: saturate(110%); }
+    .btn.ghost { padding: 10px 12px; border-radius: 10px; color: var(--text); background: transparent; border: 1px solid var(--bdr); }
+
+    /* ------------------------------
+       Page Wrap & Titles
+    ------------------------------ */
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 20px 80px; }
+    h1.page-title { font-size: clamp(24px, 3vw, 36px); margin: 18px 0 10px; }
+    p.lead { color: var(--muted); margin: 0 0 24px; }
+
+    /* ------------------------------
+       Panels & Sections
+    ------------------------------ */
+    .panel { background: var(--panel); border: 1px solid var(--bdr); border-radius: var(--radius-xl); box-shadow: var(--shadow); overflow: hidden; margin-top: 28px; }
+    .panel .panel-hd { padding: 18px 20px; border-bottom: 1px solid var(--bdr); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .panel .panel-hd h2 { margin: 0; font-size: 18px; }
+    .panel .panel-bd { padding: 20px; }
+    .muted { color: var(--muted); }
+
+    /* ------------------------------
+       Text Box (English version)
+    ------------------------------ */
+    .textbox { background: color-mix(in oklab, var(--panel) 90%, #000 10%); border: 1px solid var(--bdr); border-radius: var(--radius-lg); padding: 18px; box-shadow: var(--shadow); }
+
+    /* ------------------------------
+       Image Grids and Captions
+    ------------------------------ */
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    @media (max-width: 760px){ .grid { grid-template-columns: 1fr; } }
+    figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .thumb { position: relative; overflow: hidden; border-radius: 12px; border: 1px solid var(--bdr); box-shadow: var(--shadow); background: #000; }
+    .thumb img { width: 100%; height: auto; display: block; transform: scale(1); transition: transform .35s ease; }
+    .thumb:hover img { transform: scale(1.04); }
+    figcaption { font-size: 13px; color: var(--muted); text-align: center; }
+
+    /* ------------------------------
+       Back Button
+    ------------------------------ */
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--bdr); background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, #fff 10%), var(--panel)); text-decoration: none; color: var(--text); box-shadow: var(--shadow); transition: transform .2s ease, background .2s ease; }
+    .back-btn:hover { transform: translateY(-1px); }
+
+    footer { margin-top: 28px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   </style>
 </head>
-  
 <body>
-    <h1 style="font-size: 42px">CS180/280A Project0: Becoming Friends with Your Camera!</h1>
+  <!-- Header -->
+  <header class="site">
+    <div class="site-inner">
+      <div class="logo" aria-hidden="true">P0</div>
+      <div class="brand">CS180/280A · Project 0</div>
+      <div class="grow"></div>
+      <div class="actions">
+        <button class="btn ghost" id="themeToggle" aria-label="Toggle theme">🌓 Theme</button>
+        <a class="btn primary" href="../index.html">Back to Home</a>
+      </div>
+    </div>
+  </header>
 
-    <div class="section-title">
-      <h2>Selfie: The Wrong Way V.S. The Right Way</h2>
-    </div>
-    <div class="text-box">
-      <p>The following are two selfies taken at different focal length, while keeping the portion of face in the picture identical. It is apparent that in the one with short focal length the face is distorted. This is because with short focal length, the camera can capture wider range of scenery, and compress the scene within one image. However, the wide range scenery usually involves large distance difference between different items. For example, the nose is much more closer to the camera than the hair. The closer the items, the larger it appears in the image. So the one with short focal length will distort the face with nose being magnified and the surrounding of the face being shrunk.</p>
-  
-      <div style="display: flex; justify-content: center; gap: 20px;">
-        <div style="text-align: center; max-width: 400px;">
-          <img src="./media/img1.jpg" style="width: 200px;">
-          <p>24mm@50cm</p>
+  <!-- Main -->
+  <main class="wrap">
+    <h1 class="page-title">Becoming Friends with Your Camera</h1>
+    <p class="lead">Exploring how <strong>focal length</strong>, <strong>perspective</strong>, and the <strong>dolly zoom</strong> affect what we see.</p>
+
+    <!-- Section: Selfie -->
+    <section class="panel" aria-labelledby="sec-selfie">
+      <div class="panel-hd">
+        <h2 id="sec-selfie">Selfie: The Wrong Way vs. the Right Way</h2>
+        <span class="muted">Focal length & facial distortion</span>
+      </div>
+      <div class="panel-bd">
+        <div class="textbox">
+          Shooting a face at a very short focal length exaggerates distance differences within the face (e.g., nose vs. hairline), so close parts look larger while distant parts shrink. Keeping the face framing constant but using a longer focal length reduces this distortion.
         </div>
-        <div style="text-align: center; max-width: 400px;">
-          <img src="./media/img2.jpg" style="width: 200px;">
-          <p>13mm@15cm</p>
+        <div class="grid" style="margin-top:16px;">
+          <figure>
+            <div class="thumb"><img src="./media/img1.jpg" alt="Portrait at 24mm from 50cm" loading="lazy"></div>
+            <figcaption>24mm @ 50&nbsp;cm — noticeable distortion</figcaption>
+          </figure>
+          <figure>
+            <div class="thumb"><img src="./media/img2.jpg" alt="Portrait at 13mm from 15cm" loading="lazy"></div>
+            <figcaption>13mm @ 15&nbsp;cm — strong wide‑angle distortion</figcaption>
+          </figure>
         </div>
       </div>
-    </div>
-      
-    <div class="section-title">
-      <h2>Architectural Perspective Compression</h2>
-    </div>
-    <div class="text-box">
-      <p>It is shown in the following two set of images that filming a street using long focal length will compress the street, while usingshort focal length the depth perceptive of the street will be better expressed. This is because that within an image captured by long focal length, the distange of items in the image to the camera varies less significant in terms of percentage compared with that of short focal length, leading to their size be equally distributed.</p>
-   
-      <div style="display: flex;justify-content: center; gap: 5px">
-        <div style="text-align: center; max-width: 400px;">
-          <img src="./media/img3.jpg" style="width:200px;">
-          <p>77mm</p>
+    </section>
+
+    <!-- Section: Perspective Compression -->
+    <section class="panel" aria-labelledby="sec-arch" >
+      <div class="panel-hd">
+        <h2 id="sec-arch">Architectural Perspective Compression</h2>
+        <span class="muted">Long vs. short focal lengths on streetscapes</span>
+      </div>
+      <div class="panel-bd">
+        <div class="textbox">
+          With a long focal length, distances to scene elements vary less relative to camera distance, so object sizes appear more similar — the street looks visually “compressed.” Short focal lengths emphasize depth: near objects loom larger while far ones recede.
         </div>
-        <div style="text-align: center; max-width: 400px;">
-          <img src="./media/img4.jpg" style="width:200px;">
-          <p>13mm</p>
+        <div class="grid" style="margin-top:16px;">
+          <figure>
+            <div class="thumb"><img src="./media/img3.jpg" alt="Street at 77mm" loading="lazy"></div>
+            <figcaption>77mm — compressed perspective</figcaption>
+          </figure>
+          <figure>
+            <div class="thumb"><img src="./media/img4.jpg" alt="Street at 13mm" loading="lazy"></div>
+            <figcaption>13mm — accentuated depth</figcaption>
+          </figure>
+        </div>
+        <div class="grid" style="margin-top:16px;">
+          <figure>
+            <div class="thumb"><img src="./media/img5.jpg" alt="Street view at 77mm" loading="lazy"></div>
+            <figcaption>77mm — similar object sizes</figcaption>
+          </figure>
+          <figure>
+            <div class="thumb"><img src="./media/img6.jpg" alt="Street view at 24mm" loading="lazy"></div>
+            <figcaption>24mm — stronger depth cues</figcaption>
+          </figure>
         </div>
       </div>
-      <p> </p>
-      <div style="display: flex;justify-content: center; gap: 5px">
-        <div style="text-align: center; max-width: 400px;">
-          <img src="./media/img5.jpg" style="width:200px;">
-          <p>77mm</p>
+    </section>
+
+    <!-- Section: Dolly Zoom -->
+    <section class="panel" aria-labelledby="sec-dolly">
+      <div class="panel-hd">
+        <h2 id="sec-dolly">The Dolly Zoom</h2>
+        <span class="muted">Move back while zooming in to keep subject size constant</span>
+      </div>
+      <div class="panel-bd">
+        <div class="textbox">
+          The dolly zoom keeps the subject’s on‑screen size fixed by simultaneously changing camera position (dolly) and focal length (zoom). As the background scale changes relative to the subject, the space feels to stretch or compress — a striking cinematic effect.
         </div>
-        <div style="text-align: center; max-width: 400px;">
-          <img src="./media/img6.jpg" style="width:200px;">
-          <p>24mm</p>
+        <div style="display:flex; justify-content:center; margin-top:16px;">
+          <div class="thumb" style="max-width: 720px; width:100%;"><img src="./media/GIF.gif" alt="Animated dolly zoom GIF" loading="lazy"></div>
         </div>
       </div>
-    </div>
-      
-    <div class="section-title">
-      <h2>The Dolly Zoom</h2>
-    </div>
-    <div class="text-box">
-      <p>This is realized by steping back and zooming in the camera to keep the size of a certain object fixed in the image</p>
-      <div style="display: flex; justify-content: center;">
-        <img src="./media/GIF.gif">
-      </div>
-    </div>
-  
-    <p><a href="../index.html" class="my-button">back to home</a></p>
+    </section>
+
+    <footer class="wrap" style="padding-top:0;">
+      <a class="back-btn" href="../index.html" aria-label="Back to Home">← Back to Home</a>
+      <span class="muted">· Responsive layout · Light/Dark theme · Accessible captions</span>
+    </footer>
+  </main>
+
+  <script>
+    // Theme toggle with localStorage (same behavior as the other page)
+    const key = 'pg-theme';
+    const saved = localStorage.getItem(key);
+    if(saved){ document.documentElement.setAttribute('data-theme', saved); }
+    const btn = document.getElementById('themeToggle');
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(key, next);
+    });
+  </script>
 </body>
-  
 </html>
