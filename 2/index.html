@@ -129,8 +129,35 @@
     /* Utility */
     .muted { color: var(--muted); }
     .right { text-align: right; }
+
+    /* Mini step box */
+    .mini-box {
+      margin: 12px 4px 8px;
+      background: color-mix(in oklab, var(--panel) 92%, #000 8%);
+      border: 1px dashed var(--bdr);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 12px 14px;
+    }
+    .mini-box .mini-hd{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-weight:700; font-size:14px;
+    }
+    .mini-box .mini-hd .hint{ color: var(--muted); font-weight:600; font-size:12px; }
+    .mini-box .mini-bd{ margin-top:10px; color: var(--text); }
+    .mini-box ol{ margin: 6px 0 0 18px; padding:0; }
+    .mini-box li{ margin: 4px 0; line-height: 1.5; }
+    .mini-toggle{
+      appearance:none; border:1px solid var(--bdr); background:transparent; color:var(--text);
+      font-weight:600; border-radius:10px; padding:6px 10px; cursor:pointer;
+    }
+    .mini-toggle:hover{ filter:saturate(110%); transform: translateY(-1px); }
+    @media (max-width:760px){ .mini-box{ padding: 10px 12px; } }
   </style>
 </head>
+
+
+  
 <body>
   <!-- Sticky Header -->
   <header class="site">
@@ -147,7 +174,7 @@
 
   <main class="wrap">
     <h1 class="page-title">Images of the Russian Empire: Colorizing the Prokudin-Gorskii photo collection</h1>
-    <p class="lead">Containing <strong>simple JPG</strong> and <strong>complex TIF</strong> image datasets；Each line demonstrate the aligned image and<span class="muted">align shift (dy, dx)</span>.</p>
+    <p class="lead">Containing <strong>simple JPG</strong> and <strong>complex TIF</strong> image datasets；Each line demonstrate the aligned image and<span class="muted"> align shift (dy, dx)</span>.</p>
 
     <!-- Simple JPGs -->
     <section class="panel" aria-labelledby="sec-simple">
@@ -156,6 +183,24 @@
         <span class="muted">3 in total</span>
       </div>
       <div class="panel-bd">
+        <!-- Small step box -->
+        <div class="mini-box" id="steps-simple">
+          <div class="mini-hd">
+            <span>Generation Steps</span>
+            <span class="hint">for simple JPG set</span>
+            <button class="mini-toggle" type="button" data-target="#steps-simple-body">Hide</button>
+          </div>
+          <div class="mini-bd" id="steps-simple-body">
+            <ol>
+              <li>Split the scanned plate into B, G, R channels by equal vertical thirds.</li>
+              <li>Crop borders (e.g., 5–10%) to reduce edge artifacts before alignment.</li>
+              <li>Align <strong>G</strong> and <strong>R</strong> to <strong>B</strong> via exhaustive search on a small window (L2/SSD or NCC).</li>
+              <li>Apply the found shifts to stack channels into an RGB image.</li>
+              <li>Optional: contrast stretch & mild sharpening; save result and record (dy, dx).</li>
+            </ol>
+          </div>
+        </div>
+        <!-- The table -->
         <table class="tbl">
           <thead>
             <tr>
@@ -285,6 +330,16 @@
       const next = current === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
       localStorage.setItem(key, next);
+    });
+    // Tiny toggle for mini-box
+    document.querySelectorAll('.mini-toggle').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const sel = btn.getAttribute('data-target');
+        const box = document.querySelector(sel);
+        const hidden = box.style.display === 'none';
+        box.style.display = hidden ? '' : 'none';
+        btn.textContent = hidden ? 'Hide' : 'Show';
+      });
     });
   </script>
 </body>
