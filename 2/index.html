@@ -268,7 +268,7 @@
               <li>Import the cv2 package, read the images, and split the concatenated long image to BGR channels.</li>
               <li>Crop borders of BGR images to reduce noise brought by the edges.</li>
               <li>Construct three image pyramids of BGR channels respectively by iterating the process of Gaussian Blurring and Downsampling.</li>
-              <li>Starting from the top of pyramid, iteratively do the following process till bottom: Find best shift of G, R to B by NCC, and add it to current shifting --> times it by two to shift the next level in pyrimid</li>
+              <li>Starting from the top of pyramid, iteratively do the following process till bottom: Find best shift of G, R to B by NCC, and add it to current shifting --> times it by two to shift the next level in pyrimid.</li>
               <li>Apply the best shifts of BGR and stack them back into an RGB image.</li>
             </ol>
           </div>
@@ -282,10 +282,10 @@
           </div>
           <div class="mini-bd" id="findings-complex-body">
             <ol>
-              <li>In the Gaussian Blurring step, I used "sepfir2d" tool from "scipy.signal" toolbox, with filter = [1/16, 4/16, 6/16, 4/16, 1/16]</li>
-              <li>I constructed a pyramid with 6 levels, each layer size shrinks to (1/2)*(1/2) of its predecessor</li>
-              <li>The search range is [-5, 5], which proved to be robust, while completing the whole task within 10 sec for all tif pictures</li>
-              <li>By just doing the above process, every image can be perfectly aligned except for the R channel of "emir". This is because that channel has a large brightness difference with B channel of that image. I addressed it by interting a edge extraction process right after the cropping step. This is done using cv2.Canny() function</li>
+              <li>In the Gaussian Blurring step, I used "sepfir2d" tool from "scipy.signal" toolbox, with filter = [1/16, 4/16, 6/16, 4/16, 1/16].</li>
+              <li>I constructed a pyramid with 6 levels, each layer size shrinks to (1/2)*(1/2) of its predecessor.</li>
+              <li>The search range is [-5, 5], which proved to be robust, while completing the whole task within 10 sec for all tif pictures.</li>
+              <li>By just doing the above process, every image can be perfectly aligned except for the R channel of "emir". This is because that channel has a large brightness difference with B channel of that image. I addressed it by interting a edge extraction process right after the cropping step. This is done using cv2.Canny() function.</li>
             </ol>
           </div>
         </div>
@@ -363,14 +363,14 @@
     <h1></h1>
     <section class="panel" aria-labelledby="sec-simple">
       <div class="panel-hd">
-        <h2 id="sec-simple">Colorizing simple JPG images</h2>
+        <h2 id="sec-simple">Colorizing Extra .TIF images</h2>
         <span class="muted">3 in total</span>
       </div>
       <div class="panel-bd">
         <!-- Small step box -->
         <div class="mini-box" id="steps-simple">
           <div class="mini-hd">
-            <span>These are the result of my algorithm on 3 examples of my own choosing, downloaded from the Prokudin-Gorskii collection, each with around 70Mb data size.</span>
+            <span>These are the result of my algorithm on 3 examples of my own choosing, downloaded from the Prokudin-Gorskii collection, each with around 70Mb data size but still successfully handled within 10sec.</span>
           </div>
         </div>
         <!-- The table -->
