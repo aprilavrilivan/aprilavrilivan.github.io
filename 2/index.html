@@ -174,7 +174,7 @@
 
   <main class="wrap">
     <h1 class="page-title">Images of the Russian Empire: Colorizing the Prokudin-Gorskii photo collection</h1>
-    <p class="lead">Containing <strong>simple JPG</strong> and <strong>complex TIF</strong> image datasets；Each line demonstrate the aligned image and<span class="muted"> align shift (dy, dx)</span>.</p>
+    <p class="lead">Prokudin-Gorskii photo collection stores a set of old pictures, each with seperated RGB channels. This project aims to recover the colorful pictures by precisely align and stack back these channels. The project first succeed on recovering the simple .jpg photos by matching the brightness of each pixel in G and R channel with its surrounding pixels in B channel. For larger .tif photos, searching every pixel using brute-force is time consuming, so a image pyramid is constructed to accelerate the process. Finally, an edge extraction step is add to ensure a more robust alignment</span>.</p>
 
     <!-- Simple JPGs -->
     <section class="panel" aria-labelledby="sec-simple">
@@ -186,29 +186,29 @@
         <!-- Small step box -->
         <div class="mini-box" id="steps-simple">
           <div class="mini-hd">
-            <span>Alignment Steps</span>
+            <span>Simple Alignment</span>
             <span class="hint">Step Description</span>
             <button class="mini-toggle" type="button" data-target="#steps-simple-body">Hide</button>
           </div>
           <div class="mini-bd" id="steps-simple-body">
             <ol>
               <li>Import the cv2 package, read the images, and split the concatenated long image to BGR channels.</li>
-              <li>Crop borders of BGR images to reduce noise brought by the edges.</li>
-              <li>Align <strong>G</strong> and <strong>R</strong> to <strong>B</strong> via exhaustive searching every pixel (SSD or NCC).</li>
-              <li>Apply the best shifts of BGR and stack them back into an RGB image.</li>
+              <li>Crop borders of BGR images to reduce noise brought by them.</li>
+              <li>Align <strong>G</strong> and <strong>R</strong> to <strong>B</strong> via exhaustively matching brightness of every pixel with its surrounding pixels (SSD or NCC algorithm with searching range [-15, 15]).</li>
+              <li>Apply the best shift parameters to G and R channels and stack them back with B channel to get an RGB image.</li>
             </ol>
           </div>
         </div>
         <!-- Small finding box -->
         <div class="mini-box" id="findings-simple">
           <div class="mini-hd">
-            <span>Alignment Steps</span>
+            <span>Simple Alignment</span>
             <span class="hint">Findings sharing</span>
             <button class="mini-toggle" type="button" data-target="#findings-simple-body">Hide</button>
           </div>
           <div class="mini-bd" id="findings-simple-body">
             <ol>
-              <li>NCC performs better than SSD in aligning RGB channels, as NCC normalized the brightness of pixels, making it less sensitive to brightness and contrast differences</li>
+              <li>NCC performs better than SSD in aligning RGB channels, as NCC normalized the brightness of pixels, making it less sensitive to brightness and contrast differences.</li>
               <li>Croping boarders by 13% of the orginal image appears effective.</li>
             </ol>
           </div>
@@ -259,7 +259,7 @@
         <!-- Complex step box -->
         <div class="mini-box" id="steps-complex">
           <div class="mini-hd">
-            <span>Alignment Steps</span>
+            <span>Pyramid Alignment</span>
             <span class="hint">Step Description</span>
             <button class="mini-toggle" type="button" data-target="#steps-complex-body">Hide</button>
           </div>
@@ -276,8 +276,8 @@
         <!-- Complex findings box -->
         <div class="mini-box" id="findings-complex">
           <div class="mini-hd">
-            <span>Alignment Steps</span>
-            <span class="hint">Step Description</span>
+            <span>Pyramid Alignment</span>
+            <span class="hint">Findings Sharing</span>
             <button class="mini-toggle" type="button" data-target="#findings-complex-body">Hide</button>
           </div>
           <div class="mini-bd" id="findings-complex-body">
