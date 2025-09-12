@@ -174,7 +174,7 @@
 
   <main class="wrap">
     <h1 class="page-title">Images of the Russian Empire: Colorizing the Prokudin-Gorskii photo collection</h1>
-    <p class="lead">Prokudin-Gorskii photo collection stores a set of old pictures, each with seperated RGB channels. This project aims to recover the colorful pictures by precisely align and stack back these channels. The project first succeed on recovering the simple .jpg photos by matching the brightness of each pixel in G and R channel with its surrounding pixels in B channel. For larger .tif photos, searching every pixel using brute-force is time consuming, so a image pyramid is constructed to accelerate the process. Finally, an edge extraction step is add to ensure a more robust alignment</span>.</p>
+    <p class="lead">Prokudin-Gorskii photo collection stores a set of old pictures, each with seperated RGB channels. This project aims to recover the colorful pictures by precisely align and stack back these channels. The project first succeed on recovering the simple .jpg photos by matching the brightness of each pixel in G and R channel with its surrounding pixels in B channel. For larger .tif photos, searching every pixel using brute-force is time consuming, so a image pyramid is constructed to accelerate the process. Finally, an edge extraction step is add to ensure a more robust alignment. The step description, findings during implementation, final outcomes for each image and their R and G channel shift parameters are listed below.</span>.</p>
 
     <!-- Simple JPGs -->
     <section class="panel" aria-labelledby="sec-simple">
