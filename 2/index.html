@@ -186,17 +186,30 @@
         <!-- Small step box -->
         <div class="mini-box" id="steps-simple">
           <div class="mini-hd">
-            <span>Generation Steps</span>
-            <span class="hint">for simple JPG set</span>
+            <span>Alignment Steps</span>
+            <span class="hint">Step Description</span>
             <button class="mini-toggle" type="button" data-target="#steps-simple-body">Hide</button>
           </div>
           <div class="mini-bd" id="steps-simple-body">
             <ol>
-              <li>Split the scanned plate into B, G, R channels by equal vertical thirds.</li>
-              <li>Crop borders (e.g., 5–10%) to reduce edge artifacts before alignment.</li>
-              <li>Align <strong>G</strong> and <strong>R</strong> to <strong>B</strong> via exhaustive search on a small window (L2/SSD or NCC).</li>
-              <li>Apply the found shifts to stack channels into an RGB image.</li>
-              <li>Optional: contrast stretch & mild sharpening; save result and record (dy, dx).</li>
+              <li>Import the cv2 package, read the images, and split the concatenated long image to BGR channels.</li>
+              <li>Crop borders of BGR images to reduce noise brought by the edges.</li>
+              <li>Align <strong>G</strong> and <strong>R</strong> to <strong>B</strong> via exhaustive searching every pixel (SSD or NCC).</li>
+              <li>Apply the best shifts of BGR and stack them back into an RGB image.</li>
+            </ol>
+          </div>
+        </div>
+        <!-- Small finding box -->
+        <div class="mini-box" id="findings-simple">
+          <div class="mini-hd">
+            <span>Alignment Steps</span>
+            <span class="hint">Findings sharing</span>
+            <button class="mini-toggle" type="button" data-target="#findings-simple-body">Hide</button>
+          </div>
+          <div class="mini-bd" id="steps-simple-body">
+            <ol>
+              <li>NCC performs better than SSD in aligning RGB channels, as NCC normalized the brightness of pixels, making it less sensitive to brightness and contrast differences</li>
+              <li>Croping boarders by 13% of the orginal image appears effective.</li>
             </ol>
           </div>
         </div>
