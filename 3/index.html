@@ -364,17 +364,19 @@
           </div>
           <div class="mini-bd" id="2.1-body">
             <ol>
-              <li>In this section I managed to sharpen the image by adding high frequencies to the image. A naive way to do this is to first extract the high frequencies out and add them to the original image. But we can also do this by calcutate out a single kernel to convolute, resulting in the same result. 
+              <li>In this section I managed to sharpen the image by adding high frequencies to the image. A naive way to do this is to first extract the high frequencies out and add them to the original image. But we can also do this by calcutate out a single kernel to convolute, resulting in the same result The single-kernel formula is [sharpen_knl = (1+alpha)*delta_knl - alpha*gaus_knl]. 
                   <div class="result-box">
                     <div class="thumb">
-                      <img src="results/boxfilter1.jpg" alt="Box filter result 1">
+                      <img src="media/taj_unsharpMask.png" alt="Box filter result 1">
+                      <div class="caption">taj_unsharpMask.png</div>
                     </div>
                   </div>
               </li>
-              <li>Then, I pick a sharp image, blur it and then try to sharpen it again. This image looks different from the original one.
+              <li>Then, I pick a sharp image, blur it and then try to sharpen it again. This image looks different from the original one. The original img enhances all details including noise, while this one suppresses fine details through blurring and emphasizes only stronger, larger edges.
                   <div class="result-box">
                     <div class="thumb">
-                      <img src="results/boxfilter2.jpg" alt="Box filter result 2">
+                      <img src="meida/taj_unsharpMask_multi.png" alt="Box filter result 2">
+                      <div class="caption">taj_unsharpMask_multi.png</div>
                     </div>
                   </div>
               </li>
