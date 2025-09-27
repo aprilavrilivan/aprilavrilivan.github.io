@@ -328,15 +328,18 @@
           <div class="mini-bd" id="1.3-body">
             <ol>
               <li>In this section I tried to smoothering the result of binarized image. There are two ways to implement this. The first way is to gaussian blurr the image and then partial differentiate it, resulting a denoised version.
-                    <div class="thumb">
-                      <img src="results/boxfilter1.jpg" alt="Box filter result 1">
+                <div class="result-box">    
+                  <div class="thumb">
+                      <img src="media/gaussianBlurBina_two_steps.png" alt="Box filter result 1">
+                      <div class="caption">gaussianBlurBina_two_steps.png</div>
                     </div>
                   </div>
               </li>
-              <li>The second way is to difference the gaussian kernel, and use this result to convolute the image. By the assiciative law of convolution operation, these two operations have the same result.
+              <li>The second way is to difference the gaussian kernel, and use this result to convolute the image. (I_x = I * G_x,  I_y = I * G_y). By the assiciative law of convolution operation, these two operations have the same result, as demonstrated by the two pictures.
                   <div class="result-box">
                     <div class="thumb">
-                      <img src="results/boxfilter1.jpg" alt="Box filter result 1">
+                      <img src="media/gaussianBlurBina_one_step.png" alt="Box filter result 1">
+                      <div class="caption">gaussianBlurBina_one_step.png</div>
                     </div>
                   </div>
               </li>
@@ -382,7 +385,7 @@
         <!-- Small step box -->
         <div class="mini-box" id="2.2">
           <div class="mini-hd">
-            <span>Part one</span>
+            <span>Part two</span>
             <span class="hint">2.2</span>
             <button class="mini-toggle" type="button" data-target="#2.2-bo">Hide</button>
           </div>
