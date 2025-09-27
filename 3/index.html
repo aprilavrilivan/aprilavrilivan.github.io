@@ -1,1 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Colorizing the Prokudin-Gorskii photo collection</title>
+  <meta name="description" content="CS180/280A Project 1: Colorizing the Prokudin‑Gorskii photo collection" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ------------------------------
+       Theme & Reset
+    ------------------------------ */
+    :root{
+      --bg: #0b0c10;
+      --panel: #111318;
+      --text: #e6e8ec;
+      --muted: #a6adbb;
+      --accent: #7c9cff;
+      --accent-2: #4ad6a7;
+      --bdr: #1e2230;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius-xl: 18px;
+      --radius-lg: 14px;
+      --radius-md: 12px;
+      --radius-sm: 10px;
+      --blur: saturate(120%) blur(0px);
+    }
+    [data-theme="light"]{
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --text: #0b1220;
+      --muted: #5c6475;
+      --accent: #3a66ff;
+      --accent-2: #0dbb8e;
+      --bdr: #e8ebf3;
+      --shadow: 0 16px 40px rgba(16,24,40,.08);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(124,156,255,.12), transparent 60%),
+                  radial-gradient(900px 500px at 100% 0%, rgba(74,214,167,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
+    /* ------------------------------
+       Layout
+    ------------------------------ */
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 20px 80px; }
+    header.site {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: var(--blur);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--bdr);
+    }
+    .site-inner { max-width: 1080px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 40px; height: 40px; display: grid; place-items:center; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff; font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+    .brand { font-weight: 700; letter-spacing: .3px; }
+    .grow { flex: 1; }
+
+    .actions { display: flex; align-items: center; gap: 10px; }
+    .btn, a.btn { appearance: none; border: 0; cursor: pointer; text-decoration: none; color: #fff; font-weight: 600; }
+    .btn.primary { padding: 10px 14px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+    .btn.primary:hover { transform: translateY(-1px); filter: saturate(110%); }
+    .btn.ghost { padding: 10px 12px; border-radius: 10px; color: var(--text); background: transparent; border: 1px solid var(--bdr); }
+
+    h1.page-title { font-size: clamp(22px, 2.4vw, 32px); margin: 18px 0 8px; }
+    p.lead { color: var(--muted); margin: 0 0 22px; }
+
+    /* ------------------------------
+       Panels
+    ------------------------------ */
+    .panel { background: var(--panel); border: 1px solid var(--bdr); border-radius: var(--radius-xl); box-shadow: var(--shadow); overflow: hidden; }
+    .panel .panel-hd { padding: 18px 20px; border-bottom: 1px solid var(--bdr); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .panel .panel-hd h2 { margin: 0; font-size: 18px; }
+    .panel .panel-bd { padding: 14px 16px 6px; }
+
+    /* ------------------------------
+       Tables → Responsive Cards
+    ------------------------------ */
+    .tbl { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .tbl th, .tbl td { padding: 12px 14px; border-bottom: 1px solid var(--bdr); vertical-align: middle; }
+    .tbl thead th { text-align: left; font-size: 13px; letter-spacing: .4px; color: var(--muted); text-transform: uppercase; }
+    .tbl tbody tr { transition: background .2s ease, transform .08s ease; }
+    .tbl tbody tr:hover { background: color-mix(in oklab, var(--panel) 85%, #000 15%); }
+    .tbl img { width: 180px; height: auto; border-radius: 12px; display: block; border: 1px solid var(--bdr); box-shadow: var(--shadow); }
+
+    /* Make it look like card list on small screens */
+    @media (max-width: 760px){
+      .tbl thead { display: none; }
+      .tbl, .tbl tbody, .tbl tr, .tbl td { display: block; width: 100%; }
+      .tbl tr { background: var(--panel); border: 1px solid var(--bdr); border-radius: var(--radius-lg); margin: 10px 0 16px; padding: 12px; }
+      .tbl td { border: 0; padding: 8px 0; }
+      .tbl td[data-label]::before { content: attr(data-label)"："; display: inline-block; min-width: 9em; color: var(--muted); font-weight: 600; }
+      .tbl img { width: 100%; }
+    }
+
+    /* Image zoom on hover */
+    .thumb { position: relative; overflow: hidden; border-radius: 12px; }
+    .thumb img { transform: scale(1); transition: transform .35s ease; }
+    .thumb:hover img { transform: scale(1.04); }
+
+    /* Tag pills for shifts */
+    .pills { display: inline-flex; gap: 8px; flex-wrap: wrap; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12px; padding: 6px 10px; border-radius: 999px; border: 1px dashed var(--bdr); color: var(--text); background: color-mix(in oklab, var(--panel) 85%, #000 15%); }
+    .pill .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 20%, transparent); }
+    .pill.red .dot { background: #ff6b6b; }
+    .pill.green .dot { background: #4ad6a7; }
+
+    /* Footer */
+    footer { margin: 28px 0; display: flex; align-items: center; gap: 12px; }
+    .link { color: #fff; text-decoration: none; }
+
+    /* Back button */
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--bdr); background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, #fff 10%), var(--panel)); text-decoration: none; color: var(--text); box-shadow: var(--shadow); transition: transform .2s ease, background .2s ease; }
+    .back-btn:hover { transform: translateY(-1px); }
+
+    /* Utility */
+    .muted { color: var(--muted); }
+    .right { text-align: right; }
+
+    /* Mini step box */
+    .mini-box {
+      margin: 12px 4px 8px;
+      background: color-mix(in oklab, var(--panel) 92%, #000 8%);
+      border: 1px dashed var(--bdr);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 12px 14px;
+    }
+    .mini-box .mini-hd{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-weight:700; font-size:14px;
+    }
+    .mini-box .mini-hd .hint{ color: var(--muted); font-weight:600; font-size:12px; }
+    .mini-box .mini-bd{ margin-top:10px; color: var(--text); }
+    .mini-box ol{ margin: 6px 0 0 18px; padding:0; }
+    .mini-box li{ margin: 4px 0; line-height: 1.5; }
+    .mini-toggle{
+      appearance:none; border:1px solid var(--bdr); background:transparent; color:var(--text);
+      font-weight:600; border-radius:10px; padding:6px 10px; cursor:pointer;
+    }
+    .mini-toggle:hover{ filter:saturate(110%); transform: translateY(-1px); }
+    @media (max-width:760px){ .mini-box{ padding: 10px 12px; } }
+  </style>
+</head>
+    
+<body>
+  <!-- Sticky Header -->
+  <header class="site">
+    <div class="site-inner">
+      <div class="logo" aria-hidden="true">P2</div>
+      <div class="brand">CS180/280A · Project 2</div>
+      <div class="grow"></div>
+      <div class="actions">
+        <button class="btn ghost" id="themeToggle" aria-label="Switch Theme">🌓 Theme</button>
+        <a class="btn primary" href="../index.html">back to main</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1 class="page-title">Fun with Filters and Frequencies!</h1>
+    <p class="lead">This project adopts various skills to play with images. Including Gaussian Blurring, differencing, binarize, sharpening, stacking, and blending the images.</span>.</p>
+    <!-- P1 -->
+    <section class="panel" aria-labelledby="sec-simple">
+      <div class="panel-hd">
+        <h2 id="sec-simple">P1: Fun With Filters</h2>
+        <span class="muted">3 in total</span>
+      </div>
+      <div class="panel-bd">
+        <!-- Small step box -->
+        <div class="mini-box" id="1.1">
+          <div class="mini-hd">
+            <span>Part one</span>
+            <span class="hint">1.1</span>
+            <button class="mini-toggle" type="button" data-target="#1.1-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.1-body">
+            <ol>
+              <li>In this section I implemented the function of convolution from scratch. First, I implemented it using four for loops, which the outer two loops traversing every pixel in the target image, and inner two loops focusing on traversing the filter to multiply filter with target image. In the two for loops version, I just simply relaced the inner two for loops with the np.sum function. Also, I padded the boundary with zeros to make sure the size of img after convolustion doesn't change. Here are the results of to kinds of implementation of convolution, which are exactly the same.</li>
+              <li>Then, I applied the box filter to my selfies, and here are the results.</li>
+              <li>Finally, I changed the kernel to be [1,0,-1] and its transpose to realize the outcome of difference operators.</li>
+              <li></li>
+            </ol>
+          </div>
+        </div>
+
+  </main>
+  <script>
+    // Theme toggle with localStorage
+    const root = document.documentElement;
+    const key = 'pg-theme';
+    const btn = document.getElementById('themeToggle');
+    const saved = localStorage.getItem(key);
+    if(saved){ document.documentElement.setAttribute('data-theme', saved); }
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(key, next);
+    });
+    // Tiny toggle for mini-box
+    document.querySelectorAll('.mini-toggle').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const sel = btn.getAttribute('data-target');
+        const box = document.querySelector(sel);
+        const hidden = box.style.display === 'none';
+        box.style.display = hidden ? '' : 'none';
+        btn.textContent = hidden ? 'Hide' : 'Show';
+      });
+    });
+  </script>
+</body>
