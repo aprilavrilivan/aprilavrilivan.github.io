@@ -156,14 +156,18 @@ a<!DOCTYPE html>
 
     
     .result-box {
+      margin: 10px 0;
       display: flex;
-      justify-content: space-between; /* 或 center */
+      flex-wrap: wrap;
       gap: 12px;
-      flex-wrap: nowrap; /* 强制不换行 */
     }
     .result-box .thumb {
-      flex: 1 1 0;
-      max-width: 180px; /* 控制单张图宽度 */
+      flex: 1 1 200px;
+      max-width: 260px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--bdr);
+      box-shadow: var(--shadow);
     }
     .result-box img {
       width: 100%;
