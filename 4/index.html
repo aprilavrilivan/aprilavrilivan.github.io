@@ -1,1 +1,686 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fun with filters and frequencies</title>
+  <meta name="description" content="CS180/280A Project 1: Colorizing the Prokudin‑Gorskii photo collection" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ------------------------------
+       Theme & Reset
+    ------------------------------ */
+    :root{
+      --bg: #0b0c10;
+      --panel: #111318;
+      --text: #e6e8ec;
+      --muted: #a6adbb;
+      --accent: #7c9cff;
+      --accent-2: #4ad6a7;
+      --bdr: #1e2230;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius-xl: 18px;
+      --radius-lg: 14px;
+      --radius-md: 12px;
+      --radius-sm: 10px;
+      --blur: saturate(120%) blur(0px);
+    }
+    [data-theme="light"]{
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --text: #0b1220;
+      --muted: #5c6475;
+      --accent: #3a66ff;
+      --accent-2: #0dbb8e;
+      --bdr: #e8ebf3;
+      --shadow: 0 16px 40px rgba(16,24,40,.08);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(124,156,255,.12), transparent 60%),
+                  radial-gradient(900px 500px at 100% 0%, rgba(74,214,167,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
+    /* ------------------------------
+       Layout
+    ------------------------------ */
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 32px 20px 80px; }
+    header.site {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: var(--blur);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--bdr);
+    }
+    .site-inner { max-width: 1080px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 40px; height: 40px; display: grid; place-items:center; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff; font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+    .brand { font-weight: 700; letter-spacing: .3px; }
+    .grow { flex: 1; }
+
+    .actions { display: flex; align-items: center; gap: 10px; }
+    .btn, a.btn { appearance: none; border: 0; cursor: pointer; text-decoration: none; color: #fff; font-weight: 600; }
+    .btn.primary { padding: 10px 14px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+    .btn.primary:hover { transform: translateY(-1px); filter: saturate(110%); }
+    .btn.ghost { padding: 10px 12px; border-radius: 10px; color: var(--text); background: transparent; border: 1px solid var(--bdr); }
+
+    h1.page-title { font-size: clamp(22px, 2.4vw, 32px); margin: 18px 0 8px; }
+    p.lead { color: var(--muted); margin: 0 0 22px; }
+
+    /* ------------------------------
+       Panels
+    ------------------------------ */
+    .panel { background: var(--panel); border: 1px solid var(--bdr); border-radius: var(--radius-xl); box-shadow: var(--shadow); overflow: hidden; }
+    .panel .panel-hd { padding: 18px 20px; border-bottom: 1px solid var(--bdr); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .panel .panel-hd h2 { margin: 0; font-size: 18px; }
+    .panel .panel-bd { padding: 14px 16px 6px; }
+
+    /* ------------------------------
+       Tables → Responsive Cards
+    ------------------------------ */
+    .tbl { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .tbl th, .tbl td { padding: 12px 14px; border-bottom: 1px solid var(--bdr); vertical-align: middle; }
+    .tbl thead th { text-align: left; font-size: 13px; letter-spacing: .4px; color: var(--muted); text-transform: uppercase; }
+    .tbl tbody tr { transition: background .2s ease, transform .08s ease; }
+    .tbl tbody tr:hover { background: color-mix(in oklab, var(--panel) 85%, #000 15%); }
+    .tbl img { width: 180px; height: auto; border-radius: 12px; display: block; border: 1px solid var(--bdr); box-shadow: var(--shadow); }
+
+    /* Make it look like card list on small screens */
+    @media (max-width: 760px){
+      .tbl thead { display: none; }
+      .tbl, .tbl tbody, .tbl tr, .tbl td { display: block; width: 100%; }
+      .tbl tr { background: var(--panel); border: 1px solid var(--bdr); border-radius: var(--radius-lg); margin: 10px 0 16px; padding: 12px; }
+      .tbl td { border: 0; padding: 8px 0; }
+      .tbl td[data-label]::before { content: attr(data-label)"："; display: inline-block; min-width: 9em; color: var(--muted); font-weight: 600; }
+      .tbl img { width: 100%; }
+    }
+
+    /* Image zoom on hover */
+    .thumb { position: relative; overflow: hidden; border-radius: 12px; }
+    .thumb img { transform: scale(1); transition: transform .35s ease; }
+    .thumb:hover img { transform: scale(1.04); }
+
+    /* Tag pills for shifts */
+    .pills { display: inline-flex; gap: 8px; flex-wrap: wrap; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12px; padding: 6px 10px; border-radius: 999px; border: 1px dashed var(--bdr); color: var(--text); background: color-mix(in oklab, var(--panel) 85%, #000 15%); }
+    .pill .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 20%, transparent); }
+    .pill.red .dot { background: #ff6b6b; }
+    .pill.green .dot { background: #4ad6a7; }
+
+    /* Footer */
+    footer { margin: 28px 0; display: flex; align-items: center; gap: 12px; }
+    .link { color: #fff; text-decoration: none; }
+
+    /* Back button */
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--bdr); background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, #fff 10%), var(--panel)); text-decoration: none; color: var(--text); box-shadow: var(--shadow); transition: transform .2s ease, background .2s ease; }
+    .back-btn:hover { transform: translateY(-1px); }
+
+    /* Utility */
+    .muted { color: var(--muted); }
+    .right { text-align: right; }
+
+    /* Mini step box */
+    .mini-box {
+      margin: 12px 4px 8px;
+      background: color-mix(in oklab, var(--panel) 92%, #000 8%);
+      border: 1px dashed var(--bdr);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 12px 14px;
+    }
+    .mini-box .mini-hd{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-weight:700; font-size:14px;
+    }
+    .mini-box .mini-hd .hint{ color: var(--muted); font-weight:600; font-size:20px; }
+    .mini-box .mini-bd{ margin-top:10px; color: var(--text); }
+    .mini-box ol{ margin: 6px 0 0 18px; padding:0; }
+    .mini-box li{ margin: 4px 0; line-height: 1.5; }
+    .mini-toggle{
+      appearance:none; border:1px solid var(--bdr); background:transparent; color:var(--text);
+      font-weight:600; border-radius:10px; padding:6px 10px; cursor:pointer;
+    }
+    .mini-toggle:hover{ filter:saturate(110%); transform: translateY(-1px); }
+    @media (max-width:760px){ .mini-box{ padding: 10px 12px; } }
+
+    
+    .result-box {
+      margin: 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .result-box .thumb {
+      flex: 1 1 200px;
+      max-width: 260px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--bdr);
+      box-shadow: var(--shadow);
+    }
+    .result-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+      .result-line {
+      display: flex;
+      justify-content: space-between; /* 或 center */
+      gap: 12px;
+      flex-wrap: nowrap; /* 强制不换行 */
+    }
+    .result-line .thumb {
+      flex: 1 1 0;
+      max-width: 180px; /* 控制单张图宽度 */
+    }
+    .result-line img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .caption {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+  </style>
+</head>
+    
+<body>
+  <!-- Sticky Header -->
+  <header class="site">
+    <div class="site-inner">
+      <div class="logo" aria-hidden="true">P2</div>
+      <div class="brand">CS180/280A · Project 2</div>
+      <div class="grow"></div>
+      <div class="actions">
+        <button class="btn ghost" id="themeToggle" aria-label="Switch Theme">🌓 Theme</button>
+        <a class="btn primary" href="../index.html">back to main</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1 class="page-title">Fun with Filters and Frequencies!</h1>
+    <p class="lead">This project adopts various skills to play with images. Including Gaussian Blurring, differencing, binarize, sharpening, stacking, and blending the images.</span>.</p>
+    
+    <!-- P1 -->
+    <section class="panel" aria-labelledby="sec-simple">
+      <div class="panel-hd">
+        <h2 id="sec-simple">P1: Fun With Filters</h2>
+        <span class="muted">3 in total</span>
+      </div>
+      <div class="panel-bd">
+        <!-- Small step box -->
+        <div class="mini-box" id="1.1">
+          <div class="mini-hd">
+            <span>Part one</span>
+            <span class="hint">1.1</span>
+            <button class="mini-toggle" type="button" data-target="#1.1-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.1-body">
+            <ol>
+              <li>In this section I implemented the function of convolution from scratch. First, I implemented it using four for loops, which the outer two loops traversing every pixel in the target image, and inner two loops focusing on traversing the filter to multiply filter with target image. In the two for loops version, I just simply relaced the inner two for loops with the np.sum function. Also, I padded the boundary with zeros to make sure the size of img after convolustion doesn't change. Here are the results of to kinds of implementation of convolution, which are exactly the same. I applied the box filter of 9*9 to my selfies, and here are the results. 
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/selfie.png" alt="Box filter result 1">
+                      <div class="caption">selfie_origin.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/selfie_four_loops.png" alt="Box filter result 1">
+                      <div class="caption">selfie_four_loops.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/selfie_two_loops.png" alt="Box filter result 2">
+                      <div class="caption">selfie_two_loops.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>The code snippets are demonstrated as follows:
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/four_loops.png" alt="Box filter result 1">
+                      <div class="caption">four_loops</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/two_loops.png" alt="Box filter result 1">
+                      <div class="caption">two_loops</div>
+                    </div>
+                  </div>
+              </li>
+              <li>Then, I applied the standard scipy.signal.convolve2d function with the same box filter to my selfies, which results in exactly the same picture.
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/selfie_sci.png" alt="Box filter result 1">
+                      <div class="caption">selfie_sci.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>The runtime result shown below reveals that four_loops > two_loops > libversion, which is because that four_loops uses brute force computation, while two_loops uses numpy to acclerate, and the function in scipy is the most mature and efficient one. 
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/runtime.png" alt="Box filter result 1">
+                      <div class="caption">runtime.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>Finally, I changed the kernel to be [1,0,-1] and its transpose to realize the outcome of difference operators.
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/selfie_Dx.png" alt="Box filter result 1">
+                      <div class="caption">selfie_Dx.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/selfie_Dy.png" alt="Box filter result 2">
+                      <div class="caption">selfie_Dy.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>
+                To sum up, except the ones that call scipy function, all other tasks can be implemented by numpy. We can implement convolution by for loops, and by using D_x and D_y as kernel, we could get the result of finite difference of picture.
+              </li>
+            </ol>
+          </div>
+        </div>
+        
+        <!-- Small step box -->
+        <div class="mini-box" id="1.2">
+          <div class="mini-hd">
+            <span>Part one</span>
+            <span class="hint">1.2</span>
+            <button class="mini-toggle" type="button" data-target="#1.2-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.2-body">
+            <ol>
+              <li>In this section I tried to binarize the cameraman image. 
+                  <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/cameraman.png" alt="Box filter result 2">
+                      <div class="caption">cameraman.png</div>
+                    </div>
+                  </div>
+                First, I convolute the cameraman image with finite difference opterators D_x and D_y to get its partial derivative in directions of x and y. Here are the results:
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/cameraman_Dx.png" alt="Box filter result 1">
+                      <div class="caption">cameraman_Dx.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/cameraman_Dy.png" alt="Box filter result 2">
+                      <div class="caption">cameraman_Dy.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>Then, I calcutated the square root of sum of squares of partial derivatives in each pixel, and treat it as the brightness to get the magnitude image.
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/cameraman_grad_mag.png" alt="Box filter result 1">
+                      <div class="caption">cameraman_grad_mag.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>Finally, I applies a threashold to those square root of sums to serve as a classifier. The brightness below the threashold will be flattened to zero, and above the threashold will be pulled up to 255. I found setting the threashold to be 35 cound result in a satisfied outcome. This result in a clear binarized image with reduced noise.
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/cameraman_binarized.png" alt="Box filter result 1">
+                      <div class="caption">cameraman_binarized.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+
+
+
+        <!-- Small step box -->
+        <div class="mini-box" id="1.3">
+          <div class="mini-hd">
+            <span>Part one</span>
+            <span class="hint">1.3</span>
+            <button class="mini-toggle" type="button" data-target="#1.3-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.3-body">
+            <ol>
+              <li>In this section I tried to smoothering the result of binarized image. There are two ways to implement this. The first way is to gaussian blurr the image and then partial differentiate it, resulting a denoised version.
+                <div class="result-box">    
+                  <div class="thumb">
+                      <img src="media/gaussianBlurBina_two_steps.png" alt="Box filter result 1">
+                      <div class="caption">gaussianBlurBina_two_steps.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>The second way is to difference the gaussian kernel, and use this result to convolute the image. (I_x = I * G_x,  I_y = I * G_y). By the assiciative law of convolution operation, these two operations have the same result, as demonstrated by the two pictures.
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/gaussianBlurBina_one_step.png" alt="Box filter result 1">
+                      <div class="caption">gaussianBlurBina_one_step.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>  
+    </section>
+
+    <!-- P2 -->
+    <section class="panel" aria-labelledby="sec-simple">
+      <div class="panel-hd">
+        <h2 id="sec-simple">P2: Fun With Frequencies</h2>
+        <span class="muted">4 in total</span>
+      </div>
+      <div class="panel-bd">
+        <!-- Small step box -->
+        <div class="mini-box" id="2.1">
+          <div class="mini-hd">
+            <span>Part two</span>
+            <span class="hint">2.1</span>
+            <button class="mini-toggle" type="button" data-target="#2.1-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="2.1-body">
+            <ol>
+              <li>In this section I managed to sharpen the image by adding high frequencies to the image. A naive way to do this is to first extract the high frequencies out by subtracting the blurred img from the orign img, and add the result to the original image. But we can also do this by calcutate out a single kernel to convolute, resulting in the same result The single-kernel formula is [sharpen_knl = (1+alpha)*delta_knl - alpha*gaus_knl]. We can adjust the alpha to change the amount of sharpening. 
+                  <div class="result-line">
+                    <div class="thumb">
+                      <img src="media/taj.jpg" alt="Box filter result 1">
+                      <div class="caption">taj_origin.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/taj_blurred_img.png" alt="Box filter result 1">
+                      <div class="caption">taj_blurred_img.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/taj_high_freq_img.png" alt="Box filter result 1">
+                      <div class="caption">taj_high_freq_img.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/taj_unsharpMask0.png" alt="Box filter result 1">
+                      <div class="caption">taj_unsharpMask_alpha=1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/taj_unsharpMask.png" alt="Box filter result 1">
+                      <div class="caption">taj_unsharpMask_alpha=3.png</div>
+                    </div>
+                  </div>
+                  <div class="result-line">
+                  <div class="thumb">
+                      <img src="media/group_image.png" alt="Box filter result 1">
+                      <div class="caption">group_image.png.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/group_blurred_img.png" alt="Box filter result 1">
+                      <div class="caption">group_blurred_img.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/group_high_freq_img.png" alt="Box filter result 1">
+                      <div class="caption">group_high_freq_img.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/group_unsharpMask0.png" alt="Box filter result 1">
+                      <div class="caption">taj_unsharpMask_alpha=3.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/group_unsharpMask.png" alt="Box filter result 1">
+                      <div class="caption">taj_unsharpMask_alpha=10.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>Then, I pick a sharp image, blur it and then try to sharpen it again. This image looks different from the original one. The original img enhances all details including noise, while this one suppresses fine details through blurring and emphasizes only stronger, larger edges.
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/taj_unsharpMask_multi.png" alt="Box filter result 2">
+                      <div class="caption">taj_unsharpMask_multi.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+        
+        <!-- Small step box -->
+        <div class="mini-box" id="2.2">
+          <div class="mini-hd">
+            <span>Part two</span>
+            <span class="hint">2.2</span>
+            <button class="mini-toggle" type="button" data-target="#2.2-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="2.2-body">
+            <ol>
+              <li>In this section I tried to create hybird images by stacking the high frequencies of a certain pic to the low frequencies of another pic. For a low-pass filter, I used a standard 2D Gaussian filter. For a high-pass filter, I used the impulse filter minus the Gaussian filter. Firstly I showed the outcome of sample imgs. The signma for low pass filter is 4.0, for high pass filter is 7.0, and the mixing weight is 50% each.
+                  <div class="result-line">
+                    <div class="thumb">
+                      <img src="media/DerekPicture.jpg" alt="Box filter result 1">
+                      <div class="caption">DerekPicture.jpg</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/nutmeg.jpg" alt="Box filter result 1">
+                      <div class="caption">nutmeg.jpg</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/lowfreq_cat_man.png" alt="Box filter result 1">
+                      <div class="caption">lowfreq_cat_man.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/highfreq_cat_man.png" alt="Box filter result 2">
+                      <div class="caption">highfreq_cat_man.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/hybrid_cat_man.png" alt="Box filter result 1">
+                      <div class="caption">hybrid_cat_man.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>The following are the visualized frequency domain for the above results.
+                  <div class="result-line">
+                    <div class="thumb">
+                      <img src="media/fourier_man.png" alt="Box filter result 1">
+                      <div class="caption">fourier_man.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fourier_cat.png" alt="Box filter result 1">
+                      <div class="caption">fourier_cat.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fourier_lowfreq_0.png" alt="Box filter result 1">
+                      <div class="caption">fourier_lowfreq.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fourier_highfreq_0.png" alt="Box filter result 2">
+                      <div class="caption">fourier_highfreq.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fourier_hybrid_0.png" alt="Box filter result 1">
+                      <div class="caption">fourier_hybrid.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>This is my own test set. The signma for low pass filter is 3.0, for high pass filter is 4.0, and the mixing weight is 60% for low freq and 40% for high freq.
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/female.png" alt="Box filter result 1">
+                      <div class="caption">female.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/male.png" alt="Box filter result 1">
+                      <div class="caption">male.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/hybrid_male_female.png" alt="Box filter result 1">
+                      <div class="caption">hybrid_male_female.png</div>
+                    </div>
+                  </div>
+              <li>The following are the result from another set of pictures. The signma for low pass filter is 3.0, for high pass filter is 7.0, and the mixing weight is 45% for low freq and 55% for high freq.
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/avril.png" alt="Box filter result 1">
+                      <div class="caption">Avril.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/taylor.png" alt="Box filter result 1">
+                      <div class="caption">Taylor.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/hybrid_avril_taylor.png" alt="Box filter result 1">
+                      <div class="caption">hybrid_avril_taylor.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+
+
+
+        <!-- Small step box -->
+        <div class="mini-box" id="2.3">
+          <div class="mini-hd">
+            <span>Part one</span>
+            <span class="hint">2.3 & 2.4</span>
+            <button class="mini-toggle" type="button" data-target="#2.3-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="2.3-body">
+            <ol>
+              <li>In this section I tried to create a laplacian stack of pictures and a gaussian stack of a mask. By multiplying and summing them together, I got a blended picture.
+                  <div class="result-line">
+                    <div class="thumb">
+                      <img src="media/LA0.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LA1.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LA2.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LA3.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LA4.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LA5.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LA6.png" alt="Box filter result 1">
+                    </div>
+                  </div>
+                  <div class="result-line">
+                    <div class="thumb">
+                      <img src="media/LB0.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LB1.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LB2.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LB3.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LB4.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LB5.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/LB6.png" alt="Box filter result 1">
+                    </div>
+                  </div>
+                  <div class="result-line">
+                    <div class="thumb">
+                      <img src="media/blend0.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/blend1.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/blend2.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/blend3.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/blend4.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/blend5.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/blend6.png" alt="Box filter result 1">
+                    </div>
+                  </div>
+                    The successfully blended picture is shown below:
+                    <div class="thumb">
+                      <img src="media/blend_final.png" alt="Box filter result 1">
+                    </div>
+              </li>
+              <li>Here is an additional example:
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/oneDollar.png" alt="Box filter result 1">
+                    </div>    
+                    <div class="thumb">
+                      <img src="media/oneHundredDollars.png" alt="Box filter result 1">
+                    </div>               
+                    <div class="thumb">
+                      <img src="media/blend_final2.png" alt="Box filter result 1">
+                    </div>
+                </div>
+              </li>
+              <li>Here, I applied the irregular mask to reproduce the result in the paper:
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/eye.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/hand.png" alt="Box filter result 1">
+                    </div>
+                    <div class="thumb">
+                      <img src="media/blend_final3.png" alt="Box filter result 1">
+                    </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+    </section>
+  </main>
+        
+  <script>
+    // Theme toggle with localStorage
+    const root = document.documentElement;
+    const key = 'pg-theme';
+    const btn = document.getElementById('themeToggle');
+    const saved = localStorage.getItem(key);
+    if(saved){ document.documentElement.setAttribute('data-theme', saved); }
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(key, next);
+    });
+    // Tiny toggle for mini-box
+    document.querySelectorAll('.mini-toggle').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const sel = btn.getAttribute('data-target');
+        const box = document.querySelector(sel);
+        const hidden = box.style.display === 'none';
+        box.style.display = hidden ? '' : 'none';
+        btn.textContent = hidden ? 'Hide' : 'Show';
+      });
+    });
+  </script>
+        
+</body>
