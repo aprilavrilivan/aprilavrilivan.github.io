@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fun with filters and frequencies</title>
-  <meta name="description" content="CS180/280A Project 1: Colorizing the Prokudin‑Gorskii photo collection" />
+  <title>(Auto)stitching and Photo Mosaics</title>
+  <meta name="description" content="CS180/280A Project 3: (Auto)stitching and Photo Mosaics" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -216,12 +216,12 @@
 
   <main class="wrap">
     <h1 class="page-title">Fun with Filters and Frequencies!</h1>
-    <p class="lead">This project adopts various skills to play with images. Including Gaussian Blurring, differencing, binarize, sharpening, stacking, and blending the images.</span>.</p>
+    <p class="lead">This project aims to warp and mosaic pictures using various tools</span>.</p>
     
     <!-- P1 -->
     <section class="panel" aria-labelledby="sec-simple">
       <div class="panel-hd">
-        <h2 id="sec-simple">P1: Fun With Filters</h2>
+        <h2 id="sec-simple">Part A: IMAGE WARPING and MOSAICING</h2>
         <span class="muted">3 in total</span>
       </div>
       <div class="panel-bd">
@@ -326,10 +326,14 @@
                   </div>
               </li>
               <li>Then, I calcutated the square root of sum of squares of partial derivatives in each pixel, and treat it as the brightness to get the magnitude image.
-                  <div class="result-box">
+                  <div class="result-box">    
                     <div class="thumb">
-                      <img src="media/cameraman_grad_mag.png" alt="Box filter result 1">
-                      <div class="caption">cameraman_grad_mag.png</div>
+                      <img src="media/cameraman_Dx.png" alt="Box filter result 1">
+                      <div class="caption">cameraman_Dx.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/cameraman_Dy.png" alt="Box filter result 2">
+                      <div class="caption">cameraman_Dy.png</div>
                     </div>
                   </div>
               </li>
@@ -355,306 +359,53 @@
           </div>
           <div class="mini-bd" id="1.3-body">
             <ol>
-              <li>In this section I tried to smoothering the result of binarized image. There are two ways to implement this. The first way is to gaussian blurr the image and then partial differentiate it, resulting a denoised version.
+              <li>In this section I created a mosaic of three pictures of my room, as shown below.Here is a detailed breakdown of my steps.
                 <div class="result-box">    
-                  <div class="thumb">
-                      <img src="media/gaussianBlurBina_two_steps.png" alt="Box filter result 1">
-                      <div class="caption">gaussianBlurBina_two_steps.png</div>
+                    <div class="thumb">
+                      <img src="media/2.png" alt="Box filter result 1">
+                      <div class="caption">original_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/3.png" alt="Box filter result 2">
+                      <div class="caption">original_center.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/4.png" alt="Box filter result 2">
+                      <div class="caption">original_right.png</div>
                     </div>
                   </div>
               </li>
-              <li>The second way is to difference the gaussian kernel, and use this result to convolute the image. (I_x = I * G_x,  I_y = I * G_y). By the assiciative law of convolution operation, these two operations have the same result, as demonstrated by the two pictures.
-                  <div class="result-box">
+              <li>Firstly I locate the center img to a larger background that could contain the 3 imgs. Then I warped the original left and right imgs towards it.
+                <div class="result-box">    
                     <div class="thumb">
-                      <img src="media/gaussianBlurBina_one_step.png" alt="Box filter result 1">
-                      <div class="caption">gaussianBlurBina_one_step.png</div>
+                      <img src="media/left.png" alt="Box filter result 1">
+                      <div class="caption">warped_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/center.png" alt="Box filter result 2">
+                      <div class="caption">adjusted_center.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/right.png" alt="Box filter result 2">
+                      <div class="caption">warped_right.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>Then I first blended the right img with the center img using a binary center seam and a laplacian pyramid of 4 levels. This results the intermediate outcome. Finally I blended the intermediate outcome with the left img, resulting in a full-scaled panorama.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/intermediate.png" alt="Box filter result 1">
+                      <div class="caption">intermediate.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/blended_final.png" alt="Box filter result 2">
+                      <div class="caption">blended_final.png</div>
                     </div>
                   </div>
               </li>
             </ol>
           </div>
         </div>  
-    </section>
-
-    <!-- P2 -->
-    <section class="panel" aria-labelledby="sec-simple">
-      <div class="panel-hd">
-        <h2 id="sec-simple">P2: Fun With Frequencies</h2>
-        <span class="muted">4 in total</span>
-      </div>
-      <div class="panel-bd">
-        <!-- Small step box -->
-        <div class="mini-box" id="2.1">
-          <div class="mini-hd">
-            <span>Part two</span>
-            <span class="hint">2.1</span>
-            <button class="mini-toggle" type="button" data-target="#2.1-bo">Hide</button>
-          </div>
-          <div class="mini-bd" id="2.1-body">
-            <ol>
-              <li>In this section I managed to sharpen the image by adding high frequencies to the image. A naive way to do this is to first extract the high frequencies out by subtracting the blurred img from the orign img, and add the result to the original image. But we can also do this by calcutate out a single kernel to convolute, resulting in the same result The single-kernel formula is [sharpen_knl = (1+alpha)*delta_knl - alpha*gaus_knl]. We can adjust the alpha to change the amount of sharpening. 
-                  <div class="result-line">
-                    <div class="thumb">
-                      <img src="media/taj.jpg" alt="Box filter result 1">
-                      <div class="caption">taj_origin.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/taj_blurred_img.png" alt="Box filter result 1">
-                      <div class="caption">taj_blurred_img.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/taj_high_freq_img.png" alt="Box filter result 1">
-                      <div class="caption">taj_high_freq_img.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/taj_unsharpMask0.png" alt="Box filter result 1">
-                      <div class="caption">taj_unsharpMask_alpha=1.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/taj_unsharpMask.png" alt="Box filter result 1">
-                      <div class="caption">taj_unsharpMask_alpha=3.png</div>
-                    </div>
-                  </div>
-                  <div class="result-line">
-                  <div class="thumb">
-                      <img src="media/group_image.png" alt="Box filter result 1">
-                      <div class="caption">group_image.png.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/group_blurred_img.png" alt="Box filter result 1">
-                      <div class="caption">group_blurred_img.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/group_high_freq_img.png" alt="Box filter result 1">
-                      <div class="caption">group_high_freq_img.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/group_unsharpMask0.png" alt="Box filter result 1">
-                      <div class="caption">taj_unsharpMask_alpha=3.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/group_unsharpMask.png" alt="Box filter result 1">
-                      <div class="caption">taj_unsharpMask_alpha=10.png</div>
-                    </div>
-                  </div>
-              </li>
-              <li>Then, I pick a sharp image, blur it and then try to sharpen it again. This image looks different from the original one. The original img enhances all details including noise, while this one suppresses fine details through blurring and emphasizes only stronger, larger edges.
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/taj_unsharpMask_multi.png" alt="Box filter result 2">
-                      <div class="caption">taj_unsharpMask_multi.png</div>
-                    </div>
-                  </div>
-              </li>
-            </ol>
-          </div>
-        </div>
-        
-        <!-- Small step box -->
-        <div class="mini-box" id="2.2">
-          <div class="mini-hd">
-            <span>Part two</span>
-            <span class="hint">2.2</span>
-            <button class="mini-toggle" type="button" data-target="#2.2-bo">Hide</button>
-          </div>
-          <div class="mini-bd" id="2.2-body">
-            <ol>
-              <li>In this section I tried to create hybird images by stacking the high frequencies of a certain pic to the low frequencies of another pic. For a low-pass filter, I used a standard 2D Gaussian filter. For a high-pass filter, I used the impulse filter minus the Gaussian filter. Firstly I showed the outcome of sample imgs. The signma for low pass filter is 4.0, for high pass filter is 7.0, and the mixing weight is 50% each.
-                  <div class="result-line">
-                    <div class="thumb">
-                      <img src="media/DerekPicture.jpg" alt="Box filter result 1">
-                      <div class="caption">DerekPicture.jpg</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/nutmeg.jpg" alt="Box filter result 1">
-                      <div class="caption">nutmeg.jpg</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/lowfreq_cat_man.png" alt="Box filter result 1">
-                      <div class="caption">lowfreq_cat_man.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/highfreq_cat_man.png" alt="Box filter result 2">
-                      <div class="caption">highfreq_cat_man.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/hybrid_cat_man.png" alt="Box filter result 1">
-                      <div class="caption">hybrid_cat_man.png</div>
-                    </div>
-                  </div>
-              </li>
-              <li>The following are the visualized frequency domain for the above results.
-                  <div class="result-line">
-                    <div class="thumb">
-                      <img src="media/fourier_man.png" alt="Box filter result 1">
-                      <div class="caption">fourier_man.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/fourier_cat.png" alt="Box filter result 1">
-                      <div class="caption">fourier_cat.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/fourier_lowfreq_0.png" alt="Box filter result 1">
-                      <div class="caption">fourier_lowfreq.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/fourier_highfreq_0.png" alt="Box filter result 2">
-                      <div class="caption">fourier_highfreq.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/fourier_hybrid_0.png" alt="Box filter result 1">
-                      <div class="caption">fourier_hybrid.png</div>
-                    </div>
-                  </div>
-              </li>
-              <li>This is my own test set. The signma for low pass filter is 3.0, for high pass filter is 4.0, and the mixing weight is 60% for low freq and 40% for high freq.
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/female.png" alt="Box filter result 1">
-                      <div class="caption">female.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/male.png" alt="Box filter result 1">
-                      <div class="caption">male.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/hybrid_male_female.png" alt="Box filter result 1">
-                      <div class="caption">hybrid_male_female.png</div>
-                    </div>
-                  </div>
-              <li>The following are the result from another set of pictures. The signma for low pass filter is 3.0, for high pass filter is 7.0, and the mixing weight is 45% for low freq and 55% for high freq.
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/avril.png" alt="Box filter result 1">
-                      <div class="caption">Avril.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/taylor.png" alt="Box filter result 1">
-                      <div class="caption">Taylor.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/hybrid_avril_taylor.png" alt="Box filter result 1">
-                      <div class="caption">hybrid_avril_taylor.png</div>
-                    </div>
-                  </div>
-              </li>
-            </ol>
-          </div>
-
-
-
-        <!-- Small step box -->
-        <div class="mini-box" id="2.3">
-          <div class="mini-hd">
-            <span>Part one</span>
-            <span class="hint">2.3 & 2.4</span>
-            <button class="mini-toggle" type="button" data-target="#2.3-bo">Hide</button>
-          </div>
-          <div class="mini-bd" id="2.3-body">
-            <ol>
-              <li>In this section I tried to create a laplacian stack of pictures and a gaussian stack of a mask. By multiplying and summing them together, I got a blended picture.
-                  <div class="result-line">
-                    <div class="thumb">
-                      <img src="media/LA0.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LA1.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LA2.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LA3.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LA4.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LA5.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LA6.png" alt="Box filter result 1">
-                    </div>
-                  </div>
-                  <div class="result-line">
-                    <div class="thumb">
-                      <img src="media/LB0.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LB1.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LB2.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LB3.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LB4.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LB5.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/LB6.png" alt="Box filter result 1">
-                    </div>
-                  </div>
-                  <div class="result-line">
-                    <div class="thumb">
-                      <img src="media/blend0.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/blend1.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/blend2.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/blend3.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/blend4.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/blend5.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/blend6.png" alt="Box filter result 1">
-                    </div>
-                  </div>
-                    The successfully blended picture is shown below:
-                    <div class="thumb">
-                      <img src="media/blend_final.png" alt="Box filter result 1">
-                    </div>
-              </li>
-              <li>Here is an additional example:
-                <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/oneDollar.png" alt="Box filter result 1">
-                    </div>    
-                    <div class="thumb">
-                      <img src="media/oneHundredDollars.png" alt="Box filter result 1">
-                    </div>               
-                    <div class="thumb">
-                      <img src="media/blend_final2.png" alt="Box filter result 1">
-                    </div>
-                </div>
-              </li>
-              <li>Here, I applied the irregular mask to reproduce the result in the paper:
-                <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/eye.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/hand.png" alt="Box filter result 1">
-                    </div>
-                    <div class="thumb">
-                      <img src="media/blend_final3.png" alt="Box filter result 1">
-                    </div>
-                </div>
-              </li>
-            </ol>
-          </div>
     </section>
   </main>
         
