@@ -228,70 +228,43 @@
         <!-- Small step box -->
         <div class="mini-box" id="1.1">
           <div class="mini-hd">
-            <span>Part one</span>
+            <span>Part A</span>
             <span class="hint">1.1</span>
             <button class="mini-toggle" type="button" data-target="#1.1-bo">Hide</button>
           </div>
           <div class="mini-bd" id="1.1-body">
             <ol>
-              <li>In this section I implemented the function of convolution from scratch. First, I implemented it using four for loops, which the outer two loops traversing every pixel in the target image, and inner two loops focusing on traversing the filter to multiply filter with target image. In the two for loops version, I just simply relaced the inner two for loops with the np.sum function. Also, I padded the boundary with zeros to make sure the size of img after convolustion doesn't change. Here are the results of to kinds of implementation of convolution, which are exactly the same. I applied the box filter of 9*9 to my selfies, and here are the results. 
+              <li>In this section I demonstrated 2 sets of images with projective transformations between them (fixed center of projection, rotate camera). In section 1.3 I'use them for constructing a panorama
                   <div class="result-box">
                     <div class="thumb">
-                      <img src="media/selfie.png" alt="Box filter result 1">
-                      <div class="caption">selfie_origin.png</div>
+                      <img src="media/2.jpeg" alt="Box filter result 1">
+                      <div class="caption">room1.png</div>
                     </div>
                     <div class="thumb">
-                      <img src="media/selfie_four_loops.png" alt="Box filter result 1">
-                      <div class="caption">selfie_four_loops.png</div>
+                      <img src="media/3.jpeg" alt="Box filter result 1">
+                      <div class="caption">room2.png</div>
                     </div>
                     <div class="thumb">
-                      <img src="media/selfie_two_loops.png" alt="Box filter result 2">
-                      <div class="caption">selfie_two_loops.png</div>
-                    </div>
-                  </div>
-              </li>
-              <li>The code snippets are demonstrated as follows:
-                <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/four_loops.png" alt="Box filter result 1">
-                      <div class="caption">four_loops</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/two_loops.png" alt="Box filter result 1">
-                      <div class="caption">two_loops</div>
-                    </div>
-                  </div>
-              </li>
-              <li>Then, I applied the standard scipy.signal.convolve2d function with the same box filter to my selfies, which results in exactly the same picture.
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/selfie_sci.png" alt="Box filter result 1">
-                      <div class="caption">selfie_sci.png</div>
-                    </div>
-                  </div>
-              </li>
-              <li>The runtime result shown below reveals that four_loops > two_loops > libversion, which is because that four_loops uses brute force computation, while two_loops uses numpy to acclerate, and the function in scipy is the most mature and efficient one. 
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/runtime.png" alt="Box filter result 1">
-                      <div class="caption">runtime.png</div>
-                    </div>
-                  </div>
-              </li>
-              <li>Finally, I changed the kernel to be [1,0,-1] and its transpose to realize the outcome of difference operators.
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/selfie_Dx.png" alt="Box filter result 1">
-                      <div class="caption">selfie_Dx.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/selfie_Dy.png" alt="Box filter result 2">
-                      <div class="caption">selfie_Dy.png</div>
+                      <img src="media/4.jpeg" alt="Box filter result 2">
+                      <div class="caption">room3.png</div>
                     </div>
                   </div>
               </li>
               <li>
-                To sum up, except the ones that call scipy function, all other tasks can be implemented by numpy. We can implement convolution by for loops, and by using D_x and D_y as kernel, we could get the result of finite difference of picture.
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/one.jpeg" alt="Box filter result 1">
+                      <div class="caption">library1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/two.jpeg" alt="Box filter result 1">
+                      <div class="caption">library2.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/five.jpeg" alt="Box filter result 1">
+                      <div class="caption">library3.png</div>
+                    </div>
+                  </div>
               </li>
             </ol>
           </div>
