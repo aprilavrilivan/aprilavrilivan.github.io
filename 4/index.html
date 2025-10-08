@@ -277,32 +277,39 @@
           </div>
           <div class="mini-bd" id="1.2-body">
             <ol>
-              <li>In this section I'll explain the way to do homography transformation. We define the projective matrix to be H. Then a location of pixel (vector p) could be transformed by multiplying H. [p'=H@p]. By doing this over all the pixels in the target image, the target image will be warped. We can use least square solution to solve out the projective matrix between two prospective transformed images. We know p=[x,y], and p'=[x',y']. The projective matrix has entries h11-h3, with 8 dofs. Then the relationship between p' and p canbe calculated as
+              <li>
+                <p>In this section I'll explain the way to do homography transformation. We define the projective matrix to be H. 
+                  Then a location of pixel (vector p) could be transformed by multiplying H. [p'=H@p]. By doing this over all the pixels 
+                  in the target image, the target image will be warped. We can use least square solution to solve out the projective matrix 
+                  between two prospective transformed images. We know p=[x,y], and p'=[x',y']. The projective matrix has entries h11-h3, 
+                  with 8 dofs. Then the relationship between p' and p canbe calculated as</p>
                   <div class="result-box">    
                     <div class="thumb">
                       <img src="media/formula1.png" alt="Box filter result 1">
                     </div>
                   </div>
-                multiplying the denominator on both sides for the two equations, we get:
+                <p>multiplying the denominator on both sides for the two equations, we get:</p>
                 <div class="result-box">    
                     <div class="thumb">
                       <img src="media/formula2.png" alt="Box filter result 1">
                     </div>
-                <br>Then, we could rewrite the above equation to the form of A@h=0, where A is:
+                <p>Then, we could rewrite the above equation to the form of A@h=0, where A is:</p>
                 <div class="result-box">    
                   <div class="thumb">
                     <img src="media/formula4.png" alt="Box filter result 1">
                   </div>
                 </div>
-                <br>And h is the squeezed version of those nine entries:
+                <p>And h is the squeezed version of those nine entries:</p>
                 <div class="result-box">    
                   <div class="thumb">
                     <img src="media/formula3.png" alt="Box filter result 1">
                   </div>
                 </div>
-                We need at least 8 equations to solve the 8 dofs of the projective matrix. This could be done by collecting more than four [p,p'] pairs. To solve the final H out, we could first normalized the positions of the pixels, then do SVD decomposition to solve out the best H， and finally denormalize the H.
+                <p>We need at least 8 equations to solve the 8 dofs of the projective matrix. This could be done by collecting more
+                  than four [p,p'] pairs. To solve the final H out, we could first normalized the positions of the pixels, then 
+                  do SVD decomposition to solve out the best H， and finally denormalize the H.</p>
               </li>
-              <li>Here is an example. Supposed we want to warp example 1 to example 2:
+              <li><p>Here is an example. Supposed we want to warp example 1 to example 2:</p>
                   <div class="result-box">
                     <div class="thumb">
                       <img src="media/ex1.jpeg" alt="Box filter result 1">
@@ -313,20 +320,34 @@
                       <div class="caption">example2.png</div>
                     </div>
                   </div>
-                The I selected 4 corners on each of the rectangles, with the following positions:
+                  <p>Then I selected 4 corners on each of the rectangles, with the following positions:</p>
                   <div class="result-box">
                     <div class="thumb">
                       <img src="media/positions.png" alt="Box filter result 1">
                       <div class="caption">positions.png</div>
                     </div>
                   </div>
-                Using these positions together with normalization, we get the matrix A:
+                <p>Using these positions together with normalization, we get the matrix A:</p>
                 <div class="result-box">
                     <div class="thumb">
-                      <img src="media/positions.png" alt="Box filter result 1">
-                      <div class="caption">positions.png</div>
+                      <img src="media/A.png" alt="Box filter result 1">
+                      <div class="caption">matrix A</div>
                     </div>
                   </div>
+                <p>And solving using SVD and denormalize the h33 to be 1, we get the optimal H matrix:</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/H.png" alt="Box filter result 1">
+                      <div class="caption">Matrix H</div>
+                    </div>
+                  </div>
+                <p>This could exactly transfer the first example to the second one.</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/solution.png" alt="Box filter result 1">
+                      <div class="caption"></div>
+                    </div>
+                  </div> 
               </li>
             </ol>
           </div>
