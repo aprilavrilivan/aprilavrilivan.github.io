@@ -288,19 +288,45 @@
                     <div class="thumb">
                       <img src="media/formula2.png" alt="Box filter result 1">
                     </div>
-                Then, we could rewrite the above equation to the form of A@h=0, where A is:
+                <br>Then, we could rewrite the above equation to the form of A@h=0, where A is:
                 <div class="result-box">    
                   <div class="thumb">
                     <img src="media/formula4.png" alt="Box filter result 1">
                   </div>
                 </div>
-                And h is the squeezed version of those nine entries:
+                <br>And h is the squeezed version of those nine entries:
                 <div class="result-box">    
                   <div class="thumb">
                     <img src="media/formula3.png" alt="Box filter result 1">
                   </div>
                 </div>
                 We need at least 8 equations to solve the 8 dofs of the projective matrix. This could be done by collecting more than four [p,p'] pairs. To solve the final H out, we could first normalized the positions of the pixels, then do SVD decomposition to solve out the best H， and finally denormalize the H.
+              </li>
+              <li>Here is an example. Supposed we want to warp example 1 to example 2:
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/ex1.jpeg" alt="Box filter result 1">
+                      <div class="caption">example1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/ex2.jpeg" alt="Box filter result 1">
+                      <div class="caption">example2.png</div>
+                    </div>
+                  </div>
+                The I selected 4 corners on each of the rectangles, with the following positions:
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/positions.png" alt="Box filter result 1">
+                      <div class="caption">positions.png</div>
+                    </div>
+                  </div>
+                Using these positions together with normalization, we get the matrix A:
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/positions.png" alt="Box filter result 1">
+                      <div class="caption">positions.png</div>
+                    </div>
+                  </div>
               </li>
             </ol>
           </div>
