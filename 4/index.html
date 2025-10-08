@@ -277,44 +277,30 @@
           </div>
           <div class="mini-bd" id="1.2-body">
             <ol>
-              <li>In this section I'll explain the way to do homography transformation. We define the projective matrix to be H. Then a location of pixel (vector p) could be transformed by multiplying H. [p'=H@p]. By doing this over all the pixels in the target image, the target image will be warped. We can use least square solution to solve out the projective matrix between two prospective transformed images. The procedure is as follows:
+              <li>In this section I'll explain the way to do homography transformation. We define the projective matrix to be H. Then a location of pixel (vector p) could be transformed by multiplying H. [p'=H@p]. By doing this over all the pixels in the target image, the target image will be warped. We can use least square solution to solve out the projective matrix between two prospective transformed images. We know p=[x,y], and p'=[x',y']. The projective matrix has entries h11-h3, with 8 dofs. Then the relationship between p' and p canbe calculated as
                   <div class="result-box">    
                     <div class="thumb">
-                      <img src="media/cameraman.png" alt="Box filter result 2">
-                      <div class="caption">cameraman.png</div>
+                      <img src="media/formula1.png" alt="Box filter result 1">
                     </div>
                   </div>
-                First, I convolute the cameraman image with finite difference opterators D_x and D_y to get its partial derivative in directions of x and y. Here are the results:
+                multiplying the denominator on both sides for the two equations, we get:
                 <div class="result-box">    
                     <div class="thumb">
-                      <img src="media/cameraman_Dx.png" alt="Box filter result 1">
-                      <div class="caption">cameraman_Dx.png</div>
+                      <img src="media/formula2.png" alt="Box filter result 1">
                     </div>
-                    <div class="thumb">
-                      <img src="media/cameraman_Dy.png" alt="Box filter result 2">
-                      <div class="caption">cameraman_Dy.png</div>
-                    </div>
+                Then, we could rewrite the above equation to the form of A@h=0, where A is:
+                <div class="result-box">    
+                  <div class="thumb">
+                    <img src="media/formula4.png" alt="Box filter result 1">
                   </div>
-              </li>
-              <li>Then, I calcutated the square root of sum of squares of partial derivatives in each pixel, and treat it as the brightness to get the magnitude image.
-                  <div class="result-box">    
-                    <div class="thumb">
-                      <img src="media/cameraman_Dx.png" alt="Box filter result 1">
-                      <div class="caption">cameraman_Dx.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/cameraman_Dy.png" alt="Box filter result 2">
-                      <div class="caption">cameraman_Dy.png</div>
-                    </div>
+                </div>
+                And h is the squeezed version of those nine entries:
+                <div class="result-box">    
+                  <div class="thumb">
+                    <img src="media/formula3.png" alt="Box filter result 1">
                   </div>
-              </li>
-              <li>Finally, I applies a threashold to those square root of sums to serve as a classifier. The brightness below the threashold will be flattened to zero, and above the threashold will be pulled up to 255. I found setting the threashold to be 35 cound result in a satisfied outcome. This result in a clear binarized image with reduced noise.
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/cameraman_binarized.png" alt="Box filter result 1">
-                      <div class="caption">cameraman_binarized.png</div>
-                    </div>
-                  </div>
+                </div>
+                We need at least 8 equations to solve the 8 dofs of the projective matrix. This could be done by collecting more than four [p,p'] pairs. To solve the final H out, we could first normalized the positions of the pixels, then do SVD decomposition to solve out the best H， and finally denormalize the H.
               </li>
             </ol>
           </div>
