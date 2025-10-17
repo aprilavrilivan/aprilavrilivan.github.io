@@ -579,6 +579,362 @@
           </div>
         </div>  
     </section>
+    <!---------------- P2 ----------->
+    <section class="panel" aria-labelledby="sec-simple">
+      <div class="panel-hd">
+        <h2 id="sec-simple">Part B: FEATURE MATCHING for AUTOSTITCHING</h2>
+        <span class="muted">4 sections in total</span>
+      </div>
+      <div class="panel-bd">
+        <!-- Small step box -->
+        <div class="mini-box" id="2.1">
+          <div class="mini-hd">
+            <span>Part A</span>
+            <span class="hint">2.1</span>
+            <button class="mini-toggle" type="button" data-target="#2.1-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="2.1-body">
+            <ol>
+              <li>In this section I implemented the Harris Corner detector to the room picture mentioned above
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/2.jpeg" alt="Box filter result 1">
+                      <div class="caption">room1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/3.jpeg" alt="Box filter result 1">
+                      <div class="caption">room2.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/4.jpeg" alt="Box filter result 2">
+                      <div class="caption">room3.png</div>
+                    </div>
+                  </div>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/one.jpeg" alt="Box filter result 1">
+                      <div class="caption">library1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/two.jpeg" alt="Box filter result 1">
+                      <div class="caption">library2.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/five.jpeg" alt="Box filter result 1">
+                      <div class="caption">library3.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+        
+        <!-- Small step box -->
+        <div class="mini-box" id="1.2">
+          <div class="mini-hd">
+            <span>Part A</span>
+            <span class="hint">1.2</span>
+            <button class="mini-toggle" type="button" data-target="#1.2-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.2-body">
+            <ol>
+              <li>
+                <p>In this section I'll explain the way to do homography transformation. We define the projective matrix to be H. 
+                  Then a location of pixel (vector p) could be transformed by multiplying H. [p'=H@p]. By doing this over all the pixels 
+                  in the target image, the target image will be warped. We can use least square solution to solve out the projective matrix 
+                  between two prospective transformed images. We know p=[x,y], and p'=[x',y']. The projective matrix has entries h11-h3, 
+                  with 8 dofs. Then the relationship between p' and p canbe calculated as</p>
+                  <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/formula1.png" alt="Box filter result 1">
+                    </div>
+                  </div>
+                <p>multiplying the denominator on both sides for the two equations, we get:</p>
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/formula2.png" alt="Box filter result 1">
+                    </div>
+                </div>
+                <p>Then, we could rewrite the above equation to the form of A@h=0, where A is:</p>
+                <div class="result-box">    
+                  <div class="thumb">
+                    <img src="media/formula4.png" alt="Box filter result 1">
+                  </div>
+                </div>
+                <p>And h is the squeezed version of those nine entries:</p>
+                <div class="result-box">    
+                  <div class="thumb">
+                    <img src="media/formula3.png" alt="Box filter result 1">
+                  </div>
+                </div>
+                <p>We need at least 8 equations to solve the 8 dofs of the projective matrix. This could be done by collecting more
+                  than four [p,p'] pairs. To solve the final H out, we could first normalized the positions of the pixels, then 
+                  do SVD decomposition to solve out the best H， and finally denormalize the H.</p>
+              </li>
+              <li><p>Here is an example. Supposed we want to warp example 1 to example 2:</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/ex1.jpeg" alt="Box filter result 1">
+                      <div class="caption">example1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/ex2.jpeg" alt="Box filter result 1">
+                      <div class="caption">example2.png</div>
+                    </div>
+                  </div>
+                  <p>Then I selected 4 corners on each of the rectangles, with the following positions:</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/positions.png" alt="Box filter result 1">
+                      <div class="caption">positions.png</div>
+                    </div>
+                  </div>
+                <p>Using these positions together with normalization, we get the matrix A:</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/A.png" alt="Box filter result 1">
+                      <div class="caption">matrix A</div>
+                    </div>
+                  </div>
+                <p>And solving using SVD and denormalize the h33 to be 1, we get the optimal H matrix:</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/H.png" alt="Box filter result 1">
+                      <div class="caption">Matrix H</div>
+                    </div>
+                  </div>
+                <p>This could exactly transfer the first example to the second one.</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/solution.png" alt="Box filter result 1">
+                      <div class="caption"></div>
+                    </div>
+                  </div> 
+              </li>
+            </ol>
+          </div>
+
+
+        <!-- Small step box -->
+        <div class="mini-box" id="1.3">
+          <div class="mini-hd">
+            <span>Part A</span>
+            <span class="hint">1.3</span>
+            <button class="mini-toggle" type="button" data-target="#1.3-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.3-body">
+            <ol>
+              <li><p>In this section I compared two inverse warping methods: NearestNeighbour and Bilinear.
+                    Both methods seeks pixels to be extracted from the source image, according to the position of pixels from 
+                    the demanding image multiplied by the projective matrix. The difference is that NearestNeighbor Interpolation rounds
+                    coordinates to the nearest pixel value, while Bilinear Interpolation uses
+                    weighted average of four neighboring pixels. Here I listed two sets of example images.</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/1111.jpeg" alt="Box filter result 1">
+                      <div class="caption">source1</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/reference.jpeg" alt="Box filter result 1">
+                      <div class="caption">reference1.png</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/NN.png" alt="Box filter result 2">
+                      <div class="caption">NearestNeighbour</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/BL.png" alt="Box filter result 1">
+                      <div class="caption">Bilinear</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/zoom1.png" alt="Box filter result 1">
+                      <div class="caption">Detailed NearestNeighbour</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/zoom2.png" alt="Box filter result 1">
+                      <div class="caption">Detailed Bilinear</div>
+                    </div>
+                  </div>
+                <p>Generally, after evaluating, the NearestNeighbour method runs faster that Bilinear, since for every pixel, it doens't have to do the 
+                average calculation. But as a result, its outcome will be more coarse</p>
+                <p>The following is the second set of pictures</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/2222.jpeg" alt="Box filter result 1">
+                      <div class="caption">source2</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/reference.jpeg" alt="Box filter result 1">
+                      <div class="caption">reference2.png</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/NN2.png" alt="Box filter result 2">
+                      <div class="caption">NearestNeighbour</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/BL2.png" alt="Box filter result 1">
+                      <div class="caption">Bilinear</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/zoom3.png" alt="Box filter result 1">
+                      <div class="caption">Detailed NearestNeighbour</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/zoom4.png" alt="Box filter result 1">
+                      <div class="caption">Detailed Bilinear</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+          
+        <!-- Small step box -->
+        <div class="mini-box" id="1.4">
+          <div class="mini-hd">
+            <span>Part A</span>
+            <span class="hint">1.4</span>
+            <button class="mini-toggle" type="button" data-target="#1.4-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.4-body">
+            <ol>
+              <li>In this section I created a mosaic of three pictures of my room, as shown below.Here is a detailed breakdown of my steps.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/2.jpeg" alt="Box filter result 1">
+                      <div class="caption">original_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/3.jpeg" alt="Box filter result 2">
+                      <div class="caption">original_center.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/4.jpeg" alt="Box filter result 2">
+                      <div class="caption">original_right.png</div>
+                    </div>
+                  </div>
+              Firstly I locate the center img to a larger background that could contain the 3 imgs. Then I warped the original left and right imgs towards it.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/left.png" alt="Box filter result 1">
+                      <div class="caption">warped_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/center.png" alt="Box filter result 2">
+                      <div class="caption">adjusted_center.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/right.png" alt="Box filter result 2">
+                      <div class="caption">warped_right.png</div>
+                    </div>
+                  </div>
+                When using weighted average blending method like I did to create the oraple in the previous project, there'll be seemigly edge artifactes as shown below. So using the binary center seam with distance transform togerther with laplacian stack appears to be a better solution.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/weighted average.png" alt="Box filter result 1">
+                      <div class="caption">weighted average.png</div>
+                    </div>
+                  </div>
+                  Then I first blended the right img with the center img using a binary center seam and a laplacian pyramid of 4 levels. This results the intermediate outcome. Finally I blended the intermediate outcome with the left img, resulting in a full-scaled panorama.
+                <div class="result-box">    
+                    <div class="thumb large-box">
+                      <img src="media/intermediate.png" alt="Box filter result 1">
+                      <div class="caption">intermediate.png</div>
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/blend_final.png" alt="Box filter result 2">
+                      <div class="caption">blend_final.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>In this section I created a mosaic of three pictures of a library, as shown below. Additionally, I used a reference rectangular draw by myself. Here is a detailed breakdown of my steps.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/one.jpeg" alt="Box filter result 1">
+                      <div class="caption">original_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/two.jpeg" alt="Box filter result 2">
+                      <div class="caption">original_center.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/five.jpeg" alt="Box filter result 2">
+                      <div class="caption">original_right.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/reference1.jpeg" alt="Box filter result 2">
+                      <div class="caption">reference.png</div>
+                    </div>
+                  </div>
+              Firstly I warped the window of the center img to the black rectangular drawn as the reference. Then I warped the original left and right imgs using the center img as reference. The results are shown below.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/11.png" alt="Box filter result 1">
+                      <div class="caption">warped_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/22.png" alt="Box filter result 2">
+                      <div class="caption">adjusted_center.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/44.png" alt="Box filter result 2">
+                      <div class="caption">warped_right.png</div>
+                    </div>
+                  </div>
+                  The blending procedure is just the same as above. And the following are the final outcome.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/scene.png" alt="Box filter result 1">
+                      <div class="caption">outcome.png</div>
+                    </div>
+                </div>
+                <div class="result-box">   
+                    <div class="thumb large-box">
+                      <img src="media/cropped.png" alt="Box filter result 2">
+                      <div class="caption">The main part of the scene</div>
+                    </div>
+                  </div>
+              </li>
+              <li>My Third work is to put Taylor's new album on top of a table. The source imgs are shown below: 
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/album.jpeg" alt="Box filter result 1">
+                      <div class="caption">New_Album.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/table.jpeg" alt="Box filter result 2">
+                      <div class="caption">A room with table.png</div>
+                    </div>
+                  </div>
+                Firstly I warped the image with reference of four corners from the table.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/warped_album.png" alt="Box filter result 1">
+                      <div class="caption">warped_album.png</div>
+                    </div>
+                  </div>
+                  Then I used a rectangular mask to blend the two images together, which looks likes that the ablum is placed on the table.
+                <div class="result-box">    
+                    <div class="thumb large-box">
+                      <img src="media/album_on_table.png" alt="Box filter result 1">
+                      <div class="caption">Album on table.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>  
+    </section>      
   </main>
         
   <script>
