@@ -745,16 +745,24 @@
           </div>
           <div class="mini-bd" id="2.3-body">
             <ol>
-              <li>In this section I implemented the Harris Corner detector to the following three sets of images.
+              <li><p>In this section, I implemented feature matching between two corresponding images using the extracted feature descriptors.
+First, I created a 500×500 matrix where each entry stores the Euclidean distance between two feature vectors (one from the left image and one from the right image).
+For each feature vector in the left image, I found the smallest distance d_1 and the second smallest d_2, then computed their ratio d_1 / d_2.
+If this ratio is smaller than 0.7, I considered the pair as a reliable match and kept it for homography matrix estimation.
+Finally, I visualized these matched pairs by drawing connecting lines between the two images, as shown below.</p>
                   <div class="result-box">
                     <div class="thumb large-box">
                       <img src="media/canteen_matched_features.png" alt="Box filter result 1">
                       <div class="caption">canteen_matched_features.png</div>
                     </div>
+                  </div>
+                  <div class="result-box">
                     <div class="thumb large-box">
                       <img src="media/room_matched_features.png" alt="Box filter result 1">
                       <div class="caption">room_matched_features.png</div>
                     </div>
+                  </div>
+                  <div class="result-box">
                     <div class="thumb large-box">
                       <img src="media/lib_matched_features.png" alt="Box filter result 1">
                       <div class="caption">lib_matched_features.png</div>
