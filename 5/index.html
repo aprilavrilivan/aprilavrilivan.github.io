@@ -272,11 +272,11 @@
                 <p>For Nerf dataset preparation, I took 52 pictures of two pine cones together with my ArUco tag from multiple 
                     angles and perspectives to serve as the dataset for Nerf construction</p>
                   <div class="result-box">    
-                    <div class="thumb">
+                    <div class="thumb large-box">
                       <img src="media/Nerf_dataset1.png" alt="Box filter result 1">
                       <div class="caption">my Nerf source dataset</div>
                     </div>
-                    <div class="thumb">
+                    <div class="thumb large-box">
                       <img src="media/Nerf_dataset2.png" alt="Box filter result 1">
                       <div class="caption">my Nerf source dataset</div>
                     </div>
@@ -308,143 +308,27 @@
                       <div class="caption">reference1.png</div>
                     </div>
                   </div>
-                <p>It is shown that the extrinsic parameters are correct, as </p></p>
+                <p>It is shown that the extrinsic parameters are correct, as the rays are pointed towards the world coordinate center.</p>
               </li>
             </ol>
           </div>
         </div>
           
         <!-- Small step box -->
-        <div class="mini-box" id="1.4">
+        <div class="mini-box" id="0.4">
           <div class="mini-hd">
-            <span>Part A</span>
-            <span class="hint">1.4</span>
-            <button class="mini-toggle" type="button" data-target="#1.4-bo">Hide</button>
+            <span>Part 0</span>
+            <span class="hint">0.4</span>
+            <button class="mini-toggle" type="button" data-target="#0.4-bo">Hide</button>
           </div>
-          <div class="mini-bd" id="1.4-body">
+          <div class="mini-bd" id="0.4-body">
             <ol>
-              <li>In this section I created a mosaic of three pictures of my room, as shown below.Here is a detailed breakdown of my steps.
+              <li><p>Finally I undistorted my images and package everything into a dataset format that I can use 
+                for training NeRF in the later parts of this project.</p>
                 <div class="result-box">    
-                    <div class="thumb">
+                    <div class="thumb large-box">
                       <img src="media/2.jpeg" alt="Box filter result 1">
                       <div class="caption">original_left.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/3.jpeg" alt="Box filter result 2">
-                      <div class="caption">original_center.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/4.jpeg" alt="Box filter result 2">
-                      <div class="caption">original_right.png</div>
-                    </div>
-                  </div>
-              Firstly I locate the center img to a larger background that could contain the 3 imgs. Then I warped the original left and right imgs towards it.
-                <div class="result-box">    
-                    <div class="thumb">
-                      <img src="media/left.png" alt="Box filter result 1">
-                      <div class="caption">warped_left.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/center.png" alt="Box filter result 2">
-                      <div class="caption">adjusted_center.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/right.png" alt="Box filter result 2">
-                      <div class="caption">warped_right.png</div>
-                    </div>
-                  </div>
-                When using weighted average blending method like I did to create the oraple in the previous project, there'll be seemigly edge artifactes as shown below. So using the binary center seam with distance transform togerther with laplacian stack appears to be a better solution.
-                <div class="result-box">    
-                    <div class="thumb">
-                      <img src="media/weighted average.png" alt="Box filter result 1">
-                      <div class="caption">weighted average.png</div>
-                    </div>
-                  </div>
-                  Then I first blended the right img with the center img using a binary center seam and a laplacian pyramid of 4 levels. This results the intermediate outcome. Finally I blended the intermediate outcome with the left img, resulting in a full-scaled panorama.
-                <div class="result-box">    
-                    <div class="thumb large-box">
-                      <img src="media/intermediate.png" alt="Box filter result 1">
-                      <div class="caption">intermediate.png</div>
-                    </div>
-                </div>
-                <div class="result-box">
-                    <div class="thumb large-box">
-                      <img src="media/blend_final.png" alt="Box filter result 2">
-                      <div class="caption">blend_final.png</div>
-                    </div>
-                  </div>
-              </li>
-              <li>In this section I created a mosaic of three pictures of a library, as shown below. Additionally, I used a reference rectangular draw by myself. Here is a detailed breakdown of my steps.
-                <div class="result-box">    
-                    <div class="thumb">
-                      <img src="media/one.jpeg" alt="Box filter result 1">
-                      <div class="caption">original_left.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/two.jpeg" alt="Box filter result 2">
-                      <div class="caption">original_center.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/five.jpeg" alt="Box filter result 2">
-                      <div class="caption">original_right.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/reference1.jpeg" alt="Box filter result 2">
-                      <div class="caption">reference.png</div>
-                    </div>
-                  </div>
-              Firstly I warped the window of the center img to the black rectangular drawn as the reference. Then I warped the original left and right imgs using the center img as reference. The results are shown below.
-                <div class="result-box">    
-                    <div class="thumb">
-                      <img src="media/11.png" alt="Box filter result 1">
-                      <div class="caption">warped_left.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/22.png" alt="Box filter result 2">
-                      <div class="caption">adjusted_center.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/44.png" alt="Box filter result 2">
-                      <div class="caption">warped_right.png</div>
-                    </div>
-                  </div>
-                  The blending procedure is just the same as above. And the following are the final outcome.
-                <div class="result-box">    
-                    <div class="thumb">
-                      <img src="media/scene.png" alt="Box filter result 1">
-                      <div class="caption">outcome.png</div>
-                    </div>
-                </div>
-                <div class="result-box">   
-                    <div class="thumb large-box">
-                      <img src="media/cropped.png" alt="Box filter result 2">
-                      <div class="caption">The main part of the scene</div>
-                    </div>
-                  </div>
-              </li>
-              <li>My Third work is to put Taylor's new album on top of a table. The source imgs are shown below: 
-                <div class="result-box">    
-                    <div class="thumb">
-                      <img src="media/album.jpeg" alt="Box filter result 1">
-                      <div class="caption">New_Album.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/table.jpeg" alt="Box filter result 2">
-                      <div class="caption">A room with table.png</div>
-                    </div>
-                  </div>
-                Firstly I warped the image with reference of four corners from the table.
-                <div class="result-box">    
-                    <div class="thumb">
-                      <img src="media/warped_album.png" alt="Box filter result 1">
-                      <div class="caption">warped_album.png</div>
-                    </div>
-                  </div>
-                  Then I used a rectangular mask to blend the two images together, which looks likes that the ablum is placed on the table.
-                <div class="result-box">    
-                    <div class="thumb large-box">
-                      <img src="media/album_on_table.png" alt="Box filter result 1">
-                      <div class="caption">Album on table.png</div>
                     </div>
                   </div>
               </li>
