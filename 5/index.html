@@ -1,1 +1,887 @@
 
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Neural Radiance Field!</title>
+  <meta name="description" content="CS180/280A Project 4: Neural Radiance Field!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ------------------------------
+       Theme & Reset
+    ------------------------------ */
+    :root{
+      --bg: #0b0c10;
+      --panel: #111318;
+      --text: #e6e8ec;
+      --muted: #a6adbb;
+      --accent: #7c9cff;
+      --accent-2: #4ad6a7;
+      --bdr: #1e2230;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius-xl: 18px;
+      --radius-lg: 14px;
+      --radius-md: 12px;
+      --radius-sm: 10px;
+      --blur: saturate(120%) blur(0px);
+    }
+    [data-theme="light"]{
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --text: #0b1220;
+      --muted: #5c6475;
+      --accent: #3a66ff;
+      --accent-2: #0dbb8e;
+      --bdr: #e8ebf3;
+      --shadow: 0 16px 40px rgba(16,24,40,.08);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(124,156,255,.12), transparent 60%),
+                  radial-gradient(900px 500px at 100% 0%, rgba(74,214,167,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ------------------------------
+       Layout
+    ------------------------------ */
+    .wrap { max-width: 1400px; margin: 0 auto; padding: 32px 20px 80px; }
+    header.site {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: var(--blur);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--bdr);
+    }
+    .site-inner { max-width: 1080px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 40px; height: 40px; display: grid; place-items:center; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff; font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+    .brand { font-weight: 700; letter-spacing: .3px; }
+    .grow { flex: 1; }
+
+    .actions { display: flex; align-items: center; gap: 10px; }
+    .btn, a.btn { appearance: none; border: 0; cursor: pointer; text-decoration: none; color: #fff; font-weight: 600; }
+    .btn.primary { padding: 10px 14px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+    .btn.primary:hover { transform: translateY(-1px); filter: saturate(110%); }
+    .btn.ghost { padding: 10px 12px; border-radius: 10px; color: var(--text); background: transparent; border: 1px solid var(--bdr); }
+
+    h1.page-title { font-size: clamp(22px, 2.4vw, 32px); margin: 18px 0 8px; }
+    p.lead { color: var(--muted); margin: 0 0 22px; }
+
+    /* ------------------------------
+       Panels
+    ------------------------------ */
+    .panel { background: var(--panel); border: 1px solid var(--bdr); border-radius: var(--radius-xl); box-shadow: var(--shadow); overflow: hidden; }
+    .panel .panel-hd { padding: 18px 20px; border-bottom: 1px solid var(--bdr); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .panel .panel-hd h2 { margin: 0; font-size: 18px; }
+    .panel .panel-bd { padding: 14px 16px 6px; }
+
+    /* ------------------------------
+       Tables → Responsive Cards
+    ------------------------------ */
+    .tbl { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .tbl th, .tbl td { padding: 12px 14px; border-bottom: 1px solid var(--bdr); vertical-align: middle; }
+    .tbl thead th { text-align: left; font-size: 13px; letter-spacing: .4px; color: var(--muted); text-transform: uppercase; }
+    .tbl tbody tr { transition: background .2s ease, transform .08s ease; }
+    .tbl tbody tr:hover { background: color-mix(in oklab, var(--panel) 85%, #000 15%); }
+    .tbl img { width: 180px; height: auto; border-radius: 12px; display: block; border: 1px solid var(--bdr); box-shadow: var(--shadow); }
+
+    /* Make it look like card list on small screens */
+    @media (max-width: 760px){
+      .tbl thead { display: none; }
+      .tbl, .tbl tbody, .tbl tr, .tbl td { display: block; width: 100%; }
+      .tbl tr { background: var(--panel); border: 1px solid var(--bdr); border-radius: var(--radius-lg); margin: 10px 0 16px; padding: 12px; }
+      .tbl td { border: 0; padding: 8px 0; }
+      .tbl td[data-label]::before { content: attr(data-label)"："; display: inline-block; min-width: 9em; color: var(--muted); font-weight: 600; }
+      .tbl img { width: 100%; }
+    }
+
+    /* Image zoom on hover */
+    .thumb { position: relative; overflow: hidden; border-radius: 12px; }
+    .thumb img { transform: scale(1); transition: transform .35s ease; }
+    .thumb:hover img { transform: scale(1.04); }
+
+    /* Tag pills for shifts */
+    .pills { display: inline-flex; gap: 8px; flex-wrap: wrap; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12px; padding: 6px 10px; border-radius: 999px; border: 1px dashed var(--bdr); color: var(--text); background: color-mix(in oklab, var(--panel) 85%, #000 15%); }
+    .pill .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 20%, transparent); }
+    .pill.red .dot { background: #ff6b6b; }
+    .pill.green .dot { background: #4ad6a7; }
+
+    /* Footer */
+    footer { margin: 28px 0; display: flex; align-items: center; gap: 12px; }
+    .link { color: #fff; text-decoration: none; }
+
+    /* Back button */
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--bdr); background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, #fff 10%), var(--panel)); text-decoration: none; color: var(--text); box-shadow: var(--shadow); transition: transform .2s ease, background .2s ease; }
+    .back-btn:hover { transform: translateY(-1px); }
+
+    /* Utility */
+    .muted { color: var(--muted); }
+    .right { text-align: right; }
+
+    /* Mini step box */
+    .mini-box {
+      margin: 12px 4px 8px;
+      background: color-mix(in oklab, var(--panel) 92%, #000 8%);
+      border: 1px dashed var(--bdr);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 12px 14px;
+    }
+    .mini-box .mini-hd{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-weight:700; font-size:14px;
+    }
+    .mini-box .mini-hd .hint{ color: var(--muted); font-weight:600; font-size:20px; }
+    .mini-box .mini-bd{ margin-top:10px; color: var(--text); }
+    .mini-box ol{ margin: 6px 0 0 18px; padding:0; }
+    .mini-box li{ margin: 4px 0; line-height: 1.5; }
+    .mini-toggle{
+      appearance:none; border:1px solid var(--bdr); background:transparent; color:var(--text);
+      font-weight:600; border-radius:10px; padding:6px 10px; cursor:pointer;
+    }
+    .mini-toggle:hover{ filter:saturate(110%); transform: translateY(-1px); }
+    @media (max-width:760px){ .mini-box{ padding: 10px 12px; } }
+
+    
+    .result-box {
+      margin: 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .result-box .thumb {
+      flex: 1 1 200px;
+      max-width: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--bdr);
+      box-shadow: var(--shadow);
+    }
+    .result-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    /* 单独放大 main part 那一张 */
+    .result-box .large-box {
+      flex: 1 1 450px;  /* 调整基础宽度 */
+      max-width: 650px; /* 设置最大宽度 */
+    }
+
+      .result-line {
+      display: flex;
+      justify-content: space-between; /* 或 center */
+      gap: 12px;
+      flex-wrap: nowrap; /* 强制不换行 */
+    }
+    .result-line .thumb {
+      flex: 1 1 0;
+      max-width: 180px; /* 控制单张图宽度 */
+    }
+    .result-line img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .caption {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+  </style>
+</head>
+    
+<body>
+  <!-- Sticky Header -->
+  <header class="site">
+    <div class="site-inner">
+      <div class="logo" aria-hidden="true">P2</div>
+      <div class="brand">CS180/280A · Project 4</div>
+      <div class="grow"></div>
+      <div class="actions">
+        <button class="btn ghost" id="themeToggle" aria-label="Switch Theme">🌓 Theme</button>
+        <a class="btn primary" href="../index.html">back to main</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1 class="page-title">Neural Radiance Field!</h1>
+    <p class="lead">This project aims to build a simple neural radiance field</span>.</p>
+    
+    <!-- P1 -->
+    <section class="panel" aria-labelledby="sec-simple">
+      <div class="panel-hd">
+        <h2 id="sec-simple">Part 0: Calibrating Your Camera and Capturing a 3D Scan</h2>
+        <span class="muted">4 sections in total</span>
+      </div>
+      <div class="panel-bd">
+        <!-- Small step box -->
+        <div class="mini-box" id="0.1">
+          <div class="mini-hd">
+            <span>Part 0</span>
+            <span class="hint">0.1</span>
+            <button class="mini-toggle" type="button" data-target="#1.1-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="0.1-body">
+            <ol>
+              <li><p>In this section, I printed out the calibration tags fetched from the course project website, used my iphone to took 49 pictures of it from 
+                    muitiple angles and perspectives, and fed the source images to a python script to calculate the camera intrinsics and distortion coefficients</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/2.jpeg" alt="Box filter result 1">
+                      <div class="caption">room1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/3.jpeg" alt="Box filter result 1">
+                      <div class="caption">room2.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/4.jpeg" alt="Box filter result 2">
+                      <div class="caption">room3.png</div>
+                    </div>
+                  </div>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/one.jpeg" alt="Box filter result 1">
+                      <div class="caption">library1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/two.jpeg" alt="Box filter result 1">
+                      <div class="caption">library2.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/five.jpeg" alt="Box filter result 1">
+                      <div class="caption">library3.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+        
+        <!-- Small step box -->
+        <div class="mini-box" id="1.2">
+          <div class="mini-hd">
+            <span>Part A</span>
+            <span class="hint">1.2</span>
+            <button class="mini-toggle" type="button" data-target="#1.2-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.2-body">
+            <ol>
+              <li>
+                <p>In this section I'll explain the way to do homography transformation. We define the projective matrix to be H. 
+                  Then a location of pixel (vector p) could be transformed by multiplying H. [p'=H@p]. By doing this over all the pixels 
+                  in the target image, the target image will be warped. We can use least square solution to solve out the projective matrix 
+                  between two prospective transformed images. We know p=[x,y], and p'=[x',y']. The projective matrix has entries h11-h3, 
+                  with 8 dofs. Then the relationship between p' and p canbe calculated as</p>
+                  <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/formula1.png" alt="Box filter result 1">
+                    </div>
+                  </div>
+                <p>multiplying the denominator on both sides for the two equations, we get:</p>
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/formula2.png" alt="Box filter result 1">
+                    </div>
+                </div>
+                <p>Then, we could rewrite the above equation to the form of A@h=0, where A is:</p>
+                <div class="result-box">    
+                  <div class="thumb">
+                    <img src="media/formula4.png" alt="Box filter result 1">
+                  </div>
+                </div>
+                <p>And h is the squeezed version of those nine entries:</p>
+                <div class="result-box">    
+                  <div class="thumb">
+                    <img src="media/formula3.png" alt="Box filter result 1">
+                  </div>
+                </div>
+                <p>We need at least 8 equations to solve the 8 dofs of the projective matrix. This could be done by collecting more
+                  than four [p,p'] pairs. To solve the final H out, we could first normalized the positions of the pixels, then 
+                  do SVD decomposition to solve out the best H， and finally denormalize the H.</p>
+              </li>
+              <li><p>Here is an example. Supposed we want to warp example 1 to example 2:</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/ex1.jpeg" alt="Box filter result 1">
+                      <div class="caption">example1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/ex2.jpeg" alt="Box filter result 1">
+                      <div class="caption">example2.png</div>
+                    </div>
+                  </div>
+                  <p>Then I selected 4 corners on each of the rectangles, with the following positions:</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/positions.png" alt="Box filter result 1">
+                      <div class="caption">positions.png</div>
+                    </div>
+                  </div>
+                <p>Using these positions together with normalization, we get the matrix A:</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/A.png" alt="Box filter result 1">
+                      <div class="caption">matrix A</div>
+                    </div>
+                  </div>
+                <p>And solving using SVD and denormalize the h33 to be 1, we get the optimal H matrix:</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/H.png" alt="Box filter result 1">
+                      <div class="caption">Matrix H</div>
+                    </div>
+                  </div>
+                <p>This could exactly transfer the first example to the second one.</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/solution.png" alt="Box filter result 1">
+                      <div class="caption"></div>
+                    </div>
+                  </div> 
+              </li>
+            </ol>
+          </div>
+
+
+        <!-- Small step box -->
+        <div class="mini-box" id="1.3">
+          <div class="mini-hd">
+            <span>Part A</span>
+            <span class="hint">1.3</span>
+            <button class="mini-toggle" type="button" data-target="#1.3-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.3-body">
+            <ol>
+              <li><p>In this section I compared two inverse warping methods: NearestNeighbour and Bilinear.
+                    Both methods seeks pixels to be extracted from the source image, according to the position of pixels from 
+                    the demanding image multiplied by the projective matrix. The difference is that NearestNeighbor Interpolation rounds
+                    coordinates to the nearest pixel value, while Bilinear Interpolation uses
+                    weighted average of four neighboring pixels. Here I listed two sets of example images.</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/1111.jpeg" alt="Box filter result 1">
+                      <div class="caption">source1</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/reference.jpeg" alt="Box filter result 1">
+                      <div class="caption">reference1.png</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/NN.png" alt="Box filter result 2">
+                      <div class="caption">NearestNeighbour</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/BL.png" alt="Box filter result 1">
+                      <div class="caption">Bilinear</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/zoom1.png" alt="Box filter result 1">
+                      <div class="caption">Detailed NearestNeighbour</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/zoom2.png" alt="Box filter result 1">
+                      <div class="caption">Detailed Bilinear</div>
+                    </div>
+                  </div>
+                <p>Generally, after evaluating, the NearestNeighbour method runs faster that Bilinear, since for every pixel, it doens't have to do the 
+                average calculation. But as a result, its outcome will be more coarse</p>
+                <p>The following is the second set of pictures</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/2222.jpeg" alt="Box filter result 1">
+                      <div class="caption">source2</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/reference.jpeg" alt="Box filter result 1">
+                      <div class="caption">reference2.png</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/NN2.png" alt="Box filter result 2">
+                      <div class="caption">NearestNeighbour</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/BL2.png" alt="Box filter result 1">
+                      <div class="caption">Bilinear</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/zoom3.png" alt="Box filter result 1">
+                      <div class="caption">Detailed NearestNeighbour</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/zoom4.png" alt="Box filter result 1">
+                      <div class="caption">Detailed Bilinear</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+          
+        <!-- Small step box -->
+        <div class="mini-box" id="1.4">
+          <div class="mini-hd">
+            <span>Part A</span>
+            <span class="hint">1.4</span>
+            <button class="mini-toggle" type="button" data-target="#1.4-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.4-body">
+            <ol>
+              <li>In this section I created a mosaic of three pictures of my room, as shown below.Here is a detailed breakdown of my steps.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/2.jpeg" alt="Box filter result 1">
+                      <div class="caption">original_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/3.jpeg" alt="Box filter result 2">
+                      <div class="caption">original_center.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/4.jpeg" alt="Box filter result 2">
+                      <div class="caption">original_right.png</div>
+                    </div>
+                  </div>
+              Firstly I locate the center img to a larger background that could contain the 3 imgs. Then I warped the original left and right imgs towards it.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/left.png" alt="Box filter result 1">
+                      <div class="caption">warped_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/center.png" alt="Box filter result 2">
+                      <div class="caption">adjusted_center.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/right.png" alt="Box filter result 2">
+                      <div class="caption">warped_right.png</div>
+                    </div>
+                  </div>
+                When using weighted average blending method like I did to create the oraple in the previous project, there'll be seemigly edge artifactes as shown below. So using the binary center seam with distance transform togerther with laplacian stack appears to be a better solution.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/weighted average.png" alt="Box filter result 1">
+                      <div class="caption">weighted average.png</div>
+                    </div>
+                  </div>
+                  Then I first blended the right img with the center img using a binary center seam and a laplacian pyramid of 4 levels. This results the intermediate outcome. Finally I blended the intermediate outcome with the left img, resulting in a full-scaled panorama.
+                <div class="result-box">    
+                    <div class="thumb large-box">
+                      <img src="media/intermediate.png" alt="Box filter result 1">
+                      <div class="caption">intermediate.png</div>
+                    </div>
+                </div>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/blend_final.png" alt="Box filter result 2">
+                      <div class="caption">blend_final.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li>In this section I created a mosaic of three pictures of a library, as shown below. Additionally, I used a reference rectangular draw by myself. Here is a detailed breakdown of my steps.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/one.jpeg" alt="Box filter result 1">
+                      <div class="caption">original_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/two.jpeg" alt="Box filter result 2">
+                      <div class="caption">original_center.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/five.jpeg" alt="Box filter result 2">
+                      <div class="caption">original_right.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/reference1.jpeg" alt="Box filter result 2">
+                      <div class="caption">reference.png</div>
+                    </div>
+                  </div>
+              Firstly I warped the window of the center img to the black rectangular drawn as the reference. Then I warped the original left and right imgs using the center img as reference. The results are shown below.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/11.png" alt="Box filter result 1">
+                      <div class="caption">warped_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/22.png" alt="Box filter result 2">
+                      <div class="caption">adjusted_center.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/44.png" alt="Box filter result 2">
+                      <div class="caption">warped_right.png</div>
+                    </div>
+                  </div>
+                  The blending procedure is just the same as above. And the following are the final outcome.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/scene.png" alt="Box filter result 1">
+                      <div class="caption">outcome.png</div>
+                    </div>
+                </div>
+                <div class="result-box">   
+                    <div class="thumb large-box">
+                      <img src="media/cropped.png" alt="Box filter result 2">
+                      <div class="caption">The main part of the scene</div>
+                    </div>
+                  </div>
+              </li>
+              <li>My Third work is to put Taylor's new album on top of a table. The source imgs are shown below: 
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/album.jpeg" alt="Box filter result 1">
+                      <div class="caption">New_Album.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/table.jpeg" alt="Box filter result 2">
+                      <div class="caption">A room with table.png</div>
+                    </div>
+                  </div>
+                Firstly I warped the image with reference of four corners from the table.
+                <div class="result-box">    
+                    <div class="thumb">
+                      <img src="media/warped_album.png" alt="Box filter result 1">
+                      <div class="caption">warped_album.png</div>
+                    </div>
+                  </div>
+                  Then I used a rectangular mask to blend the two images together, which looks likes that the ablum is placed on the table.
+                <div class="result-box">    
+                    <div class="thumb large-box">
+                      <img src="media/album_on_table.png" alt="Box filter result 1">
+                      <div class="caption">Album on table.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>  
+    </section>
+    <!---------------- P2 ----------->
+    <section class="panel" aria-labelledby="sec-simple">
+      <div class="panel-hd">
+        <h2 id="sec-simple">Part B: FEATURE MATCHING for AUTOSTITCHING</h2>
+        <span class="muted">4 sections in total</span>
+      </div>
+      <div class="panel-bd">
+        <!-- Small step box -->
+        <div class="mini-box" id="2.1">
+          <div class="mini-hd">
+            <span>Part B</span>
+            <span class="hint">2.1</span>
+            <button class="mini-toggle" type="button" data-target="#2.1-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="2.1-body">
+            <ol>
+              <li>In this section I implemented the Harris Corner detector to the following three sets of images.
+                  <p>The first group</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/canteen_left.png" alt="Box filter result 1">
+                      <div class="caption">canteen_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/canteen_right.png" alt="Box filter result 1">
+                      <div class="caption">canteen_right.png</div>
+                    </div>
+                  </div>
+                   <p>The second group</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/room_left.png" alt="Box filter result 1">
+                      <div class="caption">room_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/room_right.png" alt="Box filter result 1">
+                      <div class="caption">room_right.png</div>
+                    </div>
+                  </div>
+                <p>The Third group</p>  
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/lib_left.png" alt="Box filter result 1">
+                      <div class="caption">library_left.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/lib_right.png" alt="Box filter result 1">
+                      <div class="caption">library_right.png</div>
+                    </div>
+                  </div>
+              </li>
+              <li><p>First I run the plain Harris Corner detection algorithm, resulting a lot of point candidates. 
+                Then, I used ANMS to select 500 representative and effective points out of the whole point set. The following 
+                is the three sets of pictures before/after ANMS. The selected corners are marked with read dots. For pics after
+                ANMS, the dots may be hard to observe, so you can zoom up a little.</p> 
+                <p>The left image of the first group</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/canteen_left_harris_overlay_full.png" alt="Box filter result 1">
+                      <div class="caption">without_ANMS</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/canteen_left_harris_overlay.png" alt="Box filter result 1">
+                      <div class="caption">with_ANMS</div>
+                    </div>
+                  </div>
+                <p>The left image of the second group</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/room_left_harris_overlay_full.png" alt="Box filter result 1">
+                      <div class="caption">without_ANMS</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/room_left_harris_overlay.png" alt="Box filter result 1">
+                      <div class="caption">with_ANMS</div>
+                    </div>
+                  </div>
+                <p>The left image of the third group</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/lib_left_harris_overlay_full.png" alt="Box filter result 1">
+                      <div class="caption">without_ANMS</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/lib_left_harris_overlay.png" alt="Box filter result 1">
+                      <div class="caption">with_ANMS</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+        
+        <!-- Small step box -->
+        <div class="mini-box" id="2.2">
+          <div class="mini-hd">
+            <span>Part B</span>
+            <span class="hint">2.2</span>
+            <button class="mini-toggle" type="button" data-target="#2.2-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="2.2-body">
+            <ol>
+              <li><p>In this section I implemented the Feature Descriptor Extraction to the previous pictures after ANMS.
+                     First I selected 40*40 pixels around the points after ANMS, then I downsampled them to 8*8. Their values
+                    are usefull for picture matching. In the following, I randomly selected three feature descriptors from 
+                     each examples and visualized them.</p>
+                  <p>The selected Feature Descriptor of the first group</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/canteen_extract0.png" alt="Box filter result 1">
+                      <div class="caption">canteen_extract0.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/canteen_extract1.png" alt="Box filter result 1">
+                      <div class="caption">canteen_extract1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/canteen_extract2.png" alt="Box filter result 1">
+                      <div class="caption">canteen_extract2.png</div>
+                    </div>
+                  </div>
+                  <p>The selected Feature Descriptor of the second group</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/room_extract0.png" alt="Box filter result 1">
+                      <div class="caption">room_extract0.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/room_extract1.png" alt="Box filter result 1">
+                      <div class="caption">room_extract1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/room_extract2.png" alt="Box filter result 1">
+                      <div class="caption">room_extract2.png</div>
+                    </div>
+                  </div>
+                <p>The selected Feature Descriptor of the third group</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/lib_extract0.png" alt="Box filter result 1">
+                      <div class="caption">lib_extract0.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/lib_extract1.png" alt="Box filter result 1">
+                      <div class="caption">lib_extract1.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/lib_extract2.png" alt="Box filter result 1">
+                      <div class="caption">lib_extract2.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+
+
+        <!-- Small step box -->
+        <div class="mini-box" id="2.3">
+          <div class="mini-hd">
+            <span>Part B</span>
+            <span class="hint">2.3</span>
+            <button class="mini-toggle" type="button" data-target="#2.3-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="2.3-body">
+            <ol>
+              <li><p>In this section, I implemented feature matching between two corresponding images using the extracted feature descriptors.
+First, I created a 500×500 matrix where each entry stores the Euclidean distance between two feature vectors (one from the left image and one from the right image).
+For each feature vector in the left image, I found the smallest distance d_1 and the second smallest d_2, then computed their ratio d_1 / d_2.
+If this ratio is smaller than 0.7, I considered the pair as a reliable match and kept it for homography matrix estimation.
+Finally, I visualized these matched pairs by drawing connecting lines between the two images, as shown below.</p>
+                  <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/canteen_matched_features.png" alt="Box filter result 1">
+                      <div class="caption">canteen_matched_features.png</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/room_matched_features.png" alt="Box filter result 1">
+                      <div class="caption">room_matched_features.png</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/lib_matched_features.png" alt="Box filter result 1">
+                      <div class="caption">lib_matched_features.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+          
+        <!-- Small step box -->
+        <div class="mini-box" id="2.4">
+          <div class="mini-hd">
+            <span>Part B</span>
+            <span class="hint">2.4</span>
+            <button class="mini-toggle" type="button" data-target="#2.4-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="2.4-body">
+            <ol>
+              <li><p>In this section, I compute the final homography matrix using RANSAC.
+First, I randomly select four pairs of matched feature points to estimate a candidate homography matrix. Then, I project all feature points from the left image to the right image using this matrix and measure their reprojection errors.
+Points with errors smaller than a certain threshold (e.g., 3 pixels) are considered inliers.
+I repeat this process for many random samples (around 2000 iterations) and keep the homography that yields the largest number of inliers.
+Finally, I recompute the homography using all inlier correspondences judged by the best homography matrix to obtain a more accurate and robust result.</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/canteen_result_bad.png" alt="Box filter result 1">
+                      <div class="caption">canteen_manual_selection.png</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/canteen_result.png" alt="Box filter result 1">
+                      <div class="caption">canteen_RANSAC.png</div>
+                    </div>
+                  </div>
+                <p>We can observed that the right picture has a much better alignment than the one with manual selected points 
+                   the following provided a detailed comparism.</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/canteen_detail_bad.png" alt="Box filter result 1">
+                      <div class="caption">canteen_detail_manual_selection.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/canteen_detail.png" alt="Box filter result 1">
+                      <div class="caption">canteen_detail_RANSAC.png</div>
+                    </div>
+                  </div>
+                <p>Here are the result of the rest two sets of images</p>
+                  <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/room_result_bad.png" alt="Box filter result 1">
+                      <div class="caption">room_manual_selection.png</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/room_result.png" alt="Box filter result 1">
+                      <div class="caption">room_RANSAC.png</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/room_detail_bad.png" alt="Box filter result 1">
+                      <div class="caption">room_detail_manual_selection.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/room_detail.png" alt="Box filter result 1">
+                      <div class="caption">room_detail_RANSAC.png</div>
+                    </div>
+                  </div>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/lib_result_bad.png" alt="Box filter result 1">
+                      <div class="caption">lib_manual_selection.png</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/lib_result.png" alt="Box filter result 1">
+                      <div class="caption">lib_RANSAC.png</div>
+                    </div>
+                  </div>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/lib_detail_bad.png" alt="Box filter result 1">
+                      <div class="caption">lib_detail_manual_selection.png</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/lib_detail.png" alt="Box filter result 1">
+                      <div class="caption">room_detail_RANSAC.png</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div> 
+    </section>      
+  </main>
+        
+  <script>
+    // Theme toggle with localStorage
+    const root = document.documentElement;
+    const key = 'pg-theme';
+    const btn = document.getElementById('themeToggle');
+    const saved = localStorage.getItem(key);
+    if(saved){ document.documentElement.setAttribute('data-theme', saved); }
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(key, next);
+    });
+    // Tiny toggle for mini-box
+    document.querySelectorAll('.mini-toggle').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const sel = btn.getAttribute('data-target');
+        const box = document.querySelector(sel);
+        const hidden = box.style.display === 'none';
+        box.style.display = hidden ? '' : 'none';
+        btn.textContent = hidden ? 'Hide' : 'Show';
+      });
+    });
+  </script>
+        
+</body>
