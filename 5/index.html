@@ -461,6 +461,12 @@
                       <div class="caption">final result for L=10 and W=256</div>
                     </div>
                   </div>
+                <p>
+                  With these four settings, we can clearly see how the positional encoding frequency L and the network width W affect the reconstruction.
+When L is small (L=4), the model can only reproduce coarse, low-frequency structures, so the results look blurry even with a wider network. Increasing the width helps a bit, but the details are still missing.
+With a higher frequency (L=10), the model recovers much sharper textures. A small width (W=64) still leaves some artifacts, but using a wider network (W=256) produces the cleanest and most detailed result.
+Overall, L controls how much fine detail the model can represent, and W controls how well it can fit those details.
+                </p>
               </li>
             </ol>
           </div>
