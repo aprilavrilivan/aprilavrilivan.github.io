@@ -471,190 +471,155 @@ Overall, L controls how much fine detail the model can represent, and W controls
             </ol>
           </div>
         </div>
-        
-        <!-- Small step box -->
-        <div class="mini-box" id="2.2">
-          <div class="mini-hd">
-            <span>Part B</span>
-            <span class="hint">2.2</span>
-            <button class="mini-toggle" type="button" data-target="#2.2-bo">Hide</button>
-          </div>
-          <div class="mini-bd" id="2.2-body">
-            <ol>
-              <li><p>In this section I implemented the Feature Descriptor Extraction to the previous pictures after ANMS.
-                     First I selected 40*40 pixels around the points after ANMS, then I downsampled them to 8*8. Their values
-                    are usefull for picture matching. In the following, I randomly selected three feature descriptors from 
-                     each examples and visualized them.</p>
-                  <p>The selected Feature Descriptor of the first group</p>
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/canteen_extract0.png" alt="Box filter result 1">
-                      <div class="caption">canteen_extract0.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/canteen_extract1.png" alt="Box filter result 1">
-                      <div class="caption">canteen_extract1.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/canteen_extract2.png" alt="Box filter result 1">
-                      <div class="caption">canteen_extract2.png</div>
-                    </div>
-                  </div>
-                  <p>The selected Feature Descriptor of the second group</p>
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/room_extract0.png" alt="Box filter result 1">
-                      <div class="caption">room_extract0.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/room_extract1.png" alt="Box filter result 1">
-                      <div class="caption">room_extract1.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/room_extract2.png" alt="Box filter result 1">
-                      <div class="caption">room_extract2.png</div>
-                    </div>
-                  </div>
-                <p>The selected Feature Descriptor of the third group</p>
-                <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/lib_extract0.png" alt="Box filter result 1">
-                      <div class="caption">lib_extract0.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/lib_extract1.png" alt="Box filter result 1">
-                      <div class="caption">lib_extract1.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/lib_extract2.png" alt="Box filter result 1">
-                      <div class="caption">lib_extract2.png</div>
-                    </div>
-                  </div>
-              </li>
-            </ol>
-          </div>
-        </div>
-
-
-        <!-- Small step box -->
-        <div class="mini-box" id="2.3">
-          <div class="mini-hd">
-            <span>Part B</span>
-            <span class="hint">2.3</span>
-            <button class="mini-toggle" type="button" data-target="#2.3-bo">Hide</button>
-          </div>
-          <div class="mini-bd" id="2.3-body">
-            <ol>
-              <li><p>In this section, I implemented feature matching between two corresponding images using the extracted feature descriptors.
-First, I created a 500×500 matrix where each entry stores the Euclidean distance between two feature vectors (one from the left image and one from the right image).
-For each feature vector in the left image, I found the smallest distance d_1 and the second smallest d_2, then computed their ratio d_1 / d_2.
-If this ratio is smaller than 0.7, I considered the pair as a reliable match and kept it for homography matrix estimation.
-Finally, I visualized these matched pairs by drawing connecting lines between the two images, as shown below.</p>
-                  <div class="result-box">
-                    <div class="thumb large-box">
-                      <img src="media/canteen_matched_features.png" alt="Box filter result 1">
-                      <div class="caption">canteen_matched_features.png</div>
-                    </div>
-                  </div>
-                  <div class="result-box">
-                    <div class="thumb large-box">
-                      <img src="media/room_matched_features.png" alt="Box filter result 1">
-                      <div class="caption">room_matched_features.png</div>
-                    </div>
-                  </div>
-                  <div class="result-box">
-                    <div class="thumb large-box">
-                      <img src="media/lib_matched_features.png" alt="Box filter result 1">
-                      <div class="caption">lib_matched_features.png</div>
-                    </div>
-                  </div>
-              </li>
-            </ol>
-          </div>
-        </div>
+    </section>   
           
+    <!---------------- P3 ----------->
+    <section class="panel" aria-labelledby="sec-simple">
+      <div class="panel-hd">
+        <h2 id="sec-simple">Part 2: Fit a Neural Radiance Field from Multi-view Images</h2>
+        <span class="muted">1 section in total</span>
+      </div>
+      <div class="panel-bd">
         <!-- Small step box -->
-        <div class="mini-box" id="2.4">
+        <div class="mini-box" id="2.1">
           <div class="mini-hd">
-            <span>Part B</span>
-            <span class="hint">2.4</span>
-            <button class="mini-toggle" type="button" data-target="#2.4-bo">Hide</button>
+            <span>Part 2.1</span>
+            <span class="hint">2.1</span>
+            <button class="mini-toggle" type="button" data-target="#2.1-bo">Hide</button>
           </div>
-          <div class="mini-bd" id="2.4-body">
+          <div class="mini-bd" id="2.1-body">
             <ol>
-              <li><p>In this section, I compute the final homography matrix using RANSAC.
-First, I randomly select four pairs of matched feature points to estimate a candidate homography matrix. Then, I project all feature points from the left image to the right image using this matrix and measure their reprojection errors.
-Points with errors smaller than a certain threshold (e.g., 3 pixels) are considered inliers.
-I repeat this process for many random samples (around 2000 iterations) and keep the homography that yields the largest number of inliers.
-Finally, I recompute the homography using all inlier correspondences judged by the best homography matrix to obtain a more accurate and robust result.</p>
-                <div class="result-box">
-                    <div class="thumb large-box">
-                      <img src="media/canteen_result_bad.png" alt="Box filter result 1">
-                      <div class="caption">canteen_manual_selection.png</div>
-                    </div>
-                    <div class="thumb large-box">
-                      <img src="media/canteen_result.png" alt="Box filter result 1">
-                      <div class="caption">canteen_RANSAC.png</div>
-                    </div>
-                  </div>
-                <p>We can observed that the right picture has a much better alignment than the one with manual selected points 
-                   the following provided a detailed comparism.</p>
+              <li><p>In this section, I managed to load data from Lego scene provided in the course website, and 
+                  plot the cameras, rays, and samples in 3D using Viser.</p>
+                  <p>To achieve this , firstly I wrote a function transform(c2w, x_c) to transform camera coordinate to 
+                      world coordinate. Then I wrote a function pixel_to_camera(K, uv, s) to transform pixel coordinates
+                      to camera coordinates, given arbitary depth s. Finally I wrote a function pixel_to_ray(K, c2w, uv, depth)
+                      to get the unit ray that shoot from a certain pixel of the camera. The detailed implementation is shown below.</p>
                   <div class="result-box">
                     <div class="thumb">
-                      <img src="media/canteen_detail_bad.png" alt="Box filter result 1">
-                      <div class="caption">canteen_detail_manual_selection.png</div>
+                      <img src="media/modelArchietecture.png" alt="Box filter result 1">
+                      <div class="caption">My model archietecture and hyperparameters</div>
+                    </div>
+                    <div class="thumb ">
+                      <img src="media/modelArchietecture.png" alt="Box filter result 1">
+                      <div class="caption">My model archietecture and hyperparameters</div>
                     </div>
                     <div class="thumb">
-                      <img src="media/canteen_detail.png" alt="Box filter result 1">
-                      <div class="caption">canteen_detail_RANSAC.png</div>
-                    </div>
-                  </div>
-                <p>Here are the result of the rest two sets of images</p>
-                  <div class="result-box">
-                    <div class="thumb large-box">
-                      <img src="media/room_result_bad.png" alt="Box filter result 1">
-                      <div class="caption">room_manual_selection.png</div>
-                    </div>
-                    <div class="thumb large-box">
-                      <img src="media/room_result.png" alt="Box filter result 1">
-                      <div class="caption">room_RANSAC.png</div>
-                    </div>
-                  </div>
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/room_detail_bad.png" alt="Box filter result 1">
-                      <div class="caption">room_detail_manual_selection.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/room_detail.png" alt="Box filter result 1">
-                      <div class="caption">room_detail_RANSAC.png</div>
-                    </div>
-                  </div>
-                <div class="result-box">
-                    <div class="thumb large-box">
-                      <img src="media/lib_result_bad.png" alt="Box filter result 1">
-                      <div class="caption">lib_manual_selection.png</div>
-                    </div>
-                    <div class="thumb large-box">
-                      <img src="media/lib_result.png" alt="Box filter result 1">
-                      <div class="caption">lib_RANSAC.png</div>
-                    </div>
-                  </div>
-                <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/lib_detail_bad.png" alt="Box filter result 1">
-                      <div class="caption">lib_detail_manual_selection.png</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/lib_detail.png" alt="Box filter result 1">
-                      <div class="caption">room_detail_RANSAC.png</div>
+                      <img src="media/modelArchietecture.png" alt="Box filter result 1">
+                      <div class="caption">My model archietecture and hyperparameters</div>
                     </div>
                   </div>
               </li>
+              <li><p>I used this configuration to train the fox image and my own image,here are the results of my training progression:</p> 
+                <p>FOX IMAGE</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/fox.jpg" alt="Box filter result 1">
+                      <div class="caption">original fox picture</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/fox_final.png" alt="Box filter result 1">
+                      <div class="caption">fox picture predicted by my model</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/fox_iter_0001.png" alt="Box filter result 1">
+                      <div class="caption">iteration 1</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fox_iter_0050.png" alt="Box filter result 1">
+                      <div class="caption">iteration 50</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fox_iter_0100.png" alt="Box filter result 1">
+                      <div class="caption">iteration 100</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fox_iter_0200.png" alt="Box filter result 1">
+                      <div class="caption">iteration 200</div>
+                    </div>
+                  </div>
+                <p>BREAKFAST IMAGE</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/breakfast.png" alt="Box filter result 1">
+                      <div class="caption">original fox picture</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/breakfast_final.png" alt="Box filter result 1">
+                      <div class="caption">fox picture predicted by my model</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/breakfast_iter_0001.png" alt="Box filter result 1">
+                      <div class="caption">iteration 1</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/breakfast_iter_0050.png" alt="Box filter result 1">
+                      <div class="caption">iteration 50</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/breakfast_iter_0100.png" alt="Box filter result 1">
+                      <div class="caption">iteration 100</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/breakfast_iter_0300.png" alt="Box filter result 1">
+                      <div class="caption">iteration 200</div>
+                    </div>
+                  </div>
+              </li>
+              <li>
+                <p>
+                  Here are the corresponding PSNR curves:
+                </p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/fox_psnr_curve.png" alt="Box filter result 1">
+                      <div class="caption">PSNR for fox picture</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/breakfast_psnr_curve.png" alt="Box filter result 1">
+                      <div class="caption">PSNR for breakfast picture</div>
+                    </div>
+                  </div>
+              </li>
+              <li>
+                <p>
+                  Finally I compared two choices of max positional encoding frequency (L=4; L=10) and 2 choices of width (W=64; W=256)
+                </p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/final_L4_W64.png" alt="Box filter result 1">
+                      <div class="caption">final result for L=4 and W=64</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/final_L4_W256.png" alt="Box filter result 1">
+                      <div class="caption">final result for L=4 and W=256</div>
+                    </div>
+                  </div>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/final_L10_W64.png" alt="Box filter result 1">
+                      <div class="caption">final result for L=10 and W=64</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fox_final.png" alt="Box filter result 1">
+                      <div class="caption">final result for L=10 and W=256</div>
+                    </div>
+                  </div>
+                <p>
+                  With these four settings, we can clearly see how the positional encoding frequency L and the network width W affect the reconstruction.
+When L is small (L=4), the model can only reproduce coarse, low-frequency structures, so the results look blurry even with a wider network. Increasing the width helps a bit, but the details are still missing.
+With a higher frequency (L=10), the model recovers much sharper textures. A small width (W=64) still leaves some artifacts, but using a wider network (W=256) produces the cleanest and most detailed result.
+Overall, L controls how much fine detail the model can represent, and W controls how well it can fit those details.
+                </p>
+              </li>
             </ol>
           </div>
-        </div> 
-    </section>      
+        </div>
+    </section> 
   </main>
         
   <script>
