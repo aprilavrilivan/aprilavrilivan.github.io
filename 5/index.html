@@ -520,17 +520,22 @@ Overall, L controls how much fine detail the model can represent, and W controls
                   </div>
               </li>
               <li>
-                <p>
-                  Here are the corresponding PSNR curves:
-                </p>
+                <p>After doing the above procedure, I integrate the above tools to a RaysDataset class.
+                  This RaysDataset class precomputes all rays for every training image so we can sample them efficiently
+                  during NeRF training. It builds a pixel grid, converts each pixel into a ray using the camera intrinsics 
+                  and extrinsics, and stores the ray origins, directions, and corresponding RGB values in flattened form. 
+                  During training, we can randomly draw a batch of rays from the entire dataset or from a specific camera for debugging.
+                  This makes the dataloader simple, fast, and convenient for both global sampling and visualization in Part 2.3.</p>
+                <p>Then, I implemented a visualization function visualize_random_rays(dataset, K, num_rays, n_samples=) that helps visualize
+                   the dataset using Viser, following the code structure provided in the official website. These are two of the visualized results:</p>
                 <div class="result-box">
                     <div class="thumb large-box">
-                      <img src="media/fox_psnr_curve.png" alt="Box filter result 1">
-                      <div class="caption">PSNR for fox picture</div>
+                      <img src="media/Viser3.png" alt="Box filter result 1">
+                      <div class="caption">Visualization with sampled rays</div>
                     </div>
                     <div class="thumb large-box">
-                      <img src="media/breakfast_psnr_curve.png" alt="Box filter result 1">
-                      <div class="caption">PSNR for breakfast picture</div>
+                      <img src="media/Viser4.png" alt="Box filter result 1">
+                      <div class="caption">Visualization with sampled rays</div>
                     </div>
                   </div>
               </li>
