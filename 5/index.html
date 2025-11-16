@@ -606,14 +606,10 @@ Overall, L controls how much fine detail the model can represent, and W controls
                 </div>
               </li>
               <li>
-                <p>After doing the above procedure, I integrate the above tools to a RaysDataset class.
-                  This RaysDataset class precomputes all rays for every training image so we can sample them efficiently
-                  during NeRF training. It builds a pixel grid, converts each pixel into a ray using the camera intrinsics 
-                  and extrinsics, and stores the ray origins, directions, and corresponding RGB values in flattened form. 
-                  During training, we can randomly draw a batch of rays from the entire dataset or from a specific camera for debugging.
-                  This makes the dataloader simple, fast, and convenient for both global sampling and visualization in Part 2.3.</p>
-                <p>Then, I implemented a visualization function visualize_random_rays(dataset, K, num_rays, n_samples=) that helps visualize
-                   the dataset using Viser, following the code structure provided in the official website. These are two of the visualized results:</p>
+                <p>Then I tested using my own dataset. I found that near=0.3 far=0.7 is suitable for my dataset. 
+                  I set n_samples=64, batch_size=4096, max_iters=5000, lr=5e-4, and the rest of the hyperparameters are the same 
+                  as above.</p>
+                <p>Here are the progress during training:</p>
                 <div class="result-box">
                     <div class="thumb large-box">
                       <img src="media/Viser3.png" alt="Box filter result 1">
