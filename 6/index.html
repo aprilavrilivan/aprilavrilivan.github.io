@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Neural Radiance Field!</title>
-  <meta name="description" content="CS180/280A Project 4: Neural Radiance Field!" />
+  <title>Fun With Diffusion Models!</title>
+  <meta name="description" content="CS180/280A Project 5: Fun With Diffusion Models!" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -210,7 +210,7 @@
   <header class="site">
     <div class="site-inner">
       <div class="logo" aria-hidden="true">P2</div>
-      <div class="brand">CS180/280A · Project 4</div>
+      <div class="brand">CS180/280A · Project 5</div>
       <div class="grow"></div>
       <div class="actions">
         <button class="btn ghost" id="themeToggle" aria-label="Switch Theme">🌓 Theme</button>
@@ -220,13 +220,13 @@
   </header>
 
   <main class="wrap">
-    <h1 class="page-title">Neural Radiance Field!</h1>
-    <p class="lead">This project aims to build a simple neural radiance field</span>.</p>
+    <h1 class="page-title">Fun With Diffusion Models!</h1>
+    <p class="lead">This project aims to explore Diffusion Models</span>.</p>
     
     <!-- P1 -->
     <section class="panel" aria-labelledby="sec-simple">
       <div class="panel-hd">
-        <h2 id="sec-simple">Part 0: Calibrating Your Camera and Capturing a 3D Scan</h2>
+        <h2 id="sec-simple">Part 0: Setup</h2>
         <span class="muted">4 sections in total</span>
       </div>
       <div class="panel-bd">
@@ -239,101 +239,65 @@
           </div>
           <div class="mini-bd" id="0.1-body">
             <ol>
-              <li><p>To calibrate my camera and get its parameters, I printed out the calibration tags fetched from the course project website, used my iphone to took 49 pictures of it from 
-                    muitiple angles and perspectives, and fed the source images to a python script to calculate the camera intrinsics and distortion coefficients</p>
+              <li><p>This part aims to play with DeepFloyd, which is a two stage diffusion model trained by Stability AI. The first step
+                  I did is to create some imaginative prompts, and encode them to vectors using T5 Text Encoder Embeddings Generator 
+                  I created 11 prompts, as shown below in the generator's website:</p>
                   <div class="result-box">
                     <div class="thumb large-box">
-                      <img src="media/calibration_dataset.png" alt="Box filter result 1">
-                      <div class="caption">my calibration dataset</div>
-                    </div>
-                    <div class="thumb large-box">
-                      <img src="media/calibration_result.png" alt="Box filter result 1">
-                      <div class="caption">my calibration result</div>
+                      <img src="media/questions.png" alt="Box filter result 1">
+                      <div class="caption">the prompts</div>
                     </div>
                   </div>
-                <p>It is proven that the calibration result is precise as the reprojction error is just 0.6337 pixel. 
-                    the camera configuration is then saved to camera_params.npz for further usage.</p>
+                <p>"a wide angle photo of the campanile reflected in a rain puddle at night"</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/prompt1_20.png" alt="Box filter result 1">
+                      <div class="caption">the prompts</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/prompt1_40.png" alt="Box filter result 1">
+                      <div class="caption">the prompts</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/prompt1_80.png" alt="Box filter result 1">
+                      <div class="caption">the prompts</div>
+                    </div>
+                  </div>
+                <p>"a watercolor painting of robots studying under paper lanterns in a quiet library"</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/prompt2_20.png" alt="Box filter result 1">
+                      <div class="caption">the prompts</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/prompt2_40.png" alt="Box filter result 1">
+                      <div class="caption">the prompts</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/prompt2_80.png" alt="Box filter result 1">
+                      <div class="caption">the prompts</div>
+                    </div>
+                  </div>
+                <p>"an aerial photograph of terraced rice fields shaped like a spiral galaxy"</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/prompt3_20.png" alt="Box filter result 1">
+                      <div class="caption">the prompts</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/prompt3_40.png" alt="Box filter result 1">
+                      <div class="caption">the prompts</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/prompt3_80.png" alt="Box filter result 1">
+                      <div class="caption">the prompts</div>
+                    </div>
+                  </div>
+                <p>The random seed I used in my code is 100.</p>
               </li>
             </ol>
           </div>
         </div>
-        
-        <!-- Small step box -->
-        <div class="mini-box" id="0.2">
-          <div class="mini-hd">
-            <span>Part 0</span>
-            <span class="hint">0.2</span>
-            <button class="mini-toggle" type="button" data-target="#0.2-bo">Hide</button>
-          </div>
-          <div class="mini-bd" id="0.2-body">
-            <ol>
-              <li>
-                <p>For Nerf dataset preparation, I took 52 pictures of two pine cones together with my ArUco tag from multiple 
-                    angles and perspectives to serve as the dataset for Nerf construction</p>
-                  <div class="result-box">    
-                    <div class="thumb large-box">
-                      <img src="media/Nerf_dataset1.png" alt="Box filter result 1">
-                      <div class="caption">my Nerf source dataset</div>
-                    </div>
-                    <div class="thumb large-box">
-                      <img src="media/Nerf_dataset2.png" alt="Box filter result 1">
-                      <div class="caption">my Nerf source dataset</div>
-                    </div>
-                  </div>
-              </li>
-            </ol>
-          </div>
-
-
-        <!-- Small step box -->
-        <div class="mini-box" id="0.3">
-          <div class="mini-hd">
-            <span>Part 0</span>
-            <span class="hint">0.3</span>
-            <button class="mini-toggle" type="button" data-target="#0.3-bo">Hide</button>
-          </div>
-          <div class="mini-bd" id="0.3-body">
-            <ol>
-              <li><p>After figuring out the camera intrinsics and collecting the Nerf source dataset, I wrote a 
-                      script to figure out the extrinsic parameter w.r.t each Nerf source picture, and visualized them 
-                      using the python package Viser.</p>
-                  <div class="result-box">
-                    <div class="thumb large-box">
-                      <img src="media/Viser1.png" alt="Box filter result 1">
-                      <div class="caption">Angle 1</div>
-                    </div>
-                    <div class="thumb large-box">
-                      <img src="media/Viser2.png" alt="Box filter result 1">
-                      <div class="caption">Angle 2</div>
-                    </div>
-                  </div>
-                <p>It is shown that the extrinsic parameters are correct, as the rays are pointed towards the world coordinate center.</p>
-              </li>
-            </ol>
-          </div>
-        </div>
-          
-        <!-- Small step box -->
-        <div class="mini-box" id="0.4">
-          <div class="mini-hd">
-            <span>Part 0</span>
-            <span class="hint">0.4</span>
-            <button class="mini-toggle" type="button" data-target="#0.4-bo">Hide</button>
-          </div>
-          <div class="mini-bd" id="0.4-body">
-            <ol>
-              <li><p>Finally I undistorted my images and package everything into a dataset format that I can use 
-                for training NeRF in the later parts of this project.</p>
-                <div class="result-box">    
-                    <div class="thumb large-box">
-                      <img src="media/final_dataset.png" alt="Box filter result 1">
-                      <div class="caption">Final dataset preparation for Nerf</div>
-                    </div>
-                  </div>
-              </li>
-            </ol>
-          </div>
-        </div>  
     </section>
     <!---------------- P2 ----------->
     <section class="panel" aria-labelledby="sec-simple">
