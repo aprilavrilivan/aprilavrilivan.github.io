@@ -1,1 +1,701 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Neural Radiance Field!</title>
+  <meta name="description" content="CS180/280A Project 4: Neural Radiance Field!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ------------------------------
+       Theme & Reset
+    ------------------------------ */
+    :root{
+      --bg: #0b0c10;
+      --panel: #111318;
+      --text: #e6e8ec;
+      --muted: #a6adbb;
+      --accent: #7c9cff;
+      --accent-2: #4ad6a7;
+      --bdr: #1e2230;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius-xl: 18px;
+      --radius-lg: 14px;
+      --radius-md: 12px;
+      --radius-sm: 10px;
+      --blur: saturate(120%) blur(0px);
+    }
+    [data-theme="light"]{
+      --bg: #f6f7fb;
+      --panel: #ffffff;
+      --text: #0b1220;
+      --muted: #5c6475;
+      --accent: #3a66ff;
+      --accent-2: #0dbb8e;
+      --bdr: #e8ebf3;
+      --shadow: 0 16px 40px rgba(16,24,40,.08);
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(124,156,255,.12), transparent 60%),
+                  radial-gradient(900px 500px at 100% 0%, rgba(74,214,167,.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
+    /* ------------------------------
+       Layout
+    ------------------------------ */
+    .wrap { max-width: 1400px; margin: 0 auto; padding: 32px 20px 80px; }
+    header.site {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: var(--blur);
+      background: color-mix(in oklab, var(--bg) 70%, transparent);
+      border-bottom: 1px solid var(--bdr);
+    }
+    .site-inner { max-width: 1080px; margin: 0 auto; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+    .logo {
+      width: 40px; height: 40px; display: grid; place-items:center; border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #fff; font-weight: 800;
+      box-shadow: var(--shadow);
+    }
+    .brand { font-weight: 700; letter-spacing: .3px; }
+    .grow { flex: 1; }
+
+    .actions { display: flex; align-items: center; gap: 10px; }
+    .btn, a.btn { appearance: none; border: 0; cursor: pointer; text-decoration: none; color: #fff; font-weight: 600; }
+    .btn.primary { padding: 10px 14px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+    .btn.primary:hover { transform: translateY(-1px); filter: saturate(110%); }
+    .btn.ghost { padding: 10px 12px; border-radius: 10px; color: var(--text); background: transparent; border: 1px solid var(--bdr); }
+
+    h1.page-title { font-size: clamp(22px, 2.4vw, 32px); margin: 18px 0 8px; }
+    p.lead { color: var(--muted); margin: 0 0 22px; }
+
+    /* ------------------------------
+       Panels
+    ------------------------------ */
+    .panel { background: var(--panel); border: 1px solid var(--bdr); border-radius: var(--radius-xl); box-shadow: var(--shadow); overflow: hidden; }
+    .panel .panel-hd { padding: 18px 20px; border-bottom: 1px solid var(--bdr); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .panel .panel-hd h2 { margin: 0; font-size: 18px; }
+    .panel .panel-bd { padding: 14px 16px 6px; }
+
+    /* ------------------------------
+       Tables → Responsive Cards
+    ------------------------------ */
+    .tbl { width: 100%; border-collapse: separate; border-spacing: 0; }
+    .tbl th, .tbl td { padding: 12px 14px; border-bottom: 1px solid var(--bdr); vertical-align: middle; }
+    .tbl thead th { text-align: left; font-size: 13px; letter-spacing: .4px; color: var(--muted); text-transform: uppercase; }
+    .tbl tbody tr { transition: background .2s ease, transform .08s ease; }
+    .tbl tbody tr:hover { background: color-mix(in oklab, var(--panel) 85%, #000 15%); }
+    .tbl img { width: 180px; height: auto; border-radius: 12px; display: block; border: 1px solid var(--bdr); box-shadow: var(--shadow); }
+
+    /* Make it look like card list on small screens */
+    @media (max-width: 760px){
+      .tbl thead { display: none; }
+      .tbl, .tbl tbody, .tbl tr, .tbl td { display: block; width: 100%; }
+      .tbl tr { background: var(--panel); border: 1px solid var(--bdr); border-radius: var(--radius-lg); margin: 10px 0 16px; padding: 12px; }
+      .tbl td { border: 0; padding: 8px 0; }
+      .tbl td[data-label]::before { content: attr(data-label)"："; display: inline-block; min-width: 9em; color: var(--muted); font-weight: 600; }
+      .tbl img { width: 100%; }
+    }
+
+    /* Image zoom on hover */
+    .thumb { position: relative; overflow: hidden; border-radius: 12px; }
+    .thumb img { transform: scale(1); transition: transform .35s ease; }
+    .thumb:hover img { transform: scale(1.04); }
+
+    /* Tag pills for shifts */
+    .pills { display: inline-flex; gap: 8px; flex-wrap: wrap; }
+    .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 12px; padding: 6px 10px; border-radius: 999px; border: 1px dashed var(--bdr); color: var(--text); background: color-mix(in oklab, var(--panel) 85%, #000 15%); }
+    .pill .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 2px color-mix(in oklab, var(--accent) 20%, transparent); }
+    .pill.red .dot { background: #ff6b6b; }
+    .pill.green .dot { background: #4ad6a7; }
+
+    /* Footer */
+    footer { margin: 28px 0; display: flex; align-items: center; gap: 12px; }
+    .link { color: #fff; text-decoration: none; }
+
+    /* Back button */
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--bdr); background: linear-gradient(180deg, color-mix(in oklab, var(--panel) 90%, #fff 10%), var(--panel)); text-decoration: none; color: var(--text); box-shadow: var(--shadow); transition: transform .2s ease, background .2s ease; }
+    .back-btn:hover { transform: translateY(-1px); }
+
+    /* Utility */
+    .muted { color: var(--muted); }
+    .right { text-align: right; }
+
+    /* Mini step box */
+    .mini-box {
+      margin: 12px 4px 8px;
+      background: color-mix(in oklab, var(--panel) 92%, #000 8%);
+      border: 1px dashed var(--bdr);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 12px 14px;
+    }
+    .mini-box .mini-hd{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-weight:700; font-size:14px;
+    }
+    .mini-box .mini-hd .hint{ color: var(--muted); font-weight:600; font-size:20px; }
+    .mini-box .mini-bd{ margin-top:10px; color: var(--text); }
+    .mini-box ol{ margin: 6px 0 0 18px; padding:0; }
+    .mini-box li{ margin: 4px 0; line-height: 1.5; }
+    .mini-toggle{
+      appearance:none; border:1px solid var(--bdr); background:transparent; color:var(--text);
+      font-weight:600; border-radius:10px; padding:6px 10px; cursor:pointer;
+    }
+    .mini-toggle:hover{ filter:saturate(110%); transform: translateY(-1px); }
+    @media (max-width:760px){ .mini-box{ padding: 10px 12px; } }
+
+    
+    .result-box {
+      margin: 10px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .result-box .thumb {
+      flex: 1 1 200px;
+      max-width: 300px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--bdr);
+      box-shadow: var(--shadow);
+    }
+    .result-box img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    /* 单独放大 main part 那一张 */
+    .result-box .large-box {
+      flex: 1 1 450px;  /* 调整基础宽度 */
+      max-width: 650px; /* 设置最大宽度 */
+    }
+
+      .result-line {
+      display: flex;
+      justify-content: space-between; /* 或 center */
+      gap: 12px;
+      flex-wrap: nowrap; /* 强制不换行 */
+    }
+    .result-line .thumb {
+      flex: 1 1 0;
+      max-width: 180px; /* 控制单张图宽度 */
+    }
+    .result-line img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .caption {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+  </style>
+</head>
+    
+<body>
+  <!-- Sticky Header -->
+  <header class="site">
+    <div class="site-inner">
+      <div class="logo" aria-hidden="true">P2</div>
+      <div class="brand">CS180/280A · Project 4</div>
+      <div class="grow"></div>
+      <div class="actions">
+        <button class="btn ghost" id="themeToggle" aria-label="Switch Theme">🌓 Theme</button>
+        <a class="btn primary" href="../index.html">back to main</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <h1 class="page-title">Neural Radiance Field!</h1>
+    <p class="lead">This project aims to build a simple neural radiance field</span>.</p>
+    
+    <!-- P1 -->
+    <section class="panel" aria-labelledby="sec-simple">
+      <div class="panel-hd">
+        <h2 id="sec-simple">Part 0: Calibrating Your Camera and Capturing a 3D Scan</h2>
+        <span class="muted">4 sections in total</span>
+      </div>
+      <div class="panel-bd">
+        <!-- Small step box -->
+        <div class="mini-box" id="0.1">
+          <div class="mini-hd">
+            <span>Part 0</span>
+            <span class="hint">0.1</span>
+            <button class="mini-toggle" type="button" data-target="#0.1-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="0.1-body">
+            <ol>
+              <li><p>To calibrate my camera and get its parameters, I printed out the calibration tags fetched from the course project website, used my iphone to took 49 pictures of it from 
+                    muitiple angles and perspectives, and fed the source images to a python script to calculate the camera intrinsics and distortion coefficients</p>
+                  <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/calibration_dataset.png" alt="Box filter result 1">
+                      <div class="caption">my calibration dataset</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/calibration_result.png" alt="Box filter result 1">
+                      <div class="caption">my calibration result</div>
+                    </div>
+                  </div>
+                <p>It is proven that the calibration result is precise as the reprojction error is just 0.6337 pixel. 
+                    the camera configuration is then saved to camera_params.npz for further usage.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+        
+        <!-- Small step box -->
+        <div class="mini-box" id="0.2">
+          <div class="mini-hd">
+            <span>Part 0</span>
+            <span class="hint">0.2</span>
+            <button class="mini-toggle" type="button" data-target="#0.2-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="0.2-body">
+            <ol>
+              <li>
+                <p>For Nerf dataset preparation, I took 52 pictures of two pine cones together with my ArUco tag from multiple 
+                    angles and perspectives to serve as the dataset for Nerf construction</p>
+                  <div class="result-box">    
+                    <div class="thumb large-box">
+                      <img src="media/Nerf_dataset1.png" alt="Box filter result 1">
+                      <div class="caption">my Nerf source dataset</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/Nerf_dataset2.png" alt="Box filter result 1">
+                      <div class="caption">my Nerf source dataset</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+
+
+        <!-- Small step box -->
+        <div class="mini-box" id="0.3">
+          <div class="mini-hd">
+            <span>Part 0</span>
+            <span class="hint">0.3</span>
+            <button class="mini-toggle" type="button" data-target="#0.3-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="0.3-body">
+            <ol>
+              <li><p>After figuring out the camera intrinsics and collecting the Nerf source dataset, I wrote a 
+                      script to figure out the extrinsic parameter w.r.t each Nerf source picture, and visualized them 
+                      using the python package Viser.</p>
+                  <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/Viser1.png" alt="Box filter result 1">
+                      <div class="caption">Angle 1</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/Viser2.png" alt="Box filter result 1">
+                      <div class="caption">Angle 2</div>
+                    </div>
+                  </div>
+                <p>It is shown that the extrinsic parameters are correct, as the rays are pointed towards the world coordinate center.</p>
+              </li>
+            </ol>
+          </div>
+        </div>
+          
+        <!-- Small step box -->
+        <div class="mini-box" id="0.4">
+          <div class="mini-hd">
+            <span>Part 0</span>
+            <span class="hint">0.4</span>
+            <button class="mini-toggle" type="button" data-target="#0.4-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="0.4-body">
+            <ol>
+              <li><p>Finally I undistorted my images and package everything into a dataset format that I can use 
+                for training NeRF in the later parts of this project.</p>
+                <div class="result-box">    
+                    <div class="thumb large-box">
+                      <img src="media/final_dataset.png" alt="Box filter result 1">
+                      <div class="caption">Final dataset preparation for Nerf</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>  
+    </section>
+    <!---------------- P2 ----------->
+    <section class="panel" aria-labelledby="sec-simple">
+      <div class="panel-hd">
+        <h2 id="sec-simple">Part 1: Fit a Neural Field to a 2D Image</h2>
+        <span class="muted">1 section in total</span>
+      </div>
+      <div class="panel-bd">
+        <!-- Small step box -->
+        <div class="mini-box" id="1.1">
+          <div class="mini-hd">
+            <span>Part 1</span>
+            <span class="hint">1.1</span>
+            <button class="mini-toggle" type="button" data-target="#1.1-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.1-body">
+            <ol>
+              <li><p>In this section I trained a basic neural network to realize image recovering from pixel coordinates.
+                  The network has 4 layers, each with width of 256, trained using a learning rate of 1e-2. To help the 
+                  network learning more details of the picture, I defined the highest positional encoding frequency order to be 
+                  10.</p>
+                  <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/modelArchietecture.png" alt="Box filter result 1">
+                      <div class="caption">My model archietecture and hyperparameters</div>
+                    </div>
+                  </div>
+              </li>
+              <li><p>I used this configuration to train the fox image and my own image,here are the results of my training progression:</p> 
+                <p>FOX IMAGE</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/fox.jpg" alt="Box filter result 1">
+                      <div class="caption">original fox picture</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/fox_final.png" alt="Box filter result 1">
+                      <div class="caption">fox picture predicted by my model</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/fox_iter_0001.png" alt="Box filter result 1">
+                      <div class="caption">iteration 1</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fox_iter_0050.png" alt="Box filter result 1">
+                      <div class="caption">iteration 50</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fox_iter_0100.png" alt="Box filter result 1">
+                      <div class="caption">iteration 100</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fox_iter_0200.png" alt="Box filter result 1">
+                      <div class="caption">iteration 200</div>
+                    </div>
+                  </div>
+                <p>BREAKFAST IMAGE</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/breakfast.png" alt="Box filter result 1">
+                      <div class="caption">original fox picture</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/breakfast_final.png" alt="Box filter result 1">
+                      <div class="caption">fox picture predicted by my model</div>
+                    </div>
+                  </div>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/breakfast_iter_0001.png" alt="Box filter result 1">
+                      <div class="caption">iteration 1</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/breakfast_iter_0050.png" alt="Box filter result 1">
+                      <div class="caption">iteration 50</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/breakfast_iter_0100.png" alt="Box filter result 1">
+                      <div class="caption">iteration 100</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/breakfast_iter_0300.png" alt="Box filter result 1">
+                      <div class="caption">iteration 200</div>
+                    </div>
+                  </div>
+              </li>
+              <li>
+                <p>
+                  Here are the corresponding PSNR curves:
+                </p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/fox_psnr_curve.png" alt="Box filter result 1">
+                      <div class="caption">PSNR for fox picture</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/breakfast_psnr_curve.png" alt="Box filter result 1">
+                      <div class="caption">PSNR for breakfast picture</div>
+                    </div>
+                  </div>
+              </li>
+              <li>
+                <p>
+                  Finally I compared two choices of max positional encoding frequency (L=4; L=10) and 2 choices of width (W=64; W=256)
+                </p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/final_L4_W64.png" alt="Box filter result 1">
+                      <div class="caption">final result for L=4 and W=64</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/final_L4_W256.png" alt="Box filter result 1">
+                      <div class="caption">final result for L=4 and W=256</div>
+                    </div>
+                  </div>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/final_L10_W64.png" alt="Box filter result 1">
+                      <div class="caption">final result for L=10 and W=64</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/fox_final.png" alt="Box filter result 1">
+                      <div class="caption">final result for L=10 and W=256</div>
+                    </div>
+                  </div>
+                <p>
+                  With these four settings, we can clearly see how the positional encoding frequency L and the network width W affect the reconstruction.
+When L is small (L=4), the model can only reproduce coarse, low-frequency structures, so the results look blurry even with a wider network. Increasing the width helps a bit, but the details are still missing.
+With a higher frequency (L=10), the model recovers much sharper textures. A small width (W=64) still leaves some artifacts, but using a wider network (W=256) produces the cleanest and most detailed result.
+Overall, L controls how much fine detail the model can represent, and W controls how well it can fit those details.
+                </p>
+              </li>
+            </ol>
+          </div>
+        </div>
+    </section>   
+          
+    <!---------------- P3 ----------->
+    <section class="panel" aria-labelledby="sec-simple">
+      <div class="panel-hd">
+        <h2 id="sec-simple">Part 2: Fit a Neural Radiance Field from Multi-view Images</h2>
+        <span class="muted">1 section in total</span>
+      </div>
+      <div class="panel-bd">
+        <!-- Small step box -->
+        <div class="mini-box" id="2.1～2.3">
+          <div class="mini-hd">
+            <span>Part 2.1～2.3</span>
+            <span class="hint">2.1～2.3</span>
+            <button class="mini-toggle" type="button" data-target="#2.1～2.3-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="2.1～2.3-body">
+            <ol>
+              <li><p>In this section, I managed to load data from Lego scene provided in the course website, and 
+                  plot the cameras, rays, and samples in 3D using Viser.</p>
+                  <p>To achieve this , firstly I wrote a function transform(c2w, x_c) to transform camera coordinate to 
+                      world coordinate. Then I wrote a function pixel_to_camera(K, uv, s) to transform pixel coordinates
+                      to camera coordinates, given arbitary depth s. Finally I wrote a function pixel_to_ray(K, c2w, uv, depth)
+                      to get the unit ray that shoot from a certain pixel of the camera. The detailed implementation is shown below.</p>
+                  <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/transform.png" alt="Box filter result 1">
+                      <div class="caption">transform(c2w, x_c)</div>
+                    </div>
+                    <div class="thumb ">
+                      <img src="media/pixel2camera.png" alt="Box filter result 1">
+                      <div class="caption">pixel_to_camera(K, uv, s) </div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/pixel2ray.png" alt="Box filter result 1">
+                      <div class="caption">pixel_to_ray(K, c2w, uv, depth)</div>
+                    </div>
+                  </div>
+              </li>
+              <li><p>I used the second method mentioned in the official website, which randomly pick N rays and sample along them
+                      finally return the world coordinates of those points. The detailed procedure is shown in the picture below</p> 
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/samplealongrays.png" alt="Box filter result 1">
+                      <div class="caption">Sample along rays function</div>
+                    </div>
+                  </div>
+              </li>
+              <li>
+                <p>After doing the above procedure, I integrate the above tools to a RaysDataset class.
+                  This RaysDataset class precomputes all rays for every training image so we can sample them efficiently
+                  during NeRF training. It builds a pixel grid, converts each pixel into a ray using the camera intrinsics 
+                  and extrinsics, and stores the ray origins, directions, and corresponding RGB values in flattened form. 
+                  During training, we can randomly draw a batch of rays from the entire dataset or from a specific camera for debugging.
+                  This makes the dataloader simple, fast, and convenient for both global sampling and visualization in Part 2.3.</p>
+                <p>Then, I implemented a visualization function visualize_random_rays(dataset, K, num_rays, n_samples=) that helps visualize
+                   the dataset using Viser, following the code structure provided in the official website. These are two of the visualized results:</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/Viser3.png" alt="Box filter result 1">
+                      <div class="caption">Visualization with random rays</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/from_single.png" alt="Box filter result 1">
+                      <div class="caption">Visualization with rays from a single camera</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <!-- Small step box -->
+        <div class="mini-box" id="2.4～2.5">
+          <div class="mini-hd">
+            <span>Part 2.4～2.5</span>
+            <span class="hint">2.4～2.5</span>
+            <button class="mini-toggle" type="button" data-target="#2.4～2.5-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="2.4～2.5-body">
+            <ol>
+              <li><p>In this section, I managed to train a Nerf using the lego dataset.</p>
+                  <p>To achieve this , firstly I implemented the nerf model.the NeRF model follows the standard 
+                    design proposed in the original paper. I apply sinusoidal positional encoding to both 3D positions
+                    and view directions, using higher-frequency bands for positions and lower-frequency ones for 
+                    directions. The network is built as an eight-layer MLP with a skip connection at the middle layer,
+                    which helps preserve high-frequency details during training. The density (sigma) and color branches 
+                    are separated: sigma is predicted directly from the spatial features, while RGB is produced by 
+                    combining learned features with the encoded viewing direction. 
+                    A final sigmoid ensures valid color outputs.</p>
+              </li>
+              <li><p>To train the NeRF model, I implemented the volume rendering function as indeicated in the instruction. Then,
+                I randomly sample a large batch of rays at each iteration and generate points 
+                along them with stratified sampling. The network is optimized using Adam with a learning rate of 5 \times 10^{-4}, 
+                batch size 8192, and 64 samples per ray. I trained for 5000 iterations on Google Colab T4 GPU.
+                During training, I rendered a validation image every 250 iterations to track progress. PSNR is used as the main evaluation metric, and I log both training loss and validation PSNR to
+                monitor convergence. This setup provides stable optimization and reproduces the expected NeRF performance on the 
+                Lego dataset. Here are the rendering results during training:</p> 
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/val_iter_000001.png" alt="Box filter result 1">
+                      <div class="caption">the first iteration</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/val_iter_000250.png" alt="Box filter result 1">
+                      <div class="caption">the 250th iteration</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/val_iter_000750.png" alt="Box filter result 1">
+                      <div class="caption">the 750th iteration</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/val_iter_001500.png" alt="Box filter result 1">
+                      <div class="caption">the 1500th iteration</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/val_iter_005000.png" alt="Box filter result 1">
+                      <div class="caption">the 5000th iteration</div>
+                    </div>
+                  </div>
+                <p>And here is the PSNR curve:</p>
+                <div class="result-box">
+                  <div class="thumb large-box">
+                      <img src="media/psnr_curve.png" alt="Box filter result 1">
+                      <div class="caption">the PSNR curve during trainig</div>
+                    </div>
+                </div>
+                <p>Finally, here is the GIF of camera circling the lego car</p>
+                <div class="result-box">
+                  <div class="thumb large-box">
+                      <img src="media/output.gif" alt="Box filter result 1">
+                      <div class="caption">Spherical rendering video of the Lego</div>
+                    </div>
+                </div>
+              </li>
+              <li>
+                <p>Then I tested using my own dataset. I found that near=0.3 far=0.7 is suitable for my dataset. 
+                  I set n_samples=64, batch_size=4096, max_iters=5000, lr=5e-4, and the rest of the hyperparameters are the same 
+                  as above.During implementation, I found that the model failed to converge when trained on my first 
+                  set of images. The PSNR stayed extremely low and the rendered results were almost blank. 
+                  After debugging, I realized the issue was not in the code, but in the dataset: most views 
+                  contained large backgrounds, very small objects, and almost no parallax. NeRF simply couldn’t 
+                  recover meaningful geometry. To fix this, I reshot the entire dataset, keeping the object centered,
+                  increasing the number of viewpoints, and making sure the camera moved around it in a full circle. 
+                  After these adjustments, training became much better, though the outcome isn't satisfying enough.</p>
+                <div class="result-box">
+                  <div class="thumb large-box">
+                      <img src="media/image.png" alt="Box filter result 1">
+                      <div class="caption">my new dataset after realizing the problem</div>
+                    </div>
+                </div>
+                <p>Here are the progress during training:</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/val_iter_1.png" alt="Box filter result 1">
+                      <div class="caption">the first iteration</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/val_iter_250.png" alt="Box filter result 1">
+                      <div class="caption">the 250th iteration</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/val_iter_500.png" alt="Box filter result 1">
+                      <div class="caption">the 500th iteration</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/val_iter_1000.png" alt="Box filter result 1">
+                      <div class="caption">the 1000th iteration</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/val_iter_2750.png" alt="Box filter result 1">
+                      <div class="caption">the 2750th iteration</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/val_iter_5000.png" alt="Box filter result 1">
+                      <div class="caption">the 5000th iteration</div>
+                    </div>
+                  </div>
+                <p>And here is the PSNR curve and Loss function:</p>
+                <div class="result-box">
+                  <div class="thumb large-box">
+                      <img src="media/Traing_PSNRR.png" alt="Box filter result 1">
+                      <div class="caption">the PSNR curve during trainig</div>
+                    </div>
+                  <div class="thumb large-box">
+                      <img src="media/Training_loss.png" alt="Box filter result 1">
+                      <div class="caption">the LOSS curve during trainig</div>
+                    </div>
+                </div>
+                <p>Finally, here is the GIF of camera circling my own object</p>
+                <div class="result-box">
+                  <div class="thumb large-box">
+                      <img src="media/output4.gif" alt="Box filter result 1">
+                      <div class="caption">Spherical rendering video of my own dataset</div>
+                    </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+    </section> 
+  </main>
+        
+  <script>
+    // Theme toggle with localStorage
+    const root = document.documentElement;
+    const key = 'pg-theme';
+    const btn = document.getElementById('themeToggle');
+    const saved = localStorage.getItem(key);
+    if(saved){ document.documentElement.setAttribute('data-theme', saved); }
+    btn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem(key, next);
+    });
+    // Tiny toggle for mini-box
+    document.querySelectorAll('.mini-toggle').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const sel = btn.getAttribute('data-target');
+        const box = document.querySelector(sel);
+        const hidden = box.style.display === 'none';
+        box.style.display = hidden ? '' : 'none';
+        btn.textContent = hidden ? 'Hide' : 'Show';
+      });
+    });
+  </script>
+        
+</body>
