@@ -240,7 +240,7 @@
           <div class="mini-bd" id="0.1-body">
             <ol>
               <li><p>This part aims to play with DeepFloyd, which is a two stage diffusion model trained by Stability AI. The first step
-                  I did is to create some imaginative prompts, and encode them to vectors using T5 Text Encoder Embeddings Generator 
+                  I did is to create some imaginative prompts, and encode them to vectors using T5 Text Encoder Embeddings Generator. 
                   I created 11 prompts, as shown below in the generator's website:</p>
                   <div class="result-box">
                     <div class="thumb large-box">
@@ -248,7 +248,9 @@
                       <div class="caption">the prompts</div>
                     </div>
                   </div>
-                <p>"a wide angle photo of the campanile reflected in a rain puddle at night"</p>
+                <p>Prompt: "a wide angle photo of the campanile reflected in a rain puddle at night"</p>
+                <p>Reflect: The three pictures are all clear, and they all matches the key words in prompt: wide angle/campanile/reflect/rain puddle/night. As the inference 
+                  steps becomes larger, the pictures gradually contain more details (can diffuse more noise), and the angles becomes wider.</p>
                 <div class="result-box">
                     <div class="thumb">
                       <img src="media/prompt1_20.png" alt="Box filter result 1">
@@ -263,7 +265,10 @@
                       <div class="caption">80 num_inference_steps</div>
                     </div>
                   </div>
-                <p>"a watercolor painting of robots studying under paper lanterns in a quiet library"</p>
+                <p>Prompt: "a watercolor painting of robots studying under paper lanterns in a quiet library"</p>
+                <p>Reflect: All three pictures didn't manage to obey all the instructions in the prompt: Only the third picture captures the detail "paper lanters", and only the second image captures the detail "library", but it doesn't show the keyword "studying". But at least all three pictures
+                  follow the instruction of "watercolor painting" and "robotics". Overall, the images are clear, with more details added
+                  as the inference steps grow, which aligns the observation in the first set of images.</p>
                 <div class="result-box">
                     <div class="thumb">
                       <img src="media/prompt2_20.png" alt="Box filter result 1">
@@ -278,7 +283,9 @@
                       <div class="caption">80 num_inference_steps</div>
                     </div>
                   </div>
-                <p>"an aerial photograph of terraced rice fields shaped like a spiral galaxy"</p>
+                <p>Prompt: "an aerial photograph of terraced rice fields shaped like a spiral galaxy"</p>
+                <p>Reflect: The terraced rice fields are more and more shaped like a spiral galaxy as the inference steps grow. Overall, the three
+                    images all obeys the instruction in the prompt, and are all clear without distinct noise。</p>
                 <div class="result-box">
                     <div class="thumb">
                       <img src="media/prompt3_20.png" alt="Box filter result 1">
