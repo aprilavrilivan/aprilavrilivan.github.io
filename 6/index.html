@@ -248,6 +248,8 @@
                       <div class="caption">the prompts</div>
                     </div>
                   </div>
+                </li>
+              <li>
                 <p>Then I fed the embedded vectors to DeepFloyd, with random seed = 100. The following are three sets of results</p>
                 <p>--------------------------------------------------------------------------------------------------------------------------</p>
                 <p>Prompt: "a wide angle photo of the campanile reflected in a rain puddle at night"</p>
@@ -312,8 +314,8 @@
     <!---------------- P2 ----------->
     <section class="panel" aria-labelledby="sec-simple">
       <div class="panel-hd">
-        <h2 id="sec-simple">Part 1: Fit a Neural Field to a 2D Image</h2>
-        <span class="muted">1 section in total</span>
+        <h2 id="sec-simple">Part 1: Sampling Loops</h2>
+        <span class="muted">9 section in total</span>
       </div>
       <div class="panel-bd">
         <!-- Small step box -->
@@ -325,122 +327,38 @@
           </div>
           <div class="mini-bd" id="1.1-body">
             <ol>
-              <li><p>In this section I trained a basic neural network to realize image recovering from pixel coordinates.
-                  The network has 4 layers, each with width of 256, trained using a learning rate of 1e-2. To help the 
-                  network learning more details of the picture, I defined the highest positional encoding frequency order to be 
-                  10.</p>
+              <li><p>The following demonstrates a simple fwd proc of diffusion sampling</p>
+                  <p>Here is the critical part of the forward(im, t) function: choose an alpha, sqrt the alpha
+                    , generate a pure noise img, and merge the noise img and the orignal img in a weighted way according to alpha.</p>
                   <div class="result-box">
                     <div class="thumb large-box">
-                      <img src="media/modelArchietecture.png" alt="Box filter result 1">
-                      <div class="caption">My model archietecture and hyperparameters</div>
-                    </div>
-                  </div>
-              </li>
-              <li><p>I used this configuration to train the fox image and my own image,here are the results of my training progression:</p> 
-                <p>FOX IMAGE</p>
-                <div class="result-box">
-                    <div class="thumb large-box">
-                      <img src="media/fox.jpg" alt="Box filter result 1">
-                      <div class="caption">original fox picture</div>
-                    </div>
-                    <div class="thumb large-box">
-                      <img src="media/fox_final.png" alt="Box filter result 1">
-                      <div class="caption">fox picture predicted by my model</div>
-                    </div>
-                  </div>
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/fox_iter_0001.png" alt="Box filter result 1">
-                      <div class="caption">iteration 1</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/fox_iter_0050.png" alt="Box filter result 1">
-                      <div class="caption">iteration 50</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/fox_iter_0100.png" alt="Box filter result 1">
-                      <div class="caption">iteration 100</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/fox_iter_0200.png" alt="Box filter result 1">
-                      <div class="caption">iteration 200</div>
-                    </div>
-                  </div>
-                <p>BREAKFAST IMAGE</p>
-                <div class="result-box">
-                    <div class="thumb large-box">
-                      <img src="media/breakfast.png" alt="Box filter result 1">
-                      <div class="caption">original fox picture</div>
-                    </div>
-                    <div class="thumb large-box">
-                      <img src="media/breakfast_final.png" alt="Box filter result 1">
-                      <div class="caption">fox picture predicted by my model</div>
-                    </div>
-                  </div>
-                  <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/breakfast_iter_0001.png" alt="Box filter result 1">
-                      <div class="caption">iteration 1</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/breakfast_iter_0050.png" alt="Box filter result 1">
-                      <div class="caption">iteration 50</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/breakfast_iter_0100.png" alt="Box filter result 1">
-                      <div class="caption">iteration 100</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/breakfast_iter_0300.png" alt="Box filter result 1">
-                      <div class="caption">iteration 200</div>
+                      <img src="media/forward_proc.png" alt="Box filter result 1">
+                      <div class="caption">the forward process</div>
                     </div>
                   </div>
               </li>
               <li>
                 <p>
-                  Here are the corresponding PSNR curves:
+                  Here are the Campanile at noise level [250, 500, 750]:
                 </p>
                 <div class="result-box">
                     <div class="thumb large-box">
-                      <img src="media/fox_psnr_curve.png" alt="Box filter result 1">
-                      <div class="caption">PSNR for fox picture</div>
+                      <img src="media/0.png" alt="Box filter result 1">
+                      <div class="caption">Berkeley Campanile</div>
                     </div>
                     <div class="thumb large-box">
-                      <img src="media/breakfast_psnr_curve.png" alt="Box filter result 1">
-                      <div class="caption">PSNR for breakfast picture</div>
+                      <img src="media/250.png" alt="Box filter result 1">
+                      <div class="caption">Noisy Campanile at t=250</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/500.png" alt="Box filter result 1">
+                      <div class="caption">Noisy Campanile at t=500</div>
+                    </div>
+                    <div class="thumb large-box">
+                      <img src="media/750.png" alt="Box filter result 1">
+                      <div class="caption">Noisy Campanile at t=750</div>
                     </div>
                   </div>
-              </li>
-              <li>
-                <p>
-                  Finally I compared two choices of max positional encoding frequency (L=4; L=10) and 2 choices of width (W=64; W=256)
-                </p>
-                <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/final_L4_W64.png" alt="Box filter result 1">
-                      <div class="caption">final result for L=4 and W=64</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/final_L4_W256.png" alt="Box filter result 1">
-                      <div class="caption">final result for L=4 and W=256</div>
-                    </div>
-                  </div>
-                <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/final_L10_W64.png" alt="Box filter result 1">
-                      <div class="caption">final result for L=10 and W=64</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/fox_final.png" alt="Box filter result 1">
-                      <div class="caption">final result for L=10 and W=256</div>
-                    </div>
-                  </div>
-                <p>
-                  With these four settings, we can clearly see how the positional encoding frequency L and the network width W affect the reconstruction.
-When L is small (L=4), the model can only reproduce coarse, low-frequency structures, so the results look blurry even with a wider network. Increasing the width helps a bit, but the details are still missing.
-With a higher frequency (L=10), the model recovers much sharper textures. A small width (W=64) still leaves some artifacts, but using a wider network (W=256) produces the cleanest and most detailed result.
-Overall, L controls how much fine detail the model can represent, and W controls how well it can fit those details.
-                </p>
               </li>
             </ol>
           </div>
