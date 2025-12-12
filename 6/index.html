@@ -431,6 +431,42 @@
             </ol>
           </div>
         </div>
+        <!-- Small step box -->
+        <div class="mini-box" id="1.4">
+          <div class="mini-hd">
+            <span>Part 1</span>
+            <span class="hint">1.4</span>
+            <button class="mini-toggle" type="button" data-target="#1.4-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.4-body">
+            <ol>
+              <li><p>To achieve even better denoising outcome, we can use iterative denoising. We can iteratively denoise from t=990 to t=0, 
+                      with a stride=30. To do this, first I implemented a strided_timesteps list, which contains timesteps like 990,960,930...,60,30,0, and 
+              also initialize the timesteps to stage_1 model using the function stage_1.scheduler.set_timesteps(timesteps=strided_timesteps):</p>
+                  <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/createStride.png" alt="Box filter result 1">
+                    </div>
+                  </div>
+                <p>Here are the results:</p>
+                <div class="result-box">
+                    <div class="thumb">
+                      <img src="media/deno250.png" alt="Box filter result 1">
+                      <div class="caption">One-Step Denoised Campanile at t=250</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/deno500.png" alt="Box filter result 1">
+                      <div class="caption">One-Step Denoised Campanile at t=500</div>
+                    </div>
+                    <div class="thumb">
+                      <img src="media/deno750.png" alt="Box filter result 1">
+                      <div class="caption">One-Step Denoised Campanile at t=750</div>
+                    </div>
+                  </div>
+              </li>
+            </ol>
+          </div>
+        </div>
       </div>
     </section>   
           
