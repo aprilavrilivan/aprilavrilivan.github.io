@@ -1008,35 +1008,34 @@
           </div>
           <div class="mini-bd" id="1.8-body">
             <ol>
-              <li><p>Then, I implemented a visual anagram using diffusion. The picture describes different scenes when fliped upsidedown. To do this, I did two </p>
+              <li><p>Then, I implemented a visual anagram using diffusion. The picture describes different scenes when fliped upsidedown. To do this, I did two CFGs in one timestep, one for upright picture and one for upside uown picture,
+                and then average them together</p>
               <div class="result-box">
                   <div class="thumb">
-                    <img src="media/prompt1_1.png" alt="Box filter result 1">
-                    <div class="caption">SDEdit with i_start=1</div>
+                    <img src="media/anacode1.png" alt="Box filter result 1">
+                    <div class="caption">CFG for upright</div>
                   </div>
                   <div class="thumb">
-                    <img src="media/prompt1_3.png" alt="Box filter result 1">
-                    <div class="caption">SDEdit with i_start=3</div>
+                    <img src="media/anacode2.png" alt="Box filter result 1">
+                    <div class="caption">CFG for upsidedown</div>
                   </div>
                   <div class="thumb">
-                    <img src="media/prompt1_5.png" alt="Box filter result 1">
-                    <div class="caption">SDEdit with i_start=5</div>
+                    <img src="media/anacode3.png" alt="Box filter result 1">
+                    <div class="caption">merge the noise together</div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <p>p1 = "an oil painting of paper lanterns floating in a circle on a lake at night"</p>
+                <p>p2 = "an oil painting of a dragon's face made of glowing scales in the dark"</p>
+              <div class="result-box">
+                  <div class="thumb">
+                    <img src="media/anacode111.png" alt="Box filter result 1">
+                    <div class="caption">upright</div>
                   </div>
                   <div class="thumb">
-                    <img src="media/prompt1_7.png" alt="Box filter result 1">
-                    <div class="caption">SDEdit with i_start=7</div>
-                  </div>
-                  <div class="thumb">
-                    <img src="media/prompt1_10.png" alt="Box filter result 1">
-                    <div class="caption">SDEdit with i_start=10</div>
-                  </div>                  
-                  <div class="thumb">
-                    <img src="media/prompt1_21.png" alt="Box filter result 1">
-                    <div class="caption">SDEdit with i_start=20</div>
-                  </div>
-                  <div class="thumb">
-                    <img src="media/original.png" alt="Box filter result 1">
-                    <div class="caption">original campanile</div>
+                    <img src="media/anacode2222.png" alt="Box filter result 1">
+                    <div class="caption">upsidedown</div>
                   </div>
                 </div>
               </li>
