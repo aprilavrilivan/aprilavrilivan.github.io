@@ -514,6 +514,35 @@
             </ol>
           </div>
         </div>
+      <!-- Small step box -->
+        <div class="mini-box" id="1.5">
+          <div class="mini-hd">
+            <span>Part 1</span>
+            <span class="hint">1.5</span>
+            <button class="mini-toggle" type="button" data-target="#1.5-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.5-body">
+            <ol>
+              <li><p>To generate arbitarily denoised images, we could add noise to the Campanile image to time t=1000 (let i_start = 0), which tranforms it into a pure noise image. Then we perform the same 
+              iteratively denoise process till time =0, and see what kind of clean images the model would output:</p>
+              <div class="result-box">
+                  <div class="thumb">
+                    <img src="media/deno250.png" alt="Box filter result 1">
+                    <div class="caption">One-Step Denoised Campanile at t=250</div>
+                  </div>
+                  <div class="thumb">
+                    <img src="media/deno500.png" alt="Box filter result 1">
+                    <div class="caption">One-Step Denoised Campanile at t=500</div>
+                  </div>
+                  <div class="thumb">
+                    <img src="media/deno750.png" alt="Box filter result 1">
+                    <div class="caption">One-Step Denoised Campanile at t=750</div>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
       </div>
     </section>   
           
