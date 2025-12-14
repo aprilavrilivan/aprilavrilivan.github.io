@@ -1160,22 +1160,10 @@
                   </div>
               </li>
               <li>
-                <p>After doing the above procedure, I integrate the above tools to a RaysDataset class.
-                  This RaysDataset class precomputes all rays for every training image so we can sample them efficiently
-                  during NeRF training. It builds a pixel grid, converts each pixel into a ray using the camera intrinsics 
-                  and extrinsics, and stores the ray origins, directions, and corresponding RGB values in flattened form. 
-                  During training, we can randomly draw a batch of rays from the entire dataset or from a specific camera for debugging.
-                  This makes the dataloader simple, fast, and convenient for both global sampling and visualization in Part 2.3.</p>
-                <p>Then, I implemented a visualization function visualize_random_rays(dataset, K, num_rays, n_samples=) that helps visualize
-                   the dataset using Viser, following the code structure provided in the official website. These are two of the visualized results:</p>
+                <p>Then, I did the OOD test, which used the well trained UNet to predict noisy pictures with sigma values: sigma=[0.0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0] :</p>
                 <div class="result-box">
                     <div class="thumb large-box">
-                      <img src="media/Viser3.png" alt="Box filter result 1">
-                      <div class="caption">Visualization with random rays</div>
-                    </div>
-                    <div class="thumb large-box">
-                      <img src="media/from_single.png" alt="Box filter result 1">
-                      <div class="caption">Visualization with rays from a single camera</div>
+                      <img src="media/OOD.png" alt="Box filter result 1">
                     </div>
                   </div>
               </li>
