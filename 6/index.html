@@ -1167,6 +1167,28 @@
                     </div>
                   </div>
               </li>
+              <li>
+                <p>The last experiment is to train the UNet to denoise pure noise. I used the same model training hyperparameters as in 2.1.2.1, but
+                with input pictures of pure noise. The following is the loss curve during training:</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/losscurvenoise.png" alt="Box filter result 1">
+                    </div>
+                  </div>
+                <p>Here is the prediction on random pure noise by model trained after 1 epoch and 5 epochs:</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/average1.png" alt="Box filter result 1">
+                    </div>
+                  </div>
+                <p>We can see that no matter what random noise we feed in, the model tends to output something that looks like a blurry “9”. 
+                  This is basically the model collapsing to an “average digit” over the training set. The reason is that with an MSE loss, 
+                  the best prediction for a given input is the conditional mean E[x｜z]. But here z is pure Gaussian noise and it has almost 
+                  no relationship with the target clean image x, so E[x｜z] is roughly just E[x], i.e., the dataset mean
+                  (similar to a centroid in clustering). Since the input doesn’t provide any useful hint about which digit it 
+                  should reconstruct, predicting this average-looking digit is an easy way to reduce the overall squared error.
+                </p>
+              </li>
             </ol>
           </div>
         </div>
