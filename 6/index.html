@@ -1028,30 +1028,81 @@
                 </div>
               </li>
               <li>
-                <p>p1 = "an oil painting of paper lanterns floating in a circle on a lake at night"</p>
-                <p>p2 = "an oil painting of a dragon's face made of glowing scales in the dark"</p>
+                <p>p1 = "A cat"</p>
+                <p>p2 = "A dragon"</p>
               <div class="result-box">
                   <div class="thumb">
-                    <img src="media/anagram111.png" alt="Box filter result 1">
+                    <img src="media/anagram_1.png" alt="Box filter result 1">
                     <div class="caption">upright</div>
                   </div>
                   <div class="thumb">
-                    <img src="media/anagram222.png" alt="Box filter result 1">
+                    <img src="media/anagram_2.png" alt="Box filter result 1">
                     <div class="caption">upsidedown</div>
                   </div>
                 </div>
               </li>
               <li>
-                <p>p1 = "a digital painting of a person in a hood sitting on a rooftop watching the city lights below"</P>
-                <p>p2 = "a digital painting of a fox's face with bright eyes and sharp triangular ears" </p>
+                <p>p1 = "A hooded person sitting on a rooftop"</P>
+                <p>p2 = "A fox face with bright eyes" </p>
               <div class="result-box">
                   <div class="thumb">
-                    <img src="media/anagram1.png" alt="Box filter result 1">
+                    <img src="media/anagram_3.png" alt="Box filter result 1">
                     <div class="caption">upright</div>
                   </div>
                   <div class="thumb">
-                    <img src="media/anagram2.png" alt="Box filter result 1">
+                    <img src="media/anagram_4.png" alt="Box filter result 1">
                     <div class="caption">upsidedown</div>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+        <!-- Small step box -->
+        <div class="mini-box" id="1.9">
+          <div class="mini-hd">
+            <span>Part 1</span>
+            <span class="hint">1.9</span>
+            <button class="mini-toggle" type="button" data-target="#1.9-bo">Hide</button>
+          </div>
+          <div class="mini-bd" id="1.9-body">
+            <ol>
+              <li><p>We can also create hybrid pictures using the same diffusion pipeline. The hybrid picture performs different meanings when 
+              looked from close to far. To realize this, I did two CFGs in a single timestep with different guiding prompts. Then, I merge the 
+              low frequency part of the noise from the first CFG with the high frequency part of the noise from the second CFG, and performs a 
+              denoising step. The critical code snippets are shown below:</p>
+              <div class="result-box">
+                  <div class="thumb">
+                    <img src="media/hybrid1.png" alt="Box filter result 1">
+                    <div class="caption">CFG for prompt 1</div>
+                  </div>
+                  <div class="thumb">
+                    <img src="media/hybrid2.png" alt="Box filter result 1">
+                    <div class="caption">CFG for prompt 2</div>
+                  </div>
+              </div>
+              <div class="result-box">
+                  <div class="thumb large-box">
+                    <img src="media/merge_noise.png" alt="Box filter result 1">
+                    <div class="caption">merge the noise(with diff freq) together</div>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <p>p1(low freq) = "A mushroom"</p>
+                <p>p2(high freq) = "A flower"</p>
+              <div class="result-box">
+                  <div class="thumb">
+                    <img src="media/hybrid_1.png" alt="Box filter result 1">
+                  </div>
+                </div>
+              </li>
+              <li>
+                <p>p1(low freq) = "A mountain"</P>
+                <p>p2(high freq) = "A Christmas tree" </p>
+              <div class="result-box">
+                  <div class="thumb">
+                    <img src="media/hybrid_2.png" alt="Box filter result 1">
                   </div>
                 </div>
               </li>
