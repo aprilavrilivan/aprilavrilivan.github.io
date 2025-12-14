@@ -1131,18 +1131,31 @@
                 is to train a UNet that translate a noisy image back to its clean version. To do this, I first create a set of noisy images by 
                 adding Gaussian noise to clean images, visualized as below:
                   <div class="result-box">
-                    <div class="thumb">
+                    <div class="thumb large-box">
                       <img src="media/noise_number.png" alt="Box filter result 1">
                       <div class="caption">clean pics adding noise with sigma=[0.0, 0.2, 0.4, 0.5, 0.6, 0.8, 1.0]</div>
                     </div>
                   </div>
               </li>
-              <li><p>I used the second method mentioned in the official website, which randomly pick N rays and sample along them
-                      finally return the world coordinates of those points. The detailed procedure is shown in the picture below</p> 
+              <li><p>Then  I set up a training pipeline to train the UNet, with the following parameters:</p> 
                 <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/samplealongrays.png" alt="Box filter result 1">
+                    <div class="thumb large-box">
+                      <img src="media/train_para.png" alt="Box filter result 1">
                       <div class="caption">Sample along rays function</div>
+                    </div>
+                  </div>
+                <p>Here is the mse_loss during training:</p>
+                  <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/loss_curve.png" alt="Box filter result 1">
+                      <div class="caption">The loss curve</div>
+                    </div>
+                  </div>
+                <p>And here is the comparism of the original clean images, the images adding noise with sigma=0.5, the prediction from the first epoch and the 
+                prediction from the 5th epoch of training;</p>
+                <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/prediction.png" alt="Box filter result 1">
                     </div>
                   </div>
               </li>
