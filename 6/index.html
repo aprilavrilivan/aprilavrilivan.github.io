@@ -1193,65 +1193,28 @@
           </div>
         </div>
         <!-- Small step box -->
-        <div class="mini-box" id="2.4～2.5">
+        <div class="mini-box" id="2.2.1～2.2.6">
           <div class="mini-hd">
-            <span>Part 2.4～2.5</span>
-            <span class="hint">2.4～2.5</span>
-            <button class="mini-toggle" type="button" data-target="#2.4～2.5-bo">Hide</button>
+            <span>Part 2.2.1～2.2.6</span>
+            <span class="hint">2.2.1～2.2.6</span>
+            <button class="mini-toggle" type="button" data-target="#2.2.1～2.2.6-bo">Hide</button>
           </div>
-          <div class="mini-bd" id="2.4～2.5-body">
+          <div class="mini-bd" id="2.2.1～2.2.6-body">
             <ol>
-              <li><p>In this section, I managed to train a Nerf using the lego dataset.</p>
-                  <p>To achieve this , firstly I implemented the nerf model.the NeRF model follows the standard 
-                    design proposed in the original paper. I apply sinusoidal positional encoding to both 3D positions
-                    and view directions, using higher-frequency bands for positions and lower-frequency ones for 
-                    directions. The network is built as an eight-layer MLP with a skip connection at the middle layer,
-                    which helps preserve high-frequency details during training. The density (sigma) and color branches 
-                    are separated: sigma is predicted directly from the spatial features, while RGB is produced by 
-                    combining learned features with the encoded viewing direction. 
-                    A final sigmoid ensures valid color outputs.</p>
-              </li>
-              <li><p>To train the NeRF model, I implemented the volume rendering function as indeicated in the instruction. Then,
-                I randomly sample a large batch of rays at each iteration and generate points 
-                along them with stratified sampling. The network is optimized using Adam with a learning rate of 5 \times 10^{-4}, 
-                batch size 8192, and 64 samples per ray. I trained for 5000 iterations on Google Colab T4 GPU.
-                During training, I rendered a validation image every 250 iterations to track progress. PSNR is used as the main evaluation metric, and I log both training loss and validation PSNR to
-                monitor convergence. This setup provides stable optimization and reproduces the expected NeRF performance on the 
-                Lego dataset. Here are the rendering results during training:</p> 
-                <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/val_iter_000001.png" alt="Box filter result 1">
-                      <div class="caption">the first iteration</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/val_iter_000250.png" alt="Box filter result 1">
-                      <div class="caption">the 250th iteration</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/val_iter_000750.png" alt="Box filter result 1">
-                      <div class="caption">the 750th iteration</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/val_iter_001500.png" alt="Box filter result 1">
-                      <div class="caption">the 1500th iteration</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/val_iter_005000.png" alt="Box filter result 1">
-                      <div class="caption">the 5000th iteration</div>
+              <li><p>This section explores the flow matching model. To let the original UNet support fm function, I added the time 
+              conditioning block to it, as demonstrated in the official diagram. Then I managed to set up a training pipeline following the 
+              pseudocode provided in the hw website, the following is the resulting loss function during 20 epochs of training:</p>
+                  <div class="result-box">
+                    <div class="thumb large-box">
+                      <img src="media/fmloss.png" alt="Box filter result 1">
+                      <div class="caption">the loss function of fm training</div>
                     </div>
                   </div>
-                <p>And here is the PSNR curve:</p>
+              </li>
+              <li><p>I managed to visualize the fm model prediction after 1, 5, 10, and 20 epochs:</p> 
                 <div class="result-box">
                   <div class="thumb large-box">
-                      <img src="media/psnr_curve.png" alt="Box filter result 1">
-                      <div class="caption">the PSNR curve during trainig</div>
-                    </div>
-                </div>
-                <p>Finally, here is the GIF of camera circling the lego car</p>
-                <div class="result-box">
-                  <div class="thumb large-box">
-                      <img src="media/output.gif" alt="Box filter result 1">
-                      <div class="caption">Spherical rendering video of the Lego</div>
+                      <img src="media/fm1.png" alt="Box filter result 1">
                     </div>
                 </div>
               </li>
