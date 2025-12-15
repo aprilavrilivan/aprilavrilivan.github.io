@@ -1219,64 +1219,19 @@
                 </div>
               </li>
               <li>
-                <p>Then I tested using my own dataset. I found that near=0.3 far=0.7 is suitable for my dataset. 
-                  I set n_samples=64, batch_size=4096, max_iters=5000, lr=5e-4, and the rest of the hyperparameters are the same 
-                  as above.During implementation, I found that the model failed to converge when trained on my first 
-                  set of images. The PSNR stayed extremely low and the rendered results were almost blank. 
-                  After debugging, I realized the issue was not in the code, but in the dataset: most views 
-                  contained large backgrounds, very small objects, and almost no parallax. NeRF simply couldn’t 
-                  recover meaningful geometry. To fix this, I reshot the entire dataset, keeping the object centered,
-                  increasing the number of viewpoints, and making sure the camera moved around it in a full circle. 
-                  After these adjustments, training became much better, though the outcome isn't satisfying enough.</p>
+                <p>Finally, I implementes a class-conditioned FM denoiser, which instructs which specific number should the UNet denoise back to.
+                To do this, I add two more FCBlocks in  addition to the original blocks, whose job is to guide the denoiser. During training, 
+                I randomly let 10% of the one-hot clasifier to be zero, in order to maintain the model's basic denoising capability. During sampling
+                I used a CFG style sampling method like that in the diffusion part. Here is the loss funtion after 10 training epochs:</p>
                 <div class="result-box">
                   <div class="thumb large-box">
-                      <img src="media/image.png" alt="Box filter result 1">
-                      <div class="caption">my new dataset after realizing the problem</div>
+                      <img src="media/conditionedFMloss.png" alt="Box filter result 1">
                     </div>
                 </div>
-                <p>Here are the progress during training:</p>
-                <div class="result-box">
-                    <div class="thumb">
-                      <img src="media/val_iter_1.png" alt="Box filter result 1">
-                      <div class="caption">the first iteration</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/val_iter_250.png" alt="Box filter result 1">
-                      <div class="caption">the 250th iteration</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/val_iter_500.png" alt="Box filter result 1">
-                      <div class="caption">the 500th iteration</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/val_iter_1000.png" alt="Box filter result 1">
-                      <div class="caption">the 1000th iteration</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/val_iter_2750.png" alt="Box filter result 1">
-                      <div class="caption">the 2750th iteration</div>
-                    </div>
-                    <div class="thumb">
-                      <img src="media/val_iter_5000.png" alt="Box filter result 1">
-                      <div class="caption">the 5000th iteration</div>
-                    </div>
-                  </div>
-                <p>And here is the PSNR curve and Loss function:</p>
+                <p>I demonstrated the output of model after 1, 5, and 10 training epochs:</p>
                 <div class="result-box">
                   <div class="thumb large-box">
-                      <img src="media/Traing_PSNRR.png" alt="Box filter result 1">
-                      <div class="caption">the PSNR curve during trainig</div>
-                    </div>
-                  <div class="thumb large-box">
-                      <img src="media/Training_loss.png" alt="Box filter result 1">
-                      <div class="caption">the LOSS curve during trainig</div>
-                    </div>
-                </div>
-                <p>Finally, here is the GIF of camera circling my own object</p>
-                <div class="result-box">
-                  <div class="thumb large-box">
-                      <img src="media/output4.gif" alt="Box filter result 1">
-                      <div class="caption">Spherical rendering video of my own dataset</div>
+                      <img src="media/conditionedFMoutput.png" alt="Box filter result 1">
                     </div>
                 </div>
               </li>
