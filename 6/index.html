@@ -849,10 +849,10 @@
             <ol>
               <li><p>We can also use this process to do inpainting. That is, given a mask, the diffusion process only edits the area where the mask is 1. To realize this, at every diffusing step
               when we get the result x_t, we only keep the unmasked area, and replace the masked area with the original corresponding image at that stage. The following is the critical 
-              part of the inpainting function:</p>
+              part of the inpainting function (the rest part is just like CFG function):</p>
               <div class="result-box">
                   <div class="thumb large-box">
-                    <img src="media/codeInpainting.png" alt="Box filter result 1">
+                    <img src="media/inpaintingcriticalpic.png" alt="Box filter result 1">
                   </div>
               </div>
               </li>
