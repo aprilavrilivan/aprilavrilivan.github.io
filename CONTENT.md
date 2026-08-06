@@ -39,7 +39,14 @@
 - UC San Diego summer research year, mentor, and research topic（可选）:
 - Shenzhen Middle School graduation year（可选）:
 
-## Selected work still needed
+## Selected work — added
+
+- CS 180: Computer Vision and Computational Photography
+- Course portfolio: Projects 0–5
+- Project page and source repository links
+- Project 1 colorization result used as the cover image
+
+## Additional selected work still needed
 
 为每个项目或论文准备：
 
@@ -60,7 +67,7 @@
 
 - Replace every remaining visible `[placeholder]`.
 - Add a real profile photo, email, CV, and relevant profile links.
-- Add real selected work or temporarily remove that section.
+- Review and add future selected work as it becomes ready.
 - Confirm the dates and official titles in Experience & Education.
 - Remove `noindex, nofollow` when the site is ready for search engines.
 - Test both desktop and mobile layouts.
