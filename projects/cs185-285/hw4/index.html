@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Reinforcement Learning for LLMs | CS 185/285 | Yifan Xu</title>
+    <meta name="author" content="Yifan Xu">
+    <meta
+      name="description"
+      content="Yifan Xu's CS 185/285 LLM reinforcement learning project comparing REINFORCE and GRPO."
+    >
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#f7f6f2">
+
+    <link
+      rel="canonical"
+      href="https://aprilavrilivan.github.io/projects/cs185-285/hw4/"
+    >
+    <link rel="stylesheet" href="../../../stylesheet.css">
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="page-shell">
+      <header class="site-header subpage-header" id="top">
+        <a class="site-mark" href="../../../index.html" aria-label="Go to Yifan Xu's homepage">YX</a>
+        <nav class="site-nav" aria-label="Project navigation">
+          <a href="../../../index.html">Home</a>
+          <a href="../index.html">CS 185/285</a>
+          <a href="index.html" aria-current="page">HW4</a>
+        </nav>
+      </header>
+
+      <main id="main-content">
+        <section class="course-hero course-hero--detail" aria-labelledby="page-title">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">CS 185/285</a>
+            <span aria-hidden="true">/</span>
+            <span>Homework 4</span>
+          </nav>
+          <p class="eyebrow">Homework 4 · LLM Reinforcement Learning</p>
+          <h1 id="page-title">REINFORCE and GRPO for Language Models</h1>
+          <p class="course-lede">
+            I implemented sequence-level reinforcement learning for
+            Qwen2.5-Math-1.5B and compared REINFORCE with GRPO on controlled format
+            copying and harder mathematical reasoning tasks.
+          </p>
+          <ul class="course-meta" aria-label="Project topics">
+            <li>LLM RL</li>
+            <li>REINFORCE</li>
+            <li>GRPO</li>
+            <li>Mathematical Reasoning</li>
+          </ul>
+          <div class="artifact-links" aria-label="Homework 4 artifacts">
+            <a
+              class="artifact-link"
+              href="https://rail.eecs.berkeley.edu/deeprlcourse/static/homeworks/hw4.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Assignment <span aria-hidden="true">↗</span>
+            </a>
+            <a class="artifact-link" href="../reports/hw4-llm-rl.pdf">
+              Report <span aria-hidden="true">→</span>
+            </a>
+            <a
+              class="artifact-link artifact-link--primary"
+              href="https://github.com/aprilavrilivan/cs185-285-deep-rl-coursework/tree/main/hw4"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Code <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
+
+        <div class="project-body">
+          <div class="project-detail-grid">
+            <div>
+              <section class="project-section" aria-labelledby="overview-title">
+                <p class="section-kicker">Overview</p>
+                <h2 id="overview-title">Policy gradients at the token-sequence level</h2>
+                <p>
+                  This project adapted policy-gradient ideas to autoregressive language
+                  generation. I computed response log probabilities, constructed rollout
+                  buffers, and implemented both a standard REINFORCE objective and the
+                  group-relative advantage calculation used by GRPO.
+                </p>
+              </section>
+
+              <section class="project-section" aria-labelledby="experiments-title">
+                <p class="section-kicker">Experiments</p>
+                <h2 id="experiments-title">Format control and mathematical reasoning</h2>
+                <ul>
+                  <li>A format-copy task for validating reward-driven sequence learning.</li>
+                  <li>REINFORCE and GRPO under matched model and task settings.</li>
+                  <li>KL regularization and grouped rollouts during policy updates.</li>
+                  <li>Evaluation on Math Hard using boxed-answer exact match.</li>
+                </ul>
+              </section>
+
+              <section class="project-section" aria-labelledby="results-title">
+                <p class="section-kicker">Results</p>
+                <h2 id="results-title">Group-relative advantages improved the final score</h2>
+                <p>
+                  Both methods learned the constrained output format, but GRPO produced
+                  the stronger final Math Hard result. Comparing the two made the value
+                  of within-prompt grouped samples concrete: they supplied a useful
+                  relative learning signal without a separate learned critic.
+                </p>
+                <div class="result-grid" aria-label="Math Hard results">
+                  <div class="result-callout">
+                    <strong>37.70%</strong>
+                    <span>Final boxed exact match with GRPO</span>
+                  </div>
+                  <div class="result-callout">
+                    <strong>28.32%</strong>
+                    <span>Final boxed exact match with REINFORCE</span>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <aside class="project-aside" aria-labelledby="facts-title">
+              <h2 id="facts-title">Project at a glance</h2>
+              <dl class="fact-list">
+                <div>
+                  <dt>Course</dt>
+                  <dd>UC Berkeley CS 185/285</dd>
+                </div>
+                <div>
+                  <dt>Term</dt>
+                  <dd>Spring 2026</dd>
+                </div>
+                <div>
+                  <dt>Base Model</dt>
+                  <dd>Qwen2.5-Math-1.5B</dd>
+                </div>
+                <div>
+                  <dt>Algorithms</dt>
+                  <dd>REINFORCE and GRPO</dd>
+                </div>
+                <div>
+                  <dt>Metric</dt>
+                  <dd>Boxed-answer exact match</dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+
+          <nav class="project-navigation" aria-label="Adjacent projects">
+            <a href="../hw3/">
+              <small>Previous project</small>
+              Homework 3 · Q-Learning &amp; Actor-Critic
+            </a>
+            <a href="../hw5/">
+              <small>Next project</small>
+              Homework 5 · Offline RL
+            </a>
+          </nav>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        <p>© Yifan Xu. CS 185/285 · Spring 2026.</p>
+        <a href="#top">Back to top</a>
+      </footer>
+    </div>
+  </body>
+</html>

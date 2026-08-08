@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Q-Learning and Actor-Critic | CS 185/285 | Yifan Xu</title>
+    <meta name="author" content="Yifan Xu">
+    <meta
+      name="description"
+      content="Yifan Xu's CS 185/285 project implementing DQN, Double DQN, and Soft Actor-Critic."
+    >
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#f7f6f2">
+
+    <link
+      rel="canonical"
+      href="https://aprilavrilivan.github.io/projects/cs185-285/hw3/"
+    >
+    <link rel="stylesheet" href="../../../stylesheet.css">
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="page-shell">
+      <header class="site-header subpage-header" id="top">
+        <a class="site-mark" href="../../../index.html" aria-label="Go to Yifan Xu's homepage">YX</a>
+        <nav class="site-nav" aria-label="Project navigation">
+          <a href="../../../index.html">Home</a>
+          <a href="../index.html">CS 185/285</a>
+          <a href="index.html" aria-current="page">HW3</a>
+        </nav>
+      </header>
+
+      <main id="main-content">
+        <section class="course-hero course-hero--detail" aria-labelledby="page-title">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">CS 185/285</a>
+            <span aria-hidden="true">/</span>
+            <span>Homework 3</span>
+          </nav>
+          <p class="eyebrow">Homework 3 · Value-Based &amp; Actor-Critic RL</p>
+          <h1 id="page-title">Deep Q-Learning and Soft Actor-Critic</h1>
+          <p class="course-lede">
+            I implemented DQN and Double DQN for discrete action spaces, then built a
+            Soft Actor-Critic agent for continuous control and examined target updates,
+            entropy tuning, and Q-value overestimation.
+          </p>
+          <ul class="course-meta" aria-label="Project topics">
+            <li>DQN</li>
+            <li>Double DQN</li>
+            <li>Soft Actor-Critic</li>
+            <li>Entropy Tuning</li>
+          </ul>
+          <div class="artifact-links" aria-label="Homework 3 artifacts">
+            <a
+              class="artifact-link"
+              href="https://rail.eecs.berkeley.edu/deeprlcourse/static/homeworks/hw3.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Assignment <span aria-hidden="true">↗</span>
+            </a>
+            <a class="artifact-link" href="../reports/hw3-q-learning-actor-critic.pdf">
+              Report <span aria-hidden="true">→</span>
+            </a>
+            <a
+              class="artifact-link artifact-link--primary"
+              href="https://github.com/aprilavrilivan/cs185-285-deep-rl-coursework/tree/main/hw3"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Code <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
+
+        <div class="project-body">
+          <div class="project-detail-grid">
+            <div>
+              <section class="project-section" aria-labelledby="overview-title">
+                <p class="section-kicker">Overview</p>
+                <h2 id="overview-title">Two families of off-policy learning</h2>
+                <p>
+                  The first half of the project focused on stabilizing temporal-difference
+                  learning with replay buffers, target networks, and Double DQN. The
+                  second half moved to continuous actions with SAC, combining stochastic
+                  policies, twin critics, and entropy regularization.
+                </p>
+              </section>
+
+              <section class="project-section" aria-labelledby="implementation-title">
+                <p class="section-kicker">Implementation</p>
+                <h2 id="implementation-title">What I built and compared</h2>
+                <ul>
+                  <li>DQN training with replay, target networks, and exploration schedules.</li>
+                  <li>Double DQN targets to reduce maximization bias.</li>
+                  <li>SAC actor and critic updates for continuous-control environments.</li>
+                  <li>Automatic entropy-temperature tuning.</li>
+                  <li>Single-Q and clipped double-Q backups on Hopper.</li>
+                </ul>
+              </section>
+
+              <section class="project-section" aria-labelledby="results-title">
+                <p class="section-kicker">Results</p>
+                <h2 id="results-title">Clipped double-Q sharply reduced the failure mode</h2>
+                <p>
+                  The clearest ablation appeared on Hopper. The single-Q variant was
+                  substantially weaker, while the clipped double-Q backup produced a
+                  much stronger policy. The full experiment suite also covered CartPole,
+                  LunarLander, Ms. Pac-Man, HalfCheetah, and InvertedPendulum.
+                </p>
+                <div class="result-grid" aria-label="Hopper comparison">
+                  <div class="result-callout">
+                    <strong>≈ 3,344</strong>
+                    <span>Selected Hopper return with clipped double-Q</span>
+                  </div>
+                  <div class="result-callout">
+                    <strong>≈ 984</strong>
+                    <span>Selected Hopper return with a single-Q backup</span>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <aside class="project-aside" aria-labelledby="facts-title">
+              <h2 id="facts-title">Project at a glance</h2>
+              <dl class="fact-list">
+                <div>
+                  <dt>Course</dt>
+                  <dd>UC Berkeley CS 185/285</dd>
+                </div>
+                <div>
+                  <dt>Term</dt>
+                  <dd>Spring 2026</dd>
+                </div>
+                <div>
+                  <dt>Algorithms</dt>
+                  <dd>DQN, Double DQN, Soft Actor-Critic</dd>
+                </div>
+                <div>
+                  <dt>Domains</dt>
+                  <dd>Discrete and continuous control</dd>
+                </div>
+                <div>
+                  <dt>Focus</dt>
+                  <dd>Stable value learning and entropy regularization</dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+
+          <nav class="project-navigation" aria-label="Adjacent projects">
+            <a href="../hw2/">
+              <small>Previous project</small>
+              Homework 2 · Policy Gradients
+            </a>
+            <a href="../hw4/">
+              <small>Next project</small>
+              Homework 4 · LLM RL
+            </a>
+          </nav>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        <p>© Yifan Xu. CS 185/285 · Spring 2026.</p>
+        <a href="#top">Back to top</a>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Offline Reinforcement Learning | CS 185/285 | Yifan Xu</title>
+    <meta name="author" content="Yifan Xu">
+    <meta
+      name="description"
+      content="Yifan Xu's CS 185/285 offline reinforcement learning project comparing SAC+BC, IQL, and Flow Q-Learning."
+    >
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#f7f6f2">
+
+    <link
+      rel="canonical"
+      href="https://aprilavrilivan.github.io/projects/cs185-285/hw5/"
+    >
+    <link rel="stylesheet" href="../../../stylesheet.css">
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="page-shell">
+      <header class="site-header subpage-header" id="top">
+        <a class="site-mark" href="../../../index.html" aria-label="Go to Yifan Xu's homepage">YX</a>
+        <nav class="site-nav" aria-label="Project navigation">
+          <a href="../../../index.html">Home</a>
+          <a href="../index.html">CS 185/285</a>
+          <a href="index.html" aria-current="page">HW5</a>
+        </nav>
+      </header>
+
+      <main id="main-content">
+        <section class="course-hero course-hero--detail" aria-labelledby="page-title">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">CS 185/285</a>
+            <span aria-hidden="true">/</span>
+            <span>Homework 5</span>
+          </nav>
+          <p class="eyebrow">Homework 5 · Offline Reinforcement Learning</p>
+          <h1 id="page-title">SAC+BC, IQL, and Flow Q-Learning</h1>
+          <p class="course-lede">
+            I implemented three offline RL approaches and compared how they balance
+            value improvement against staying close to a fixed behavior dataset on
+            robotic manipulation and long-horizon navigation tasks.
+          </p>
+          <ul class="course-meta" aria-label="Project topics">
+            <li>Offline RL</li>
+            <li>SAC+BC</li>
+            <li>Implicit Q-Learning</li>
+            <li>Flow Q-Learning</li>
+          </ul>
+          <div class="artifact-links" aria-label="Homework 5 artifacts">
+            <a
+              class="artifact-link"
+              href="https://rail.eecs.berkeley.edu/deeprlcourse/static/homeworks/hw5.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Assignment <span aria-hidden="true">↗</span>
+            </a>
+            <a class="artifact-link" href="../reports/hw5-offline-rl.pdf">
+              Report <span aria-hidden="true">→</span>
+            </a>
+            <a
+              class="artifact-link artifact-link--primary"
+              href="https://github.com/aprilavrilivan/cs185-285-deep-rl-coursework/tree/main/hw5"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Code <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
+
+        <div class="project-body">
+          <div class="project-detail-grid">
+            <div>
+              <section class="project-section" aria-labelledby="overview-title">
+                <p class="section-kicker">Overview</p>
+                <h2 id="overview-title">Policy improvement without new environment interaction</h2>
+                <p>
+                  Offline RL has to improve a policy using only logged data, which makes
+                  out-of-distribution actions especially dangerous. I compared three
+                  strategies for controlling that risk: explicit behavior-cloning
+                  regularization, expectile-based implicit value learning, and a
+                  flow-based policy objective.
+                </p>
+                <p>
+                  I evaluated every method on Cube Single, a manipulation task, and
+                  AntSoccer Arena, a more difficult navigation task. For each one, I
+                  swept the behavior-cloning coefficient to see where policy improvement
+                  gave way to either extrapolation error or excessive conservatism.
+                </p>
+              </section>
+
+              <section class="project-section" aria-labelledby="methods-title">
+                <p class="section-kicker">Methods</p>
+                <h2 id="methods-title">Three ways to stay close to the data</h2>
+                <ul>
+                  <li>
+                    <strong>SAC+BC:</strong> combines an actor-critic objective with an
+                    explicit behavior-cloning penalty.
+                  </li>
+                  <li>
+                    <strong>IQL:</strong> uses expectile value regression and
+                    advantage-weighted behavior cloning without querying unseen actions
+                    in its value target.
+                  </li>
+                  <li>
+                    <strong>FQL:</strong> learns a flow policy and uses Q-values to guide
+                    it toward higher-return actions while retaining behavioral support.
+                  </li>
+                </ul>
+              </section>
+
+              <section class="project-section" aria-labelledby="results-title">
+                <p class="section-kicker">Results</p>
+                <h2 id="results-title">Moderate regularization was consistently strongest</h2>
+                <p>
+                  SAC+BC achieved strong peaks when its coefficient was tuned carefully,
+                  while IQL was generally less sensitive across the tested values. FQL
+                  delivered the strongest selected AntSoccer result, but its performance
+                  also showed why offline policy constraints need careful calibration:
+                  too little regularization caused out-of-distribution errors, while too
+                  much prevented useful improvement.
+                </p>
+                <div class="result-grid" aria-label="Key results">
+                  <div class="result-callout">
+                    <strong>0.64</strong>
+                    <span>Final AntSoccer success rate for the selected FQL run</span>
+                  </div>
+                  <div class="result-callout">
+                    <strong>3 methods</strong>
+                    <span>SAC+BC, IQL, and FQL implemented and compared</span>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <aside class="project-aside" aria-labelledby="facts-title">
+              <h2 id="facts-title">Project at a glance</h2>
+              <dl class="fact-list">
+                <div>
+                  <dt>Course</dt>
+                  <dd>UC Berkeley CS 185/285</dd>
+                </div>
+                <div>
+                  <dt>Term</dt>
+                  <dd>Spring 2026</dd>
+                </div>
+                <div>
+                  <dt>Algorithms</dt>
+                  <dd>SAC+BC, IQL, Flow Q-Learning</dd>
+                </div>
+                <div>
+                  <dt>Tasks</dt>
+                  <dd>Cube Single and AntSoccer Arena</dd>
+                </div>
+                <div>
+                  <dt>Focus</dt>
+                  <dd>Distribution shift and behavioral regularization</dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+
+          <nav class="project-navigation" aria-label="Adjacent projects">
+            <a href="../hw4/">
+              <small>Previous project</small>
+              Homework 4 · LLM RL
+            </a>
+            <a href="../final/">
+              <small>Next project</small>
+              Final · Calibrated Reward Ensembles
+            </a>
+          </nav>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        <p>© Yifan Xu. CS 185/285 · Spring 2026.</p>
+        <a href="#top">Back to top</a>
+      </footer>
+    </div>
+  </body>
+</html>

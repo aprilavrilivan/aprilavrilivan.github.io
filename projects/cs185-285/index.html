@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>CS 185/285 Deep Reinforcement Learning | Yifan Xu</title>
+    <meta name="author" content="Yifan Xu">
+    <meta
+      name="description"
+      content="Yifan Xu's CS 185/285 deep reinforcement learning coursework and LLM RLHF final project at UC Berkeley."
+    >
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#f7f6f2">
+
+    <link rel="canonical" href="https://aprilavrilivan.github.io/projects/cs185-285/">
+    <link rel="stylesheet" href="../../stylesheet.css">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CS 185/285 Deep Reinforcement Learning | Yifan Xu">
+    <meta
+      property="og:description"
+      content="Five deep reinforcement learning assignments and an LLM RLHF final project."
+    >
+    <meta
+      property="og:url"
+      content="https://aprilavrilivan.github.io/projects/cs185-285/"
+    >
+    <meta name="twitter:card" content="summary">
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="page-shell">
+      <header class="site-header subpage-header" id="top">
+        <a class="site-mark" href="../../index.html" aria-label="Go to Yifan Xu's homepage">YX</a>
+        <nav class="site-nav" aria-label="Project navigation">
+          <a href="../../index.html">Home</a>
+          <a href="../../index.html#work">Selected Work</a>
+          <a href="index.html" aria-current="page">CS 185/285</a>
+        </nav>
+      </header>
+
+      <main id="main-content">
+        <section class="course-hero" aria-labelledby="page-title">
+          <p class="eyebrow">Course Portfolio · UC Berkeley · Spring 2026</p>
+          <h1 id="page-title">CS 185/285: Deep Reinforcement Learning</h1>
+          <p class="course-lede">
+            I completed five assignments that move from imitation learning through
+            online and offline reinforcement learning, followed by a final project
+            on reward modeling and reinforcement learning for large language models.
+          </p>
+          <ul class="course-meta" aria-label="Course topics">
+            <li>Imitation Learning</li>
+            <li>Policy Gradients</li>
+            <li>DQN &amp; SAC</li>
+            <li>LLM RL</li>
+            <li>Offline RL</li>
+            <li>RLHF</li>
+          </ul>
+        </section>
+
+        <section class="course-intro" aria-labelledby="portfolio-title">
+          <div>
+            <p class="section-kicker">Portfolio</p>
+            <h2 id="portfolio-title">From robot behavior to language-model alignment</h2>
+            <p>
+              Across the course, I implemented core algorithms, designed controlled
+              comparisons, and analyzed where different objectives and value estimates
+              succeed or fail. The work connects directly to my interests in
+              learning-based robot control, while the final project extends those ideas
+              to open-domain RLHF.
+            </p>
+          </div>
+          <aside class="course-note" aria-label="Artifact note">
+            <strong>Project artifacts</strong>
+            <span>
+              Each page links the official assignment, my report, and the
+              corresponding source code.
+            </span>
+          </aside>
+        </section>
+
+        <section class="course-projects" aria-labelledby="projects-title">
+          <div class="course-projects-heading">
+            <p class="section-kicker">Six Projects</p>
+            <h2 id="projects-title">Coursework and final project</h2>
+          </div>
+
+          <div class="course-grid">
+            <article class="course-card course-card--flagship">
+              <div class="course-card-topline">
+                <span class="course-number">Final Project</span>
+                <span class="course-badge">Featured</span>
+              </div>
+              <h2>
+                <a href="final/">Calibrated Reward Ensembles for LLM RLHF</a>
+              </h2>
+              <p>
+                I studied offline preference optimization, reward modeling, and online
+                RL for Qwen2.5-1.5B-Instruct, then developed a calibrated three-model
+                reward ensemble for more reliable candidate reranking.
+              </p>
+              <p class="course-result">
+                <strong>0.8609 average win rate</strong> for the selected offline
+                reranking method across three course-evaluator runs.
+              </p>
+              <a class="course-card-link" href="final/">
+                View final project <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="course-card">
+              <div class="course-card-topline">
+                <span class="course-number">Homework 1</span>
+              </div>
+              <h2><a href="hw1/">Imitation Learning</a></h2>
+              <p>
+                Action chunking with MSE loss and flow matching on Push-T, followed by
+                robustness experiments under uneven friction.
+              </p>
+              <p class="course-result">
+                Flow matching reached <strong>approximately 0.802</strong> evaluation
+                reward at 70k steps, compared with approximately 0.576 for MSE.
+              </p>
+              <a class="course-card-link" href="hw1/">
+                View Homework 1 <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="course-card">
+              <div class="course-card-topline">
+                <span class="course-number">Homework 2</span>
+              </div>
+              <h2><a href="hw2/">Policy Gradients</a></h2>
+              <p>
+                REINFORCE with reward-to-go, neural baselines, and generalized
+                advantage estimation across classic control tasks.
+              </p>
+              <p class="course-result">
+                A tuned InvertedPendulum policy achieved the environment's
+                <strong>1,000 return</strong> ceiling.
+              </p>
+              <a class="course-card-link" href="hw2/">
+                View Homework 2 <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="course-card">
+              <div class="course-card-topline">
+                <span class="course-number">Homework 3</span>
+              </div>
+              <h2><a href="hw3/">Q-Learning &amp; Actor-Critic</a></h2>
+              <p>
+                DQN and Double DQN for discrete control, plus Soft Actor-Critic and
+                automatic temperature tuning for continuous control.
+              </p>
+              <p class="course-result">
+                Clipped double-Q reached roughly <strong>3,344 return</strong> on Hopper,
+                versus roughly 984 with a single-Q backup.
+              </p>
+              <a class="course-card-link" href="hw3/">
+                View Homework 3 <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="course-card">
+              <div class="course-card-topline">
+                <span class="course-number">Homework 4</span>
+              </div>
+              <h2><a href="hw4/">Reinforcement Learning for LLMs</a></h2>
+              <p>
+                REINFORCE and GRPO training for format following and mathematical
+                reasoning with Qwen2.5-Math-1.5B.
+              </p>
+              <p class="course-result">
+                GRPO reached <strong>37.70% boxed exact match</strong> on Math Hard,
+                compared with 28.32% for REINFORCE.
+              </p>
+              <a class="course-card-link" href="hw4/">
+                View Homework 4 <span aria-hidden="true">→</span>
+              </a>
+            </article>
+
+            <article class="course-card">
+              <div class="course-card-topline">
+                <span class="course-number">Homework 5</span>
+              </div>
+              <h2><a href="hw5/">Offline Reinforcement Learning</a></h2>
+              <p>
+                A comparison of SAC with behavior cloning, Implicit Q-Learning, and
+                Flow Q-Learning on manipulation and navigation tasks.
+              </p>
+              <p class="course-result">
+                Flow Q-Learning achieved a final AntSoccer success rate of
+                <strong>0.64</strong> in the selected run.
+              </p>
+              <a class="course-card-link" href="hw5/">
+                View Homework 5 <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>© Yifan Xu. CS 185/285 · Spring 2026.</p>
+        <a href="#top">Back to top</a>
+      </footer>
+    </div>
+  </body>
+</html>

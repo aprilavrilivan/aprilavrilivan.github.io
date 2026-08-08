@@ -45,6 +45,15 @@
 - Course portfolio: Projects 0–5
 - Project page and source repository links
 - Project 1 colorization result used as the cover image
+- CS 185/285: Deep Reinforcement Learning
+- Homework 1–5 and LLM RLHF final-project pages
+- Official assignment, report, and source-code links for each project
+- Local PDF reports for Homework 1–5 and the final project
+
+## CS 185/285 publication status
+
+- Homework 1–5 reports and the post-course final-project portfolio report are integrated.
+- The cleaned HW1–5 coursework repository is linked from all project pages.
 
 ## Additional selected work still needed
 

@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Policy Gradients | CS 185/285 | Yifan Xu</title>
+    <meta name="author" content="Yifan Xu">
+    <meta
+      name="description"
+      content="Yifan Xu's CS 185/285 policy-gradient project implementing REINFORCE, reward-to-go, baselines, and GAE."
+    >
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#f7f6f2">
+
+    <link
+      rel="canonical"
+      href="https://aprilavrilivan.github.io/projects/cs185-285/hw2/"
+    >
+    <link rel="stylesheet" href="../../../stylesheet.css">
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <div class="page-shell">
+      <header class="site-header subpage-header" id="top">
+        <a class="site-mark" href="../../../index.html" aria-label="Go to Yifan Xu's homepage">YX</a>
+        <nav class="site-nav" aria-label="Project navigation">
+          <a href="../../../index.html">Home</a>
+          <a href="../index.html">CS 185/285</a>
+          <a href="index.html" aria-current="page">HW2</a>
+        </nav>
+      </header>
+
+      <main id="main-content">
+        <section class="course-hero course-hero--detail" aria-labelledby="page-title">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="../index.html">CS 185/285</a>
+            <span aria-hidden="true">/</span>
+            <span>Homework 2</span>
+          </nav>
+          <p class="eyebrow">Homework 2 · Policy Gradients</p>
+          <h1 id="page-title">REINFORCE, Baselines, and Generalized Advantage Estimation</h1>
+          <p class="course-lede">
+            I implemented a policy-gradient agent and used controlled experiments to
+            study how reward-to-go, neural baselines, advantage normalization, and GAE
+            affect learning stability and sample efficiency.
+          </p>
+          <ul class="course-meta" aria-label="Project topics">
+            <li>REINFORCE</li>
+            <li>Reward-to-Go</li>
+            <li>Neural Baselines</li>
+            <li>GAE</li>
+          </ul>
+          <div class="artifact-links" aria-label="Homework 2 artifacts">
+            <a
+              class="artifact-link"
+              href="https://rail.eecs.berkeley.edu/deeprlcourse/static/homeworks/hw2.pdf"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Assignment <span aria-hidden="true">↗</span>
+            </a>
+            <a class="artifact-link" href="../reports/hw2-policy-gradients.pdf">
+              Report <span aria-hidden="true">→</span>
+            </a>
+            <a
+              class="artifact-link artifact-link--primary"
+              href="https://github.com/aprilavrilivan/cs185-285-deep-rl-coursework/tree/main/hw2"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Code <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
+
+        <div class="project-body">
+          <div class="project-detail-grid">
+            <div>
+              <section class="project-section" aria-labelledby="overview-title">
+                <p class="section-kicker">Overview</p>
+                <h2 id="overview-title">Reducing variance in on-policy learning</h2>
+                <p>
+                  I began with vanilla REINFORCE and added reward-to-go, a learned value
+                  baseline, and normalized advantages. I then implemented generalized
+                  advantage estimation and varied its λ parameter to examine the
+                  bias–variance tradeoff on longer-horizon tasks.
+                </p>
+              </section>
+
+              <section class="project-section" aria-labelledby="experiments-title">
+                <p class="section-kicker">Experiments</p>
+                <h2 id="experiments-title">What I evaluated</h2>
+                <ul>
+                  <li>Vanilla and reward-to-go estimators on CartPole.</li>
+                  <li>Learned baselines and advantage normalization for variance reduction.</li>
+                  <li>Policy-gradient learning on continuous-control HalfCheetah.</li>
+                  <li>Multiple GAE λ values on LunarLander.</li>
+                  <li>Hyperparameter tuning on InvertedPendulum.</li>
+                </ul>
+              </section>
+
+              <section class="project-section" aria-labelledby="results-title">
+                <p class="section-kicker">Results</p>
+                <h2 id="results-title">The right estimator and scale mattered</h2>
+                <p>
+                  Reward-to-go and a learned baseline generally improved the quality of
+                  the gradient estimate, while GAE offered a practical control over
+                  temporal credit assignment. With tuned settings, the InvertedPendulum
+                  policy consistently reached the task's maximum episode return.
+                </p>
+                <div class="result-grid" aria-label="Key result">
+                  <div class="result-callout">
+                    <strong>1,000</strong>
+                    <span>Tuned InvertedPendulum episode return</span>
+                  </div>
+                  <div class="result-callout">
+                    <strong>5 values</strong>
+                    <span>GAE λ settings compared on LunarLander</span>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <aside class="project-aside" aria-labelledby="facts-title">
+              <h2 id="facts-title">Project at a glance</h2>
+              <dl class="fact-list">
+                <div>
+                  <dt>Course</dt>
+                  <dd>UC Berkeley CS 185/285</dd>
+                </div>
+                <div>
+                  <dt>Term</dt>
+                  <dd>Spring 2026</dd>
+                </div>
+                <div>
+                  <dt>Algorithms</dt>
+                  <dd>REINFORCE, GAE, learned value baseline</dd>
+                </div>
+                <div>
+                  <dt>Tasks</dt>
+                  <dd>CartPole, HalfCheetah, LunarLander, InvertedPendulum</dd>
+                </div>
+                <div>
+                  <dt>Focus</dt>
+                  <dd>Variance reduction and advantage estimation</dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+
+          <nav class="project-navigation" aria-label="Adjacent projects">
+            <a href="../hw1/">
+              <small>Previous project</small>
+              Homework 1 · Imitation Learning
+            </a>
+            <a href="../hw3/">
+              <small>Next project</small>
+              Homework 3 · Q-Learning &amp; Actor-Critic
+            </a>
+          </nav>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        <p>© Yifan Xu. CS 185/285 · Spring 2026.</p>
+        <a href="#top">Back to top</a>
+      </footer>
+    </div>
+  </body>
+</html>
