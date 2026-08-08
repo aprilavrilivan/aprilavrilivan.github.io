@@ -54,7 +54,7 @@
 
 ## CS 185/285 publication status
 
-- Homework 1–5 reports and the post-course final-project portfolio report are integrated.
+- Homework 1–5 reports and the course final-project report are integrated.
 - The cleaned HW1–5 coursework repository is linked from the course directory.
 - Course notes are linked from the Notes entry.
 
