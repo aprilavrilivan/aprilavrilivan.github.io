@@ -9,7 +9,7 @@
 - Current role: Undergraduate Student in Computer Engineering
 - Institution: Chinese University of Hong Kong, Shenzhen
 - Current summer research: Existential Robotics Laboratory, UC San Diego
-- Short biography: Added to the hero section in `index.html`
+- Short biography and research-opportunity statement: Added to the hero section in `index.html`
 
 ## Research interests — added
 
@@ -19,10 +19,10 @@
 
 ## Education and experience — added
 
-- Undergraduate Student in Computer Engineering — CUHK-Shenzhen
+- Undergraduate Student in Computer Engineering — CUHK-Shenzhen, Sept. 2023–present
 - Summer Research — Existential Robotics Laboratory, UC San Diego
 - Visiting Student in Computer Science — UC Berkeley, GLOBE program
-- Yale Summer Session Participant — June 2024
+- Yale University Summer Session Participant — Summer 2024
 - Graduate — Shenzhen Middle School
 
 ## Profile details still needed
