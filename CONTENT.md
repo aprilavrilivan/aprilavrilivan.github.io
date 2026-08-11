@@ -10,6 +10,7 @@
 - Institution: Chinese University of Hong Kong, Shenzhen
 - Current summer research: Existential Robotics Laboratory, UC San Diego
 - Short biography and research-opportunity statement: Added to the hero section in `index.html`
+- Profile photo: Added to the hero section as `assets/profile/yifan-xu.webp`
 
 ## Research interests — added
 
@@ -28,7 +29,6 @@
 ## Profile details still needed
 
 - Chinese name（可选）:
-- Profile photo filename:
 - Email:
 - CV:
 - Google Scholar:
@@ -84,7 +84,7 @@
 ## Before publishing
 
 - Replace every remaining visible `[placeholder]`.
-- Add a real profile photo, email, CV, and relevant profile links.
+- Add an email, CV, and relevant profile links.
 - Review and add future publications and course projects as they become ready.
 - Confirm the dates and official titles in Experience & Education.
 - Remove `noindex, nofollow` when the site is ready for search engines.

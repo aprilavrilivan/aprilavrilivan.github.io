@@ -245,33 +245,16 @@ h3 {
   font-weight: 680;
 }
 
-.portrait-placeholder {
-  display: grid;
+.portrait {
+  display: block;
   width: min(100%, 230px);
   aspect-ratio: 1;
-  place-items: center;
   justify-self: end;
-  overflow: hidden;
   border: 1px solid #ccd7df;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 35%, #fff 0 15%, transparent 15.5%),
-    radial-gradient(circle at 50% 74%, #fff 0 29%, transparent 29.5%),
-    linear-gradient(145deg, #dbe7ee, #b9ccd9);
+  object-fit: cover;
+  object-position: center;
   box-shadow: var(--shadow);
-}
-
-.portrait-placeholder span {
-  align-self: end;
-  margin-bottom: 1.9rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 999px;
-  background: rgb(255 255 255 / 85%);
-  color: #4c5c68;
-  font-size: 0.72rem;
-  font-weight: 720;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .content-section {
@@ -698,7 +681,7 @@ h3 {
     padding: 3.8rem 0;
   }
 
-  .portrait-placeholder {
+  .portrait {
     width: 170px;
     justify-self: start;
     grid-row: 1;
