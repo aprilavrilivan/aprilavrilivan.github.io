@@ -1,6 +1,6 @@
 # Yifan Xu's personal website
 
-这是 Yifan Xu（Ivan）的纯静态个人学术主页。个人简介、研究兴趣、教育经历，以及 CS 180 与 CS 185/285 课程作品集已经填入；联系方式、CV 与头像目前仍使用占位内容。
+这是 Yifan Xu（Ivan）的纯静态个人学术主页。个人简介、研究兴趣、论文、教育经历，以及 CS 180 与 CS 185/285 课程作品集已经填入；联系方式、CV 与头像目前仍使用占位内容。
 
 ## 本地预览
 
@@ -28,6 +28,7 @@ index.html       页面内容与结构
 stylesheet.css  页面视觉与响应式样式
 CONTENT.md       待填写资料清单
 assets/          后续放置个人图片、项目媒体和文档
+publications/    主页 Publications 区域链接的论文 PDF
 projects/        独立项目与课程作品集页面
 .nojekyll        让 GitHub Pages 直接发布静态文件
 ```

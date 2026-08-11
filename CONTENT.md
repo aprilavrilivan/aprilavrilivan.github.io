@@ -39,7 +39,13 @@
 - UC San Diego summer research year, mentor, and research topic（可选）:
 - Shenzhen Middle School graduation year（可选）:
 
-## Selected work — added
+## Publications — added
+
+- A Frequency-Domain Performance Evaluation Framework of Quadratic Programming-based Controllers in Motion Capture Measurement System — in submission to IEEE TIM; PDF linked
+- A Survey on Humanoid Whole-Body Control — work in progress
+- Action Chunking λ: Reinforcement Learning with Action Chunking Policies and a Single-Action Critic — work in progress
+
+## Selected course projects — added
 
 - CS 180: Computer Vision and Computational Photography
 - Course portfolio: Projects 0–5
@@ -58,7 +64,7 @@
 - The cleaned HW1–5 coursework repository is linked from the course directory.
 - Course notes are linked from the Notes entry.
 
-## Additional selected work still needed
+## Additional publication and project details still needed
 
 为每个项目或论文准备：
 
@@ -79,7 +85,7 @@
 
 - Replace every remaining visible `[placeholder]`.
 - Add a real profile photo, email, CV, and relevant profile links.
-- Review and add future selected work as it becomes ready.
+- Review and add future publications and course projects as they become ready.
 - Confirm the dates and official titles in Experience & Education.
 - Remove `noindex, nofollow` when the site is ready for search engines.
 - Test both desktop and mobile layouts.

@@ -313,6 +313,46 @@ h3 {
   font-size: 0.86rem;
 }
 
+.publication-list {
+  margin-top: 2.6rem;
+  border-top: 1px solid var(--line);
+}
+
+.publication-item {
+  padding: 1.55rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.publication-status {
+  margin-bottom: 0.45rem;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 760;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.publication-item h3 {
+  max-width: 48ch;
+  margin-bottom: 0.55rem;
+  font-size: clamp(1.18rem, 2.4vw, 1.48rem);
+}
+
+.publication-authors,
+.publication-note {
+  max-width: 760px;
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.publication-authors strong {
+  color: var(--text);
+}
+
+.publication-item .work-links {
+  margin-top: 0.9rem;
+}
+
 .work-list {
   display: grid;
   gap: 1.1rem;
