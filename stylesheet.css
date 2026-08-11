@@ -313,46 +313,6 @@ h3 {
   font-size: 0.86rem;
 }
 
-.publication-list {
-  margin-top: 2.6rem;
-  border-top: 1px solid var(--line);
-}
-
-.publication-item {
-  padding: 1.55rem 0;
-  border-bottom: 1px solid var(--line);
-}
-
-.publication-status {
-  margin-bottom: 0.45rem;
-  color: var(--accent);
-  font-size: 0.7rem;
-  font-weight: 760;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.publication-item h3 {
-  max-width: 48ch;
-  margin-bottom: 0.55rem;
-  font-size: clamp(1.18rem, 2.4vw, 1.48rem);
-}
-
-.publication-authors,
-.publication-note {
-  max-width: 760px;
-  margin-bottom: 0;
-  color: var(--muted);
-}
-
-.publication-authors strong {
-  color: var(--text);
-}
-
-.publication-item .work-links {
-  margin-top: 0.9rem;
-}
-
 .work-list {
   display: grid;
   gap: 1.1rem;
@@ -417,6 +377,43 @@ h3 {
     radial-gradient(circle at 79% 70%, rgb(255 255 255 / 42%) 0 8px, transparent 9px),
     linear-gradient(145deg, #163f5e, #2874a6 58%, #79b3ca);
   color: #fff;
+}
+
+.publication-visual {
+  min-height: 168px;
+  color: #fff;
+}
+
+.publication-visual:hover {
+  color: #fff;
+}
+
+.publication-visual--tim {
+  background:
+    radial-gradient(circle at 79% 24%, rgb(255 255 255 / 36%) 0 7px, transparent 8px),
+    linear-gradient(145deg, #17374d, #286b91 58%, #88b7ca);
+}
+
+.publication-visual--survey {
+  background:
+    linear-gradient(135deg, transparent 25%, rgb(255 255 255 / 14%) 25% 50%, transparent 50% 75%, rgb(255 255 255 / 14%) 75%),
+    linear-gradient(145deg, #3f5661, #7895a2);
+  background-size: 28px 28px, auto;
+}
+
+.publication-visual--action {
+  background:
+    radial-gradient(circle at 20% 28%, rgb(255 255 255 / 48%) 0 5px, transparent 6px),
+    radial-gradient(circle at 78% 72%, rgb(255 255 255 / 30%) 0 8px, transparent 9px),
+    linear-gradient(145deg, #17334e, #315d89 58%, #7ca1bd);
+}
+
+.publication-card .work-copy h3 {
+  max-width: 44ch;
+}
+
+.publication-authors strong {
+  color: var(--text);
 }
 
 .work-visual-type {
