@@ -159,8 +159,7 @@ h3 {
   grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
   gap: clamp(2rem, 7vw, 5.5rem);
   align-items: center;
-  min-height: 610px;
-  padding: 5rem 0;
+  padding: 4rem 0;
 }
 
 .eyebrow,
@@ -679,8 +678,7 @@ h3 {
 
   .hero {
     grid-template-columns: 1fr;
-    min-height: auto;
-    padding: 3.8rem 0;
+    padding: 3rem 0;
   }
 
   .portrait {
