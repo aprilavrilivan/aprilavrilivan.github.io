@@ -385,6 +385,14 @@ h3 {
   transition: transform 180ms ease;
 }
 
+.work-visual-image--contain {
+  object-fit: contain;
+}
+
+.work-visual--spatial {
+  background: #eef0ee;
+}
+
 .work-visual-link:hover .work-visual-image,
 .work-visual-link:focus-visible .work-visual-image {
   transform: scale(1.025);
