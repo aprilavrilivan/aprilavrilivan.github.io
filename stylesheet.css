@@ -32,7 +32,7 @@ body {
   color: var(--text);
   font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
-  line-height: 1.7;
+  line-height: 1.64;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -199,7 +199,7 @@ h3 {
   grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
   gap: clamp(2rem, 7vw, 5.5rem);
   align-items: center;
-  padding: 4rem 0;
+  padding: 3.4rem 0;
 }
 
 .eyebrow,
@@ -299,7 +299,7 @@ h3 {
 }
 
 .content-section {
-  padding: 4.5rem 0;
+  padding: 3.8rem 0;
   border-top: 1px solid var(--line);
   scroll-margin-top: var(--sticky-header-offset);
 }
@@ -323,7 +323,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
-  margin: 1.4rem 0 0;
+  margin: 1.1rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -339,15 +339,15 @@ h3 {
 
 .work-list {
   display: grid;
-  gap: 1.1rem;
-  margin-top: 2.6rem;
+  gap: 0.9rem;
+  margin-top: 2rem;
 }
 
 .work-card {
   display: grid;
   grid-template-columns: 190px minmax(0, 1fr);
-  gap: 1.8rem;
-  padding: 1.3rem;
+  gap: 1.5rem;
+  padding: 1.15rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
@@ -458,7 +458,7 @@ h3 {
 }
 
 .work-copy p {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
   color: var(--muted);
 }
 
@@ -470,7 +470,7 @@ h3 {
 
 .work-copy h3 {
   max-width: 30ch;
-  font-size: clamp(1.25rem, 2.5vw, 1.55rem);
+  font-size: clamp(1.12rem, 2vw, 1.36rem);
 }
 
 .work-title-link {
@@ -487,7 +487,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 0.65rem;
-  margin-top: 1.15rem;
+  margin-top: 0.85rem;
 }
 
 .work-link {
@@ -527,7 +527,7 @@ h3 {
 }
 
 .news-list {
-  margin: 1.6rem 0 0;
+  margin: 1.2rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -536,7 +536,7 @@ h3 {
   display: grid;
   grid-template-columns: 130px minmax(0, 1fr);
   gap: 1.25rem;
-  padding: 1rem 0;
+  padding: 0.8rem 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -548,14 +548,14 @@ h3 {
 }
 
 .timeline {
-  margin-top: 1.6rem;
+  margin-top: 1.2rem;
 }
 
 .timeline-item {
   display: grid;
   grid-template-columns: 130px minmax(0, 1fr);
   gap: 1.25rem;
-  padding: 1.2rem 0;
+  padding: 0.9rem 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -577,9 +577,9 @@ h3 {
 .contact-section {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(280px, 1fr);
-  gap: 3rem;
-  margin: 4.5rem 0;
-  padding: clamp(1.6rem, 5vw, 3rem);
+  gap: 2.5rem;
+  margin: 3.8rem 0;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
   border-radius: calc(var(--radius) + 4px);
   background: var(--text);
   color: #fff;
@@ -624,7 +624,7 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.8rem 0 2.4rem;
+  padding: 1.5rem 0 2rem;
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.84rem;
@@ -641,12 +641,12 @@ h3 {
 }
 
 .course-directory {
-  padding: clamp(4rem, 9vw, 7rem) 0 clamp(4.5rem, 9vw, 7rem);
+  padding: clamp(3rem, 7vw, 5.5rem) 0 clamp(3.5rem, 7vw, 5.5rem);
 }
 
 .course-directory h1 {
   max-width: 17ch;
-  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
 .course-directory-list {
@@ -661,7 +661,7 @@ h3 {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 1.5rem;
-  padding: 1.35rem 0;
+  padding: 1.1rem 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -715,7 +715,7 @@ h3 {
 
   .hero {
     grid-template-columns: 1fr;
-    padding: 3rem 0;
+    padding: 2.5rem 0;
   }
 
   .portrait {
@@ -730,7 +730,7 @@ h3 {
   }
 
   .content-section {
-    padding: 3.6rem 0;
+    padding: 3.1rem 0;
   }
 
   .section-heading {
