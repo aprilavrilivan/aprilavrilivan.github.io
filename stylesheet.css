@@ -394,15 +394,6 @@ h3 {
   border-radius: calc(var(--radius) - 6px);
 }
 
-.work-visual--rl {
-  min-height: 168px;
-  background:
-    radial-gradient(circle at 18% 24%, rgb(255 255 255 / 62%) 0 5px, transparent 6px),
-    radial-gradient(circle at 79% 70%, rgb(255 255 255 / 42%) 0 8px, transparent 9px),
-    linear-gradient(145deg, #163f5e, #2874a6 58%, #79b3ca);
-  color: #fff;
-}
-
 .publication-visual {
   min-height: 168px;
   color: #fff;
