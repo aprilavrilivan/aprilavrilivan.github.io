@@ -610,6 +610,21 @@ h3 {
   overflow-wrap: anywhere;
 }
 
+.contact-list a {
+  color: #fff;
+  font-weight: 620;
+  text-decoration-color: rgb(255 255 255 / 38%);
+}
+
+.contact-list a:hover {
+  color: #8cc3e8;
+  text-decoration-color: currentColor;
+}
+
+.contact-list a:focus-visible {
+  outline-color: #8cc3e8;
+}
+
 .site-footer {
   display: flex;
   align-items: center;

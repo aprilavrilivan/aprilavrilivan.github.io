@@ -29,10 +29,10 @@
 ## Profile details still needed
 
 - Chinese name（可选）:
-- Email:
+- Email: aprilavrilivan@gmail.com
 - CV:
 - Google Scholar:
-- GitHub:
+- GitHub: https://github.com/aprilavrilivan
 - LinkedIn / X / other profiles（可选）:
 - CUHK-Shenzhen enrollment and expected graduation years（可选）:
 - UC Berkeley visiting term and year（可选）:
@@ -84,7 +84,7 @@
 ## Before publishing
 
 - Replace every remaining visible `[placeholder]`.
-- Add an email, CV, and relevant profile links.
+- Add a CV and any other profile links you want to publish.
 - Review and add future publications and course projects as they become ready.
 - Confirm the dates and official titles in Experience & Education.
 - Remove `noindex, nofollow` when the site is ready for search engines.
