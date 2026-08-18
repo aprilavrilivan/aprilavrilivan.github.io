@@ -202,6 +202,10 @@ h3 {
   padding: 3.4rem 0;
 }
 
+.hero-copy {
+  position: relative;
+}
+
 .eyebrow,
 .section-kicker,
 .work-label {
@@ -570,15 +574,17 @@ h3 {
   font-weight: 680;
 }
 
-.contact-strip {
-  margin-top: -1.3rem;
-  padding: 0 0 0.65rem;
+.hero-contact {
+  position: absolute;
+  top: calc(100% - 1.75rem + 20px);
+  left: 0;
   scroll-margin-top: var(--sticky-header-offset);
 }
 
-.contact-strip + .content-section {
-  padding-top: 2.6rem;
-  border-top: 0;
+.hero-contact .contact-actions {
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
 }
 
 .contact-actions {
@@ -611,6 +617,11 @@ h3 {
     color 160ms ease,
     background-color 160ms ease,
     transform 160ms ease;
+}
+
+.hero-contact .contact-action {
+  min-height: 60px;
+  padding: 0 0.35rem;
 }
 
 .contact-action:hover {
@@ -780,6 +791,15 @@ h3 {
     grid-row: 2;
   }
 
+  .intro {
+    margin-bottom: 0;
+  }
+
+  .hero-contact {
+    position: static;
+    margin-top: 18px;
+  }
+
   .content-section {
     padding: 3.1rem 0;
   }
@@ -827,11 +847,6 @@ h3 {
   .timeline-item {
     grid-template-columns: 1fr;
     gap: 0.25rem;
-  }
-
-  .contact-strip {
-    margin-top: -0.75rem;
-    padding-bottom: 0.4rem;
   }
 
   .contact-actions {
@@ -908,7 +923,12 @@ h3 {
   }
 
   .content-section,
-  .contact-strip {
+  .hero-contact {
     break-inside: avoid;
+  }
+
+  .hero-contact {
+    position: static;
+    margin-top: 1rem;
   }
 }
