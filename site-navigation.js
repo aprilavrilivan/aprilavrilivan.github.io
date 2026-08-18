@@ -137,7 +137,7 @@
         if (label) {
           label.textContent = defaultLabel;
         }
-      }, 1800);
+      }, 900);
     });
   });
 })();

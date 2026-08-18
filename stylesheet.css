@@ -620,8 +620,10 @@ h3 {
 }
 
 .hero-contact .contact-action {
-  min-height: 60px;
-  padding: 0 0.35rem;
+  position: relative;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
 }
 
 .contact-action:hover {
@@ -644,6 +646,11 @@ h3 {
   mask: var(--contact-icon) center / contain no-repeat;
 }
 
+.hero-contact .contact-action-icon {
+  width: 30px;
+  height: 30px;
+}
+
 .contact-action-icon--email {
   --contact-icon: url("assets/icons/mail.svg");
 }
@@ -664,6 +671,37 @@ h3 {
   line-height: 1.2;
   text-align: center;
   transition: color 160ms ease;
+}
+
+.hero-contact .contact-action-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.hero-contact .contact-action.is-copied .contact-action-label,
+.hero-contact .contact-action.is-copy-error .contact-action-label {
+  z-index: 1;
+  top: calc(100% + 0.2rem);
+  left: 50%;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0.08rem 0.28rem;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  background: var(--background);
+  font-size: 0.68rem;
+  pointer-events: none;
+  transform: translateX(-50%);
 }
 
 .contact-action:hover .contact-action-label,
