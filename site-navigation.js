@@ -80,3 +80,64 @@
   window.addEventListener("resize", handleResize);
   window.addEventListener("load", handleResize, { once: true });
 })();
+
+(() => {
+  const copyActions = document.querySelectorAll("[data-copy-value]");
+
+  if (!copyActions.length) {
+    return;
+  }
+
+  const copyText = async (value) => {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(value);
+      return;
+    }
+
+    const textArea = document.createElement("textarea");
+    textArea.value = value;
+    textArea.setAttribute("readonly", "");
+    textArea.style.position = "fixed";
+    textArea.style.opacity = "0";
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    const copied = document.execCommand("copy");
+    textArea.remove();
+
+    if (!copied) {
+      throw new Error("Clipboard copy failed");
+    }
+  };
+
+  copyActions.forEach((action) => {
+    const label = action.querySelector(".contact-action-label");
+    const defaultLabel = label ? label.textContent : "Copy";
+    let feedbackTimer = 0;
+
+    action.addEventListener("click", async () => {
+      window.clearTimeout(feedbackTimer);
+      action.classList.remove("is-copied", "is-copy-error");
+
+      try {
+        await copyText(action.dataset.copyValue);
+        action.classList.add("is-copied");
+        if (label) {
+          label.textContent = "Copied";
+        }
+      } catch {
+        action.classList.add("is-copy-error");
+        if (label) {
+          label.textContent = "Copy failed";
+        }
+      }
+
+      feedbackTimer = window.setTimeout(() => {
+        action.classList.remove("is-copied", "is-copy-error");
+        if (label) {
+          label.textContent = defaultLabel;
+        }
+      }, 1800);
+    });
+  });
+})();

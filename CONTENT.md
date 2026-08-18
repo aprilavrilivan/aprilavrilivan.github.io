@@ -33,6 +33,7 @@
 - CV:
 - Google Scholar:
 - GitHub: https://github.com/aprilavrilivan
+- WeChat: Ivan13715179553
 - LinkedIn / X / other profiles（可选）:
 - CUHK-Shenzhen enrollment and expected graduation years（可选）:
 - UC Berkeley visiting term and year（可选）:
