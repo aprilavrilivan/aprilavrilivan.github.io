@@ -14,7 +14,7 @@
     <meta name="theme-color" content="#f7f6f2">
 
     <link rel="canonical" href="https://aprilavrilivan.github.io/">
-    <link rel="stylesheet" href="stylesheet.css?v=20260919-centered-covers-v2">
+    <link rel="stylesheet" href="stylesheet.css?v=20260919-research-thoughts">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Yifan Xu (Ivan) | Personal Website">
@@ -132,6 +132,46 @@
                 <li>Reinforcement Learning</li>
                 <li>Robot Foundation Models (VLA, BFM, WAM)</li>
               </ul>
+              <details class="research-thoughts">
+                <summary>General thoughts</summary>
+                <ul>
+                  <li>
+                    Recent multimodal foundation models (e.g., GPT-6) have shown striking
+                    capabilities in robot control, especially in multimodal reasoning. However,
+                    there is still a long way to go before robots can truly become part of everyday life.
+                  </li>
+                  <li>
+                    <strong>(1) Physical understanding.</strong> Current SOTA models still lack reliable,
+                    action-conditioned understanding of how the physical world evolves.
+                  </li>
+                  <li>
+                    <strong>(2) Motor grounding.</strong> High-level reasoning remains difficult to
+                    translate into robust, high-frequency, closed-loop behavior under real-world
+                    contact and dynamics.
+                  </li>
+                  <li>
+                    <strong>(3) Adaptation.</strong> Sim2real gaps and distribution shifts require
+                    embodied agents to learn efficiently from sparse deployment experience.
+                  </li>
+                  <li>
+                    <strong>For (1):</strong> World-action models can provide predictive,
+                    action-conditioned representations of physical dynamics.
+                  </li>
+                  <li>
+                    <strong>For (2):</strong> Behavior foundation models can bridge high-level
+                    reasoning and physically grounded motor behavior.
+                  </li>
+                  <li>
+                    <strong>For (3):</strong> Efficient real-world RL can enable rapid adaptation
+                    from failures, corrections, and limited interaction.
+                  </li>
+                  <li>
+                    <strong>Ideal:</strong> a predictive brain proposes and evaluates action intent;
+                    a robust cerebellum grounds it into physical behavior; an efficient learning
+                    mechanism continuously adapts both to new environments.
+                  </li>
+                </ul>
+              </details>
             </div>
           </div>
         </section>

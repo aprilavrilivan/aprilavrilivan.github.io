@@ -342,6 +342,62 @@ h3 {
   font-size: 0.86rem;
 }
 
+.research-thoughts {
+  max-width: 680px;
+  margin-top: 1.2rem;
+  color: #34414d;
+}
+
+.research-thoughts summary {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: fit-content;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.research-thoughts summary::-webkit-details-marker {
+  display: none;
+}
+
+.research-thoughts summary::before {
+  width: 0;
+  height: 0;
+  border-top: 0.32rem solid transparent;
+  border-bottom: 0.32rem solid transparent;
+  border-left: 0.44rem solid var(--accent);
+  content: "";
+  transition: transform 160ms ease;
+}
+
+.research-thoughts[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.research-thoughts summary:hover {
+  color: var(--accent);
+}
+
+.research-thoughts summary:focus-visible {
+  border-radius: 4px;
+  outline: 3px solid rgb(27 95 145 / 28%);
+  outline-offset: 4px;
+}
+
+.research-thoughts ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.55rem;
+  font-size: 0.94rem;
+  line-height: 1.55;
+}
+
+.research-thoughts li + li {
+  margin-top: 0.45rem;
+}
+
 .work-list {
   display: grid;
   gap: 1rem;
