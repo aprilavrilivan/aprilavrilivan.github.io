@@ -418,6 +418,11 @@ h3 {
   object-position: 50% 50%;
 }
 
+.publication-cover-image--diagram {
+  object-fit: contain;
+  background: #fff;
+}
+
 .publication-visual--survey {
   background:
     linear-gradient(135deg, transparent 25%, rgb(255 255 255 / 14%) 25% 50%, transparent 50% 75%, rgb(255 255 255 / 14%) 75%),
@@ -438,6 +443,10 @@ h3 {
 
 .publication-authors strong {
   color: var(--text);
+}
+
+.publication-note {
+  font-size: 0.78rem;
 }
 
 .work-visual-type {

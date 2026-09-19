@@ -44,7 +44,9 @@
 
 - A Frequency-Domain Performance Evaluation Framework of Quadratic Programming-based Controllers in Motion Capture Measurement System — in submission to IEEE TIM; PDF linked
 - A Survey on Humanoid Whole-Body Control — work in progress
-- Action Chunking λ: Reinforcement Learning with Action Chunking Policies and a Single-Action Critic — work in progress
+- CASC: Action Chunking Reinforcement Learning with a Single-action Critic — OpenReview linked; Dwait Bhatt and Yifan Xu are equal contributors
+- OmniPiano: Diverse Dexterous Piano-Playing Challenges for General, Robust, Safe, and Multi-Agent RL — OpenReview linked; cover image and author order added
+- AXIS: A Growable Community-Driven Data Engine for Scalable Robot Manipulation — OpenReview linked; listed as contributor
 
 ## Selected course projects — added
 
