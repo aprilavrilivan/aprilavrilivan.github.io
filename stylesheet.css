@@ -408,6 +408,12 @@ h3 {
   background: #fff;
 }
 
+.project-cover-image {
+  object-fit: contain !important;
+  object-position: 50% 50% !important;
+  background: #fff;
+}
+
 .publication-visual {
   min-height: 0;
   aspect-ratio: 5 / 3;
