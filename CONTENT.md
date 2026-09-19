@@ -43,7 +43,7 @@
 ## Publications — added
 
 - A Frequency-Domain Performance Evaluation Framework of Quadratic Programming-based Controllers in Motion Capture Measurement System — in submission to IEEE TIM; PDF linked
-- A Survey on Humanoid Whole-Body Control — work in progress
+- Model-based, Learning-based, and Hybrid Whole-Body Control: a Taxonomic Survey of Two Paradigms and Their Convergence — work in progress; PDF and authors linked
 - CASC: Action Chunking Reinforcement Learning with a Single-action Critic — OpenReview linked; Dwait Bhatt and Yifan Xu are equal contributors
 - OmniPiano: Diverse Dexterous Piano-Playing Challenges for General, Robust, Safe, and Multi-Agent RL — OpenReview linked; cover image and author order added
 - AXIS: A Growable Community-Driven Data Engine for Scalable Robot Manipulation — OpenReview linked; listed as contributor
@@ -56,7 +56,7 @@
 - Project 1 colorization result used as the cover image
 - CS 180 course notes linked from the course portfolio
 - CS 185/285: Deep Reinforcement Learning
-- A simple directory for Homework 1–5 and the LLM RLHF final project
+- A simple directory with the LLM RLHF final project first, followed by Homework 1–5
 - Official assignment, report, and source-code links for each project
 - Local PDF reports for Homework 1–5 and the final project
 - CS 185/285 course notes linked from the course directory

@@ -375,10 +375,9 @@ h3 {
   text-transform: uppercase;
 }
 
-.work-visual-link {
+.work-visual-frame {
   aspect-ratio: 390 / 341;
   align-self: center;
-  text-decoration: none;
 }
 
 .work-visual-image {
@@ -386,24 +385,10 @@ h3 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 180ms ease;
-}
-
-.work-visual-link:hover .work-visual-image,
-.work-visual-link:focus-visible .work-visual-image {
-  transform: scale(1.025);
-}
-
-.work-visual-link:focus-visible {
-  border-radius: calc(var(--radius) - 6px);
 }
 
 .publication-visual {
   min-height: 168px;
-  color: #fff;
-}
-
-.publication-visual:hover {
   color: #fff;
 }
 
@@ -480,16 +465,6 @@ h3 {
 .work-copy h3 {
   max-width: 30ch;
   font-size: clamp(1.12rem, 2vw, 1.36rem);
-}
-
-.work-title-link {
-  color: var(--text);
-  text-decoration-color: rgb(27 95 145 / 35%);
-  text-decoration-thickness: 0.08em;
-}
-
-.work-title-link:hover {
-  color: var(--accent);
 }
 
 .work-links {
@@ -778,6 +753,13 @@ h3 {
   margin: 0;
   font-size: clamp(1.08rem, 2.2vw, 1.35rem);
   letter-spacing: -0.015em;
+}
+
+.course-directory-note {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
 }
 
 .course-directory-links {
