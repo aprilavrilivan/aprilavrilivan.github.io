@@ -145,29 +145,34 @@
                     action-conditioned understanding of how the physical world evolves.
                   </li>
                   <li>
-                    <strong>(2) Motor grounding.</strong> High-level reasoning remains difficult to
-                    translate into robust, high-frequency, closed-loop behavior under real-world
-                    contact and dynamics.
+                    <strong>(2) Motor grounding.</strong> High-level reasoning provides accurate intent, but it still 
+                    remains difficult to translate those intent into robust, high-frequency, closed-loop behavior
+                    under real-world contact and dynamics.
                   </li>
                   <li>
                     <strong>(3) Adaptation.</strong> Sim2real gaps and distribution shifts require
-                    embodied agents to learn efficiently from sparse deployment experience.
+                    embodied agents to learn efficiently from sparse deployment experience. Scaling law can provide a strong prior, 
+                    but it is still insufficient for real-world adaptation (and even the scaling law itelf is in the early stages 
+                    in terms of embodied AI).
                   </li>
                   <li>
                     <strong>For (1):</strong> World-action models can provide predictive,
-                    action-conditioned representations of physical dynamics.
+                    action-conditioned representations of physical dynamics. Doing research on WAMs is prominent for developing
+                    better multimodal understanding and reasoining.
                   </li>
                   <li>
-                    <strong>For (2):</strong> Behavior foundation models can bridge high-level
-                    reasoning and physically grounded motor behavior.
+                    <strong>For (2):</strong> Behavior foundation models (e.g. SONIC) is a useful tool to bridge high-level
+                    multimodal intent and physically grounded plausible motor behavior. Besides multimodal modals, BFM is also a 
+                    place where scaling law can happen.
                   </li>
                   <li>
-                    <strong>For (3):</strong> Efficient real-world RL can enable rapid adaptation
-                    from failures, corrections, and limited interaction.
+                    <strong>For (3):</strong> Efficient real-world RL algorithms can enable rapid adaptation
+                    from failures, corrections, and limited interaction, while recursive self-improvement (RSI) is another efficient way
+                    to learn from experience.
                   </li>
                   <li>
-                    <strong>Ideal:</strong> a predictive brain proposes and evaluates action intent;
-                    a robust cerebellum grounds it into physical behavior; an efficient learning
+                    <strong>Ideal Case:</strong> a predictive brain proposes and evaluates action intent;
+                    a robust cerebellum grounds it into plausible physical behavior; an efficient learning
                     mechanism continuously adapts both to new environments.
                   </li>
                 </ul>
