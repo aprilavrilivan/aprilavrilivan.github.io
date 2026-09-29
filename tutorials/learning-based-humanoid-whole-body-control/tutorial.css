@@ -155,16 +155,238 @@
   margin: 2rem 0 0;
 }
 
-.docs-figure a {
-  display: block;
+.evolution-diagram {
   border: 1px solid var(--docs-border);
-  background: #fbfaf7;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 80% 16%, rgb(200 102 47 / 7%), transparent 30%),
+    linear-gradient(155deg, #fffdfa, #f8f4ed);
+  box-shadow: 0 18px 46px rgb(63 49 39 / 7%);
+  overflow: hidden;
 }
 
-.docs-figure img {
-  display: block;
+.evolution-plot {
+  position: relative;
+  aspect-ratio: 1.87;
+  min-height: 500px;
+  isolation: isolate;
+}
+
+.evolution-axis-label {
+  position: absolute;
+  z-index: 3;
+  color: #192431;
+  font-size: clamp(0.84rem, 1.55vw, 1.18rem);
+  font-weight: 760;
+  letter-spacing: -0.02em;
+}
+
+.evolution-axis-label--data {
+  top: 3.2%;
+  left: 1.7%;
+}
+
+.evolution-axis-label--task {
+  bottom: 0.7%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.evolution-axes {
+  position: absolute;
+  z-index: 0;
+  top: 12%;
+  right: 2.5%;
+  bottom: 7.2%;
+  left: 3.5%;
+  border-bottom: 1px solid #c9c1b7;
+  border-left: 1px solid #c9c1b7;
+}
+
+.evolution-axes::before,
+.evolution-axes::after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  content: "";
+}
+
+.evolution-axes::before {
+  top: -1px;
+  left: -6px;
+  border-right: 5px solid transparent;
+  border-bottom: 9px solid #c9c1b7;
+  border-left: 5px solid transparent;
+}
+
+.evolution-axes::after {
+  right: -1px;
+  bottom: -5px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 9px solid #c9c1b7;
+}
+
+.evolution-flow {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  transition: filter 180ms ease, opacity 180ms ease;
+}
+
+.evolution-flow-line {
+  fill: none;
+  stroke: url("#evolution-flow-gradient");
+  stroke-linecap: round;
+  stroke-width: 10;
+}
+
+.evolution-flow-label {
+  fill: #9e5633;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.evolution-mobile-axis {
+  display: none;
+}
+
+.evolution-stage {
+  --stage-border: #c8b7aa;
+  --stage-fill-start: #fffdf9;
+  --stage-fill-end: #f5f0e9;
+  --stage-label: #856a58;
+
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  width: 18.2%;
+  min-height: 39%;
+  flex-direction: column;
+  padding: clamp(0.62rem, 1.35vw, 0.9rem);
+  border: 1px solid var(--stage-border);
+  border-radius: 13px;
+  background: linear-gradient(145deg, var(--stage-fill-start), var(--stage-fill-end));
+  box-shadow: 0 9px 24px rgb(67 49 37 / 7%);
+  color: #2d3945;
+  text-decoration: none;
+  transform-origin: 50% 80%;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
+}
+
+.evolution-stage:hover,
+.evolution-stage:focus-visible {
+  z-index: 5;
+  border-color: var(--docs-accent);
+  box-shadow: 0 18px 38px rgb(112 63 35 / 17%);
+  color: #192431;
+  outline: none;
+  transform: translateY(-7px) scale(1.025);
+}
+
+.evolution-plot:has(.evolution-stage:hover) .evolution-stage:not(:hover),
+.evolution-plot:has(.evolution-stage:focus-visible) .evolution-stage:not(:focus-visible) {
+  opacity: 0.72;
+  transform: scale(0.985);
+}
+
+.evolution-plot:has(.evolution-stage:hover) .evolution-flow,
+.evolution-plot:has(.evolution-stage:focus-visible) .evolution-flow {
+  filter: saturate(1.22);
+}
+
+.evolution-level {
+  align-self: flex-start;
+  margin-bottom: 0.55rem;
+  padding: 0.18rem 0.46rem 0.21rem;
+  border-radius: 7px;
+  background: var(--stage-label);
+  color: #fff;
+  font-size: clamp(0.63rem, 1vw, 0.76rem);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.evolution-title {
+  color: #192431;
+  font-size: clamp(0.76rem, 1.34vw, 1rem);
+  line-height: 1.22;
+}
+
+.evolution-divider {
+  width: 100%;
+  margin: 0.62rem 0;
+  border-top: 1px solid rgb(88 71 59 / 16%);
+}
+
+.evolution-detail {
+  display: block;
+  color: #52606d;
+  font-size: clamp(0.61rem, 1.04vw, 0.78rem);
+  font-weight: 560;
+  line-height: 1.32;
+}
+
+.evolution-detail + .evolution-detail {
+  margin-top: 0.62rem;
+}
+
+.evolution-detail b {
+  color: var(--stage-label);
+  font-weight: 760;
+}
+
+.evolution-stage--l1 {
+  top: 41%;
+  left: 6.5%;
+}
+
+.evolution-stage--l2 {
+  --stage-border: #d1b49e;
+  --stage-fill-end: #f7eee6;
+  --stage-label: #9e6c4b;
+
+  top: 33%;
+  left: 25.6%;
+}
+
+.evolution-stage--l3 {
+  --stage-border: #d7a27f;
+  --stage-fill-end: #f7e9df;
+  --stage-label: #ae6741;
+
+  top: 25%;
+  left: 44.7%;
+}
+
+.evolution-stage--l4 {
+  --stage-border: #cf895f;
+  --stage-fill-end: #f5e2d5;
+  --stage-label: #b65f35;
+
+  top: 17%;
+  left: 63.8%;
+}
+
+.evolution-stage--l5 {
+  --stage-border: #bd693e;
+  --stage-fill-end: #f1d8c7;
+  --stage-label: #a84c25;
+
+  top: 8.5%;
+  right: 1.8%;
+  width: 15.2%;
 }
 
 .docs-figure figcaption {
@@ -296,6 +518,56 @@
   text-decoration: none;
 }
 
+@media (max-width: 1100px) {
+  .evolution-plot {
+    display: grid;
+    min-height: 0;
+    grid-auto-columns: minmax(235px, 72%);
+    grid-auto-flow: column;
+    gap: 0.85rem;
+    padding: 4.15rem 1rem 1rem;
+    overflow-x: auto;
+    aspect-ratio: auto;
+    scroll-padding-left: 1rem;
+    scroll-snap-type: x mandatory;
+  }
+
+  .evolution-axis-label,
+  .evolution-axes,
+  .evolution-flow {
+    display: none;
+  }
+
+  .evolution-mobile-axis {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #7d685a;
+    font-size: 0.72rem;
+    font-weight: 720;
+    letter-spacing: 0.02em;
+  }
+
+  .evolution-stage,
+  .evolution-stage--l1,
+  .evolution-stage--l2,
+  .evolution-stage--l3,
+  .evolution-stage--l4,
+  .evolution-stage--l5 {
+    position: relative;
+    top: auto;
+    right: auto;
+    left: auto;
+    width: 100%;
+    min-height: 218px;
+    scroll-snap-align: start;
+  }
+}
+
 @media (max-width: 860px) {
   .docs-layout {
     grid-template-columns: 1fr;
@@ -337,8 +609,19 @@
     padding-left: 1rem;
   }
 
+  .evolution-plot {
+    grid-auto-columns: minmax(225px, 88%);
+  }
+
   .docs-article h1 {
     font-size: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .evolution-stage,
+  .evolution-flow {
+    transition: none;
   }
 }
 

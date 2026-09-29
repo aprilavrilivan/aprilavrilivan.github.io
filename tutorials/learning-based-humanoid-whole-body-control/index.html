@@ -14,7 +14,7 @@
     <meta name="theme-color" content="#ffffff">
 
     <link rel="stylesheet" href="../../stylesheet.css?v=20260929-learning-wbc-docs">
-    <link rel="stylesheet" href="tutorial.css?v=20260929-home-palette">
+    <link rel="stylesheet" href="tutorial.css?v=20260929-native-diagram">
   </head>
 
   <body class="docs-page">
@@ -55,17 +55,103 @@
             </p>
 
             <figure class="docs-figure">
-              <a
-                href="../../assets/tutorials/learning-wbc/evolution-cover.svg"
-                aria-label="Open Figure 1 at full size"
+              <div
+                class="evolution-diagram"
+                role="group"
+                aria-label="Evolution of learning-based humanoid whole-body control from L1 to L5"
               >
-                <img
-                  src="../../assets/tutorials/learning-wbc/evolution-cover.svg"
-                  alt="Evolution of learning-based humanoid whole-body control from L1 to L5"
-                  width="2048"
-                  height="1095"
-                >
-              </a>
+                <div class="evolution-plot">
+                  <div class="evolution-axis-label evolution-axis-label--data">Data diversity</div>
+                  <div class="evolution-axis-label evolution-axis-label--task">Task generalization</div>
+                  <div class="evolution-axes" aria-hidden="true"></div>
+
+                  <svg
+                    class="evolution-flow"
+                    viewBox="0 0 1000 560"
+                    preserveAspectRatio="none"
+                    aria-hidden="true"
+                  >
+                    <defs>
+                      <linearGradient id="evolution-flow-gradient" x1="0" y1="1" x2="1" y2="0">
+                        <stop offset="0" stop-color="#ead7c7"></stop>
+                        <stop offset="0.55" stop-color="#dda77f"></stop>
+                        <stop offset="1" stop-color="#c8662f"></stop>
+                      </linearGradient>
+                      <marker
+                        id="evolution-flow-arrow"
+                        markerWidth="42"
+                        markerHeight="42"
+                        refX="36"
+                        refY="20"
+                        viewBox="0 0 40 40"
+                        orient="auto"
+                        markerUnits="userSpaceOnUse"
+                      >
+                        <path d="M 0 0 L 40 20 L 0 40 Z" fill="#c8662f"></path>
+                      </marker>
+                      <path
+                        id="evolution-flow-label-path"
+                        d="M 148 490 C 430 486, 690 438, 900 356"
+                      ></path>
+                    </defs>
+                    <path
+                      class="evolution-flow-line"
+                      d="M 104 500 C 408 497, 708 445, 930 332"
+                      marker-end="url(#evolution-flow-arrow)"
+                    ></path>
+                    <text class="evolution-flow-label" text-anchor="middle">
+                      <textPath href="#evolution-flow-label-path" startOffset="51%">
+                        Increasing data diversity and task generalizability
+                      </textPath>
+                    </text>
+                  </svg>
+
+                  <div class="evolution-mobile-axis" aria-hidden="true">
+                    <span>Data diversity ↑</span>
+                    <span>Task generalization →</span>
+                  </div>
+
+                  <a class="evolution-stage evolution-stage--l1" href="#l1">
+                    <span class="evolution-level">L1</span>
+                    <strong class="evolution-title">Reward-defined Control</strong>
+                    <span class="evolution-divider" aria-hidden="true"></span>
+                    <span class="evolution-detail"><b>Task&nbsp;:</b> Command following</span>
+                    <span class="evolution-detail"><b>Data&nbsp;:</b> Simulator rollouts</span>
+                  </a>
+
+                  <a class="evolution-stage evolution-stage--l2" href="#l2">
+                    <span class="evolution-level">L2</span>
+                    <strong class="evolution-title">Motion-reference Control</strong>
+                    <span class="evolution-divider" aria-hidden="true"></span>
+                    <span class="evolution-detail"><b>Task&nbsp;:</b> Expressive motion</span>
+                    <span class="evolution-detail"><b>Data&nbsp;:</b> Whole-body trajectories</span>
+                  </a>
+
+                  <a class="evolution-stage evolution-stage--l3" href="#l3">
+                    <span class="evolution-level">L3</span>
+                    <strong class="evolution-title">Context-rich Interaction</strong>
+                    <span class="evolution-divider" aria-hidden="true"></span>
+                    <span class="evolution-detail"><b>Task&nbsp;:</b> Humanoid-scene interaction</span>
+                    <span class="evolution-detail"><b>Data&nbsp;:</b> Scene interaction data</span>
+                  </a>
+
+                  <a class="evolution-stage evolution-stage--l4" href="#l4">
+                    <span class="evolution-level">L4</span>
+                    <strong class="evolution-title">Multimodal Generalist Control</strong>
+                    <span class="evolution-divider" aria-hidden="true"></span>
+                    <span class="evolution-detail"><b>Task&nbsp;:</b> Vision-language understanding</span>
+                    <span class="evolution-detail"><b>Data&nbsp;:</b> Multimodal expert demonstrations</span>
+                  </a>
+
+                  <a class="evolution-stage evolution-stage--l5" href="#l5">
+                    <span class="evolution-level">L5</span>
+                    <strong class="evolution-title">Predictive World-Action Models</strong>
+                    <span class="evolution-divider" aria-hidden="true"></span>
+                    <span class="evolution-detail"><b>Task&nbsp;:</b> Future consequence reasoning</span>
+                    <span class="evolution-detail"><b>Data&nbsp;:</b> Video-action experience</span>
+                  </a>
+                </div>
+              </div>
               <figcaption>
                 <strong>Fig. 1.</strong> Evolution of learning paradigms for humanoid whole-body control
                 along the axis of data diversity and task generalization. Existing approaches progressively
