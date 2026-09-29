@@ -495,19 +495,20 @@
     text-decoration-color 150ms ease;
 }
 
-.paper-link--algorithm {
-  color: #2f3a45;
-  font-weight: 720;
+.paper-link--method {
+  color: #426f75;
+  font-style: italic;
+  font-weight: inherit;
 }
 
 .paper-link--dataset {
-  color: #6f594c;
+  color: #9a5f3d;
   font-style: italic;
-  font-weight: 620;
+  font-weight: inherit;
 }
 
 .paper-link--deployment {
-  font-weight: 430;
+  font-weight: inherit;
 }
 
 .paper-link:hover,
