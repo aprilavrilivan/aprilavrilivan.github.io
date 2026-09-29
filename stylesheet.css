@@ -530,7 +530,7 @@ h3 {
 .tutorial-cover-stage {
   display: flex;
   min-height: 0;
-  aspect-ratio: 2048 / 1095;
+  aspect-ratio: 16 / 9;
   align-self: center;
   align-items: center;
   overflow: hidden;

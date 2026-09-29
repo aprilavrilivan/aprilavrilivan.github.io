@@ -4,17 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Evolution of Learning Based Humanoid Whole-body Control | Yifan Xu</title>
+    <title>Evolution of Learning Based Humanoid WBC | Yifan Xu</title>
     <meta name="author" content="Yifan Xu">
     <meta
       name="description"
-      content="Evolution of Learning Based Humanoid Whole-body Control"
+      content="Evolution of Learning Based Humanoid WBC"
     >
     <meta name="robots" content="noindex, nofollow">
     <meta name="theme-color" content="#ffffff">
 
-    <link rel="stylesheet" href="../../stylesheet.css?v=20260929-blogs">
-    <link rel="stylesheet" href="tutorial.css?v=20260929-full-chapters">
+    <link rel="stylesheet" href="../../stylesheet.css?v=20260929-blogs-v2">
+    <link rel="stylesheet" href="tutorial.css?v=20260929-unified-levels-v2">
   </head>
 
   <body class="docs-page">
@@ -29,13 +29,13 @@
 
     <div class="docs-layout">
       <aside class="docs-sidebar" aria-label="Blog navigation">
-        <a class="docs-title" href="#top">Learning-based Whole-body Control</a>
+        <a class="docs-title" href="#top">Learning-based Humanoid WBC</a>
         <nav class="docs-nav">
           <a href="#overview">Overview</a>
           <a href="#l1"><span>L1</span> Robust Command Following</a>
-          <a href="#l2"><span>L2</span> Expressive Whole Body Motion</a>
+          <a href="#l2"><span>L2</span> Expressive Motion Generation</a>
           <a href="#l3"><span>L3</span> Context-rich Interaction</a>
-          <a href="#l4"><span>L4</span> Multimodal task grounding</a>
+          <a href="#l4"><span>L4</span> Multimodal Task Grounding</a>
           <a href="#l5"><span>L5</span> Predictive Decision Making</a>
         </nav>
       </aside>
@@ -43,7 +43,7 @@
       <main class="docs-main" id="main-content">
         <article class="docs-article" id="top">
           <section id="overview">
-            <h1>Evolution of Learning Based Humanoid Whole-body Control</h1>
+            <h1>Evolution of Learning Based Humanoid WBC</h1>
             <p>
               Learning-based humanoid control has evolved from basic command following toward
               open-world generalist control, along which data priors become increasingly diverse.
@@ -77,19 +77,19 @@
                       </linearGradient>
                       <marker
                         id="evolution-flow-arrow"
-                        markerWidth="42"
-                        markerHeight="42"
-                        refX="36"
-                        refY="20"
-                        viewBox="0 0 40 40"
+                        markerWidth="34"
+                        markerHeight="34"
+                        refX="30"
+                        refY="16"
+                        viewBox="0 0 32 32"
                         orient="auto"
                         markerUnits="userSpaceOnUse"
                       >
-                        <path d="M 0 0 L 40 20 L 0 40 Z" fill="#c8662f"></path>
+                        <path d="M 2 2 L 30 16 L 2 30 L 9 16 Z" fill="#c8662f"></path>
                       </marker>
                       <path
                         id="evolution-flow-label-path"
-                        d="M 148 490 C 430 486, 690 438, 900 356"
+                        d="M 145 474 C 427 471, 700 424, 900 346"
                       ></path>
                     </defs>
                     <path
@@ -98,7 +98,7 @@
                       marker-end="url(#evolution-flow-arrow)"
                     ></path>
                     <text class="evolution-flow-label" text-anchor="middle">
-                      <textPath href="#evolution-flow-label-path" startOffset="51%">
+                      <textPath href="#evolution-flow-label-path" startOffset="50%">
                         Increasing data diversity and task generalizability
                       </textPath>
                     </text>
@@ -111,41 +111,36 @@
 
                   <a class="evolution-stage evolution-stage--l1" href="#l1">
                     <span class="evolution-level">L1</span>
-                    <strong class="evolution-title">Reward-defined Control</strong>
+                    <strong class="evolution-title">Robust Command Following</strong>
                     <span class="evolution-divider" aria-hidden="true"></span>
-                    <span class="evolution-detail"><b>Task&nbsp;:</b> Command following</span>
                     <span class="evolution-detail"><b>Data&nbsp;:</b> Simulator rollouts</span>
                   </a>
 
                   <a class="evolution-stage evolution-stage--l2" href="#l2">
                     <span class="evolution-level">L2</span>
-                    <strong class="evolution-title">Motion-reference Control</strong>
+                    <strong class="evolution-title">Expressive Motion Generation</strong>
                     <span class="evolution-divider" aria-hidden="true"></span>
-                    <span class="evolution-detail"><b>Task&nbsp;:</b> Expressive motion</span>
-                    <span class="evolution-detail"><b>Data&nbsp;:</b> Whole-body trajectories</span>
+                    <span class="evolution-detail"><b>Data&nbsp;:</b> Reference trajectories</span>
                   </a>
 
                   <a class="evolution-stage evolution-stage--l3" href="#l3">
                     <span class="evolution-level">L3</span>
                     <strong class="evolution-title">Context-rich Interaction</strong>
                     <span class="evolution-divider" aria-hidden="true"></span>
-                    <span class="evolution-detail"><b>Task&nbsp;:</b> Humanoid-scene interaction</span>
                     <span class="evolution-detail"><b>Data&nbsp;:</b> Scene interaction data</span>
                   </a>
 
                   <a class="evolution-stage evolution-stage--l4" href="#l4">
                     <span class="evolution-level">L4</span>
-                    <strong class="evolution-title">Multimodal Generalist Control</strong>
+                    <strong class="evolution-title">Multimodal Task Grounding</strong>
                     <span class="evolution-divider" aria-hidden="true"></span>
-                    <span class="evolution-detail"><b>Task&nbsp;:</b> Vision-language understanding</span>
                     <span class="evolution-detail"><b>Data&nbsp;:</b> Multimodal expert demonstrations</span>
                   </a>
 
                   <a class="evolution-stage evolution-stage--l5" href="#l5">
                     <span class="evolution-level">L5</span>
-                    <strong class="evolution-title">Predictive World-Action Models</strong>
+                    <strong class="evolution-title">Predictive Decision Making</strong>
                     <span class="evolution-divider" aria-hidden="true"></span>
-                    <span class="evolution-detail"><b>Task&nbsp;:</b> Future consequence reasoning</span>
                     <span class="evolution-detail"><b>Data&nbsp;:</b> Video-action experience</span>
                   </a>
                 </div>
@@ -177,7 +172,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row"><span>L1</span>Robust command following</th>
+                    <th scope="row"><span>L1</span>Robust Command Following</th>
                     <td>
                       <img
                         src="../../assets/tutorials/learning-wbc/l1-beamdojo.png"
@@ -206,7 +201,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <th scope="row"><span>L2</span>Expressive whole body motion</th>
+                    <th scope="row"><span>L2</span>Expressive Motion Generation</th>
                     <td>
                       <img
                         src="../../assets/tutorials/learning-wbc/l2-exbody2.png"
@@ -286,7 +281,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <th scope="row"><span>L4</span>Multimodal task grounding</th>
+                    <th scope="row"><span>L4</span>Multimodal Task Grounding</th>
                     <td>
                       <img
                         src="../../assets/tutorials/learning-wbc/l4-openhlm.png"
@@ -318,7 +313,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <th scope="row"><span>L5</span>Predictive decision making</th>
+                    <th scope="row"><span>L5</span>Predictive Decision Making</th>
                     <td>
                       <img
                         src="../../assets/tutorials/learning-wbc/l5-motionwam.png"
@@ -362,7 +357,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row"><span>L1</span>Reward-defined reactive control</th>
+                    <th scope="row"><span>L1</span>Robust Command Following</th>
                     <td>
                       On-policy and (emerging) off-policy RL; massively parallel simulation,
                       curriculum and privileged learning, and sim-to-real adaptation
@@ -375,7 +370,7 @@
                     <td>2016–</td>
                   </tr>
                   <tr>
-                    <th scope="row"><span>L2</span>Motion-conditioned control</th>
+                    <th scope="row"><span>L2</span>Expressive Motion Generation</th>
                     <td>Reference collection; motion retargeting; RL grounding; policy distillation</td>
                     <td>
                       Use external human or robot motion data to specify desired behavior. Retargeting
@@ -385,7 +380,7 @@
                     <td>2018–</td>
                   </tr>
                   <tr>
-                    <th scope="row"><span>L3</span>Context-grounded physical interaction</th>
+                    <th scope="row"><span>L3</span>Context-rich Interaction</th>
                     <td>
                       Demonstration collection; context-rich alignment; interaction-aware physical
                       grounding
@@ -398,7 +393,7 @@
                     <td>2024–</td>
                   </tr>
                   <tr>
-                    <th scope="row"><span>L4</span>Multimodal generalist control</th>
+                    <th scope="row"><span>L4</span>Multimodal Task Grounding</th>
                     <td>
                       Multimodal inference; robust real-world execution; skill, motion-latent, or
                       direct-action coupling
@@ -411,7 +406,7 @@
                     <td>2025–</td>
                   </tr>
                   <tr>
-                    <th scope="row"><span>L5</span>Predictive world–action models</th>
+                    <th scope="row"><span>L5</span>Predictive Decision Making</th>
                     <td>
                       Predictive experience modeling; action-conditioned foresight and planning;
                       prediction–execution coupling
@@ -660,7 +655,7 @@
           <section class="docs-section chapter-section" id="l2">
             <header class="chapter-heading">
               <span class="chapter-level">L2</span>
-              <h2>Expressive Whole Body Motion</h2>
+              <h2>Expressive Motion Generation</h2>
             </header>
             <h3>Motion Data Collection and Robot Alignment</h3>
             <p class="chapter-lead">
@@ -1290,7 +1285,7 @@
           <section class="docs-section chapter-section" id="l4">
             <header class="chapter-heading">
               <span class="chapter-level">L4</span>
-              <h2>Multimodal task grounding</h2>
+              <h2>Multimodal Task Grounding</h2>
             </header>
             <h3>From Structured Tasks to Multimodal Intent</h3>
             <p class="chapter-lead">
