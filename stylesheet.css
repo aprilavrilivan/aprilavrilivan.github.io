@@ -524,113 +524,23 @@ h3 {
 
 .tutorial-card {
   grid-template-columns: minmax(320px, 39%) minmax(0, 1fr);
-  background:
-    radial-gradient(circle at 9% 12%, rgb(255 255 255 / 92%), transparent 25rem),
-    rgb(251 250 247 / 92%);
+  background: rgb(251 250 247 / 92%);
 }
 
-.tutorial-book-stage {
-  position: relative;
-  display: grid;
+.tutorial-cover-stage {
+  display: flex;
   min-height: 286px;
-  place-items: center;
+  align-items: center;
   overflow: hidden;
   border: 1px solid rgb(223 218 204 / 86%);
   border-radius: calc(var(--radius) - 7px);
-  background:
-    radial-gradient(circle at 50% 26%, rgb(255 255 255 / 95%), transparent 35%),
-    linear-gradient(145deg, #e8e1d2, #f7f3e9 54%, #ddd3bf);
-  perspective: 900px;
+  background: #fff;
 }
 
-.tutorial-book-stage::after {
-  position: absolute;
-  right: 12%;
-  bottom: 8%;
-  left: 12%;
-  height: 16%;
-  border-radius: 50%;
-  background: rgb(42 49 53 / 16%);
-  content: "";
-  filter: blur(14px);
-  transform: rotate(-2deg);
-}
-
-.tutorial-book {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  width: 176px;
-  aspect-ratio: 0.73;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 1.2rem 1.05rem 1rem 1.25rem;
-  transform: rotateY(-11deg) rotateZ(-1.5deg);
-  border: 1px solid rgb(12 48 73 / 58%);
-  border-radius: 4px 11px 11px 4px;
-  background:
-    linear-gradient(90deg, rgb(255 255 255 / 12%), transparent 12% 88%, rgb(0 0 0 / 11%)),
-    linear-gradient(145deg, #163f5d, #1e618a 58%, #184a6a);
-  box-shadow:
-    8px 7px 0 -2px #e7e0d0,
-    10px 9px 0 -2px #b7ac96,
-    21px 25px 32px rgb(31 39 44 / 25%);
-  color: #fff;
-  transform-style: preserve-3d;
-}
-
-.tutorial-book::before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0.48rem;
-  width: 1px;
-  background: rgb(255 255 255 / 23%);
-  box-shadow: 2px 0 0 rgb(0 0 0 / 12%);
-  content: "";
-}
-
-.tutorial-book::after {
-  position: absolute;
-  top: 0.8rem;
-  right: -8px;
-  bottom: 0.65rem;
-  width: 8px;
-  border-radius: 0 3px 3px 0;
-  background: repeating-linear-gradient(
-    180deg,
-    #f7f0dd 0,
-    #f7f0dd 3px,
-    #d8cfbc 4px
-  );
-  content: "";
-  transform: rotateY(72deg);
-  transform-origin: left;
-}
-
-.tutorial-book-kicker,
-.tutorial-book-levels {
-  color: #d9ecf7;
-  font-size: 0.58rem;
-  font-weight: 760;
-  letter-spacing: 0.13em;
-  line-height: 1.35;
-  text-transform: uppercase;
-}
-
-.tutorial-book-title {
+.tutorial-cover-stage img {
   display: block;
-  max-width: 12ch;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.18rem;
-  font-weight: 700;
-  line-height: 1.12;
-  text-wrap: balance;
-}
-
-.tutorial-book-levels {
-  color: #f2d996;
-  font-size: 0.52rem;
+  width: 100%;
+  height: auto;
 }
 
 .tutorial-card .work-copy h3 {
