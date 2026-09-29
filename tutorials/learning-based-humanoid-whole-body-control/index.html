@@ -1849,6 +1849,116 @@
               agents that not only understand tasks and execute behaviors, but also anticipate the physical
               consequences of their decisions.
             </p>
+
+            <figure
+              id="foundation-coupling"
+              class="foundation-coupling-figure"
+              aria-label="Foundation capabilities and their coupling regimes for humanoid whole-body control"
+            >
+              <div class="foundation-capabilities">
+                <article class="foundation-capability foundation-capability--understanding">
+                  <header>
+                    <h4>Multimodal Understanding</h4>
+                    <p>What should the robot do?</p>
+                  </header>
+                  <ul class="foundation-paper-links" aria-label="Multimodal understanding papers">
+                    <li><a href="https://arxiv.org/pdf/2307.15818">RT-2</a></li>
+                    <li><a href="https://arxiv.org/pdf/2410.24164">π<sub>0</sub></a></li>
+                    <li><a href="https://arxiv.org/pdf/2406.09246">OpenVLA</a></li>
+                    <li><a href="https://arxiv.org/pdf/2512.11047">WholeBodyVLA</a></li>
+                    <li><a href="https://arxiv.org/pdf/2606.22174">OpenHLM</a></li>
+                  </ul>
+                </article>
+
+                <article class="foundation-capability foundation-capability--prediction">
+                  <header>
+                    <h4>Predictive World Modeling</h4>
+                    <p>What may happen if it acts?</p>
+                  </header>
+                  <ul class="foundation-paper-links" aria-label="Predictive world modeling papers">
+                    <li><a href="https://arxiv.org/pdf/2602.06949">DreamDojo</a></li>
+                    <li><a href="https://arxiv.org/pdf/2602.10983">VISTA</a></li>
+                    <li><a href="https://arxiv.org/pdf/2606.09215">MotionWAM</a></li>
+                    <li><a href="https://arxiv.org/pdf/2602.15922">DreamZero</a></li>
+                  </ul>
+                </article>
+
+                <article class="foundation-capability foundation-capability--execution">
+                  <header>
+                    <h4>Robust Whole-Body Execution</h4>
+                    <p>How is behavior executed stably?</p>
+                  </header>
+                  <ul class="foundation-paper-links" aria-label="Robust whole-body execution papers">
+                    <li><a href="https://arxiv.org/pdf/2511.07820">SONIC</a></li>
+                    <li><a href="https://arxiv.org/pdf/2504.11054">Meta Motivo</a></li>
+                    <li><a href="https://arxiv.org/pdf/2509.13780">BFM</a></li>
+                    <li><a href="https://arxiv.org/pdf/2606.03985">Humanoid-GPT</a></li>
+                    <li><a href="https://arxiv.org/pdf/2606.08059">Perceptive BFM</a></li>
+                  </ul>
+                </article>
+              </div>
+
+              <div class="foundation-coupling-bridge" aria-hidden="true">
+                <span>Coupling Regime</span>
+                <i></i>
+              </div>
+
+              <div class="foundation-regimes">
+                <article class="foundation-regime foundation-regime--supervision">
+                  <header>
+                    <h4>Training-Time Supervision</h4>
+                    <p>FM shapes training only</p>
+                  </header>
+                  <ul class="foundation-paper-links" aria-label="Training-time supervision papers">
+                    <li><a href="https://arxiv.org/pdf/2310.12931">Eureka</a></li>
+                    <li><a href="https://arxiv.org/pdf/2406.01967">DrEureka</a></li>
+                    <li><a href="https://arxiv.org/pdf/2502.04692">STRIDE</a></li>
+                    <li><a href="https://arxiv.org/pdf/2503.22249">FLAM</a></li>
+                  </ul>
+                </article>
+
+                <article class="foundation-regime foundation-regime--planning">
+                  <header>
+                    <h4>Explicit Planning</h4>
+                    <p>Planning <span aria-hidden="true">→</span> execution</p>
+                  </header>
+                  <ul class="foundation-paper-links" aria-label="Explicit planning papers">
+                    <li><a href="https://arxiv.org/pdf/2503.12533">Being-0</a></li>
+                    <li><a href="https://arxiv.org/pdf/2603.08572">MetaWorld-X</a></li>
+                    <li><a href="https://arxiv.org/pdf/2602.10983">VISTA</a></li>
+                    <li><a href="https://arxiv.org/pdf/2607.27599">World Action Planner</a></li>
+                  </ul>
+                </article>
+
+                <article class="foundation-regime foundation-regime--interface">
+                  <header>
+                    <h4>Latent Interface</h4>
+                    <p>Motion intent <span aria-hidden="true">→</span> execution</p>
+                  </header>
+                  <ul class="foundation-paper-links" aria-label="Latent interface papers">
+                    <li><a href="https://arxiv.org/pdf/2506.13751">LeVERB</a></li>
+                    <li><a href="https://arxiv.org/pdf/2511.22963">Humanoid-LLA</a></li>
+                    <li><a href="https://arxiv.org/pdf/2603.16188">ECHO</a></li>
+                    <li><a href="https://arxiv.org/pdf/2606.09215">MotionWAM</a></li>
+                    <li><a href="https://arxiv.org/pdf/2604.19734">UniT</a></li>
+                  </ul>
+                </article>
+
+                <article class="foundation-regime foundation-regime--unified">
+                  <header>
+                    <h4>Unified Backbone</h4>
+                    <p>End-to-end action mapping</p>
+                  </header>
+                  <ul class="foundation-paper-links" aria-label="Unified backbone papers">
+                    <li><a href="https://arxiv.org/pdf/2503.14734">GR00T N1</a></li>
+                    <li><a href="https://arxiv.org/pdf/2603.12263">Ψ<sub>0</sub></a></li>
+                    <li><a href="https://arxiv.org/pdf/2606.22174">OpenHLM</a></li>
+                    <li><a href="https://arxiv.org/pdf/2511.19236">SENTINEL</a></li>
+                    <li><a href="https://arxiv.org/pdf/2504.21738">LangWBC</a></li>
+                  </ul>
+                </article>
+              </div>
+            </figure>
           </section>
         </article>
 
