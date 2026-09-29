@@ -2,114 +2,113 @@
   <title id="title">Evolution of Learning Based Humanoid Whole-body Control</title>
   <desc id="desc">Five learning paradigms increase along data diversity and task generalization.</desc>
   <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fffdfa"/>
+      <stop offset="1" stop-color="#f8f4ed"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#ead7c7"/>
+      <stop offset="0.55" stop-color="#dda77f"/>
+      <stop offset="1" stop-color="#c8662f"/>
+    </linearGradient>
     <marker id="axis-arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
-      <path d="M0,0 L12,6 L0,12 Z" fill="#a8b7c2"/>
+      <path d="M0 0 12 6 0 12Z" fill="#c9c1b7"/>
     </marker>
     <marker
-      id="curve-arrow"
-      markerWidth="100"
-      markerHeight="100"
-      refX="88"
-      refY="50"
-      viewBox="0 0 100 100"
+      id="flow-arrow"
+      markerWidth="90"
+      markerHeight="90"
+      refX="80"
+      refY="45"
+      viewBox="0 0 90 90"
       markerUnits="userSpaceOnUse"
       orient="auto"
     >
-      <path d="M0,0 L100,50 L0,100 Z" fill="#bad2e6"/>
+      <path d="M0 0 90 45 0 90Z" fill="#c8662f"/>
     </marker>
+    <filter id="card-shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#433125" flood-opacity="0.08"/>
+    </filter>
     <style>
-      .axis-label { fill: #1d2e3f; font: 700 44px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      .level { fill: #fff; font: 750 28px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      .box-title { fill: #1d2e3f; font: 700 34px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      .field { fill: #344b5f; font: 650 25px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-      .field-label { fill: #2e6c94; font-weight: 750; }
+      .axis-label {
+        fill: #192431;
+        font: 760 42px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: -0.02em;
+      }
+      .flow-label {
+        fill: #9e5633;
+        font: 700 27px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: 0.01em;
+      }
+      .level {
+        fill: #fff;
+        font: 800 27px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: 0.04em;
+      }
+      .box-title {
+        fill: #192431;
+        font: 720 33px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: -0.02em;
+      }
     </style>
   </defs>
 
-  <rect width="2048" height="1095" fill="#fff"/>
+  <rect width="2048" height="1095" rx="24" fill="url(#background)"/>
 
-  <text class="axis-label" x="18" y="68">Data diversity</text>
-  <line x1="76" y1="975" x2="76" y2="134" stroke="#a8b7c2" stroke-width="2" marker-end="url(#axis-arrow)"/>
-  <line x1="76" y1="975" x2="2018" y2="975" stroke="#a8b7c2" stroke-width="2" marker-end="url(#axis-arrow)"/>
-  <text class="axis-label" x="845" y="1029">Task generalization</text>
+  <text class="axis-label" x="24" y="70">Data diversity</text>
+  <line x1="76" y1="972" x2="76" y2="138" stroke="#c9c1b7" stroke-width="2" marker-end="url(#axis-arrow)"/>
+  <line x1="76" y1="972" x2="2016" y2="972" stroke="#c9c1b7" stroke-width="2" marker-end="url(#axis-arrow)"/>
+  <text class="axis-label" x="1024" y="1032" text-anchor="middle">Task generalization</text>
 
   <path
-    d="M220 875 C650 850, 1190 760, 1950 505"
+    d="M230 880 C660 857 1200 775 1880 558"
     fill="none"
-    stroke="#bad2e6"
-    stroke-width="28"
+    stroke="url(#flow)"
     stroke-linecap="round"
-    marker-end="url(#curve-arrow)"
+    stroke-width="25"
+    marker-end="url(#flow-arrow)"
   />
-  <text
-    x="1120"
-    y="839"
-    fill="#2d6790"
-    font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-    font-size="28"
-    font-weight="700"
-    transform="rotate(-14 1120 839)"
-  >Increasing data diversity and task generalizability</text>
+  <text class="flow-label" x="1075" y="833" transform="rotate(-13 1075 833)">
+    Increasing data diversity and task generalizability
+  </text>
 
-  <g transform="translate(132 440)">
-    <rect width="366" height="378" rx="18" fill="#f2f5f7" stroke="#6d8aa0" stroke-width="2"/>
-    <rect x="23" y="20" width="62" height="39" rx="10" fill="#7e97aa"/>
-    <text class="level" x="37" y="49">L1</text>
-    <text class="box-title" x="23" y="107">Reward-defined</text>
-    <text class="box-title" x="23" y="149">Control</text>
-    <line x1="23" y1="169" x2="343" y2="169" stroke="#a9b9c5"/>
-    <text class="field" x="23" y="218"><tspan class="field-label">Task</tspan><tspan> : Command following</tspan></text>
-    <text class="field" x="23" y="276"><tspan class="field-label">Data</tspan><tspan> : Simulator rollouts</tspan></text>
+  <g transform="translate(145 560)" filter="url(#card-shadow)">
+    <rect width="340" height="210" rx="20" fill="#f5f0e9" stroke="#c8b7aa" stroke-width="2"/>
+    <rect x="24" y="22" width="66" height="43" rx="10" fill="#856a58"/>
+    <text class="level" x="38" y="53">L1</text>
+    <text class="box-title" x="24" y="126">Reward-defined</text>
+    <text class="box-title" x="24" y="171">Control</text>
   </g>
 
-  <g transform="translate(508 350)">
-    <rect width="366" height="375" rx="18" fill="#edf3f6" stroke="#4b7c99" stroke-width="2"/>
-    <rect x="23" y="20" width="62" height="39" rx="10" fill="#6d91a5"/>
-    <text class="level" x="37" y="49">L2</text>
-    <text class="box-title" x="23" y="107">Motion-reference</text>
-    <text class="box-title" x="23" y="149">Control</text>
-    <line x1="23" y1="169" x2="343" y2="169" stroke="#a9b9c5"/>
-    <text class="field" x="23" y="218"><tspan class="field-label">Task</tspan><tspan> : Expressive motion</tspan></text>
-    <text class="field" x="23" y="276"><tspan class="field-label">Data</tspan><tspan> : Whole-body</tspan></text>
-    <text class="field" x="23" y="308">trajectories</text>
+  <g transform="translate(515 470)" filter="url(#card-shadow)">
+    <rect width="340" height="210" rx="20" fill="#f7eee6" stroke="#d1b49e" stroke-width="2"/>
+    <rect x="24" y="22" width="66" height="43" rx="10" fill="#9e6c4b"/>
+    <text class="level" x="38" y="53">L2</text>
+    <text class="box-title" x="24" y="126">Motion-reference</text>
+    <text class="box-title" x="24" y="171">Control</text>
   </g>
 
-  <g transform="translate(883 258)">
-    <rect width="366" height="375" rx="18" fill="#e6eff4" stroke="#367495" stroke-width="2"/>
-    <rect x="23" y="20" width="62" height="39" rx="10" fill="#56869c"/>
-    <text class="level" x="37" y="49">L3</text>
-    <text class="box-title" x="23" y="107">Context-rich</text>
-    <text class="box-title" x="23" y="149">Interaction</text>
-    <line x1="23" y1="169" x2="343" y2="169" stroke="#a9b9c5"/>
-    <text class="field" x="23" y="218"><tspan class="field-label">Task</tspan><tspan> : Humanoid-scene</tspan></text>
-    <text class="field" x="23" y="250">interaction</text>
-    <text class="field" x="23" y="304"><tspan class="field-label">Data</tspan><tspan> : Scene interaction</tspan></text>
-    <text class="field" x="23" y="336">data</text>
+  <g transform="translate(885 380)" filter="url(#card-shadow)">
+    <rect width="340" height="210" rx="20" fill="#f7e9df" stroke="#d7a27f" stroke-width="2"/>
+    <rect x="24" y="22" width="66" height="43" rx="10" fill="#ae6741"/>
+    <text class="level" x="38" y="53">L3</text>
+    <text class="box-title" x="24" y="126">Context-rich</text>
+    <text class="box-title" x="24" y="171">Interaction</text>
   </g>
 
-  <g transform="translate(1259 167)">
-    <rect width="366" height="375" rx="18" fill="#dceaf1" stroke="#2a6b92" stroke-width="2"/>
-    <rect x="23" y="20" width="62" height="39" rx="10" fill="#39799a"/>
-    <text class="level" x="37" y="49">L4</text>
-    <text class="box-title" x="23" y="107">Multimodal</text>
-    <text class="box-title" x="23" y="149">Generalist Control</text>
-    <line x1="23" y1="169" x2="343" y2="169" stroke="#a9b9c5"/>
-    <text class="field" x="23" y="218"><tspan class="field-label">Task</tspan><tspan> : Vision-language</tspan></text>
-    <text class="field" x="23" y="250">understanding</text>
-    <text class="field" x="23" y="304"><tspan class="field-label">Data</tspan><tspan> : Multimodal expert</tspan></text>
-    <text class="field" x="23" y="336">demonstrations</text>
+  <g transform="translate(1255 290)" filter="url(#card-shadow)">
+    <rect width="340" height="210" rx="20" fill="#f5e2d5" stroke="#cf895f" stroke-width="2"/>
+    <rect x="24" y="22" width="66" height="43" rx="10" fill="#b65f35"/>
+    <text class="level" x="38" y="53">L4</text>
+    <text class="box-title" x="24" y="126">Multimodal</text>
+    <text class="box-title" x="24" y="171">Generalist Control</text>
   </g>
 
-  <g transform="translate(1634 78)">
-    <rect width="366" height="375" rx="18" fill="#d1e3ef" stroke="#1d608e" stroke-width="2.5"/>
-    <rect x="23" y="20" width="62" height="39" rx="10" fill="#1f618e"/>
-    <text class="level" x="37" y="49">L5</text>
-    <text class="box-title" x="23" y="107">Predictive</text>
-    <text class="box-title" x="23" y="149">World-Action Models</text>
-    <line x1="23" y1="169" x2="343" y2="169" stroke="#a9b9c5"/>
-    <text class="field" x="23" y="218"><tspan class="field-label">Task</tspan><tspan> : Future consequence</tspan></text>
-    <text class="field" x="23" y="250">reasoning</text>
-    <text class="field" x="23" y="304"><tspan class="field-label">Data</tspan><tspan> : Video-action</tspan></text>
-    <text class="field" x="23" y="336">experience</text>
+  <g transform="translate(1625 200)" filter="url(#card-shadow)">
+    <rect width="340" height="210" rx="20" fill="#f1d8c7" stroke="#bd693e" stroke-width="2"/>
+    <rect x="24" y="22" width="66" height="43" rx="10" fill="#a84c25"/>
+    <text class="level" x="38" y="53">L5</text>
+    <text class="box-title" x="24" y="126">Predictive</text>
+    <text class="box-title" x="24" y="171">World-Action Models</text>
   </g>
 </svg>
