@@ -496,15 +496,19 @@
 }
 
 .paper-link--method {
-  color: #426f75;
+  color: #126a73;
   font-style: italic;
   font-weight: inherit;
+  text-decoration-color: #126a73;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1.5px;
 }
 
 .paper-link--dataset {
-  color: #9a5f3d;
+  color: #a7562d;
   font-style: italic;
   font-weight: inherit;
+  text-decoration-color: #a7562d;
 }
 
 .paper-link--deployment {
