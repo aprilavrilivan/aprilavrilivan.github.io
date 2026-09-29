@@ -1,0 +1,459 @@
+.tutorial-page {
+  background:
+    radial-gradient(circle at 84% 9rem, rgb(212 229 240 / 50%), transparent 27rem),
+    radial-gradient(circle at 10% 38rem, rgb(245 225 180 / 24%), transparent 30rem),
+    linear-gradient(180deg, #faf9f5 0, var(--background) 42rem),
+    var(--background);
+}
+
+.tutorial-header-inner,
+.tutorial-shell {
+  width: min(calc(100% - 3rem), 1240px);
+  margin: 0 auto;
+}
+
+.tutorial-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 34%);
+  align-items: center;
+  gap: clamp(3rem, 8vw, 7rem);
+  min-height: 570px;
+  padding: clamp(4rem, 9vw, 7.5rem) 0 clamp(3rem, 7vw, 5.5rem);
+}
+
+.tutorial-hero h1 {
+  max-width: 16ch;
+  margin-bottom: 1.25rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(3rem, 6.4vw, 5.7rem);
+  font-weight: 650;
+  letter-spacing: -0.052em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.tutorial-title-nowrap {
+  white-space: nowrap;
+}
+
+.tutorial-eyebrow,
+.tutorial-section-number,
+.chapter-level {
+  margin-bottom: 0.75rem;
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 780;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.tutorial-lede {
+  max-width: 680px;
+  margin-bottom: 1.35rem;
+  color: #465563;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.08rem, 1.8vw, 1.32rem);
+  line-height: 1.6;
+}
+
+.tutorial-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.tutorial-page-book-stage {
+  min-height: 410px;
+  border: 0;
+  background:
+    radial-gradient(circle at 50% 34%, rgb(255 255 255 / 95%), transparent 37%),
+    linear-gradient(145deg, rgb(230 224 211 / 86%), rgb(250 247 239 / 90) 56%, rgb(215 205 186 / 74%));
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 78%),
+    0 24px 70px rgb(46 48 47 / 10%);
+}
+
+.tutorial-page-book {
+  width: min(52%, 214px);
+}
+
+.tutorial-page-book .tutorial-book-title {
+  font-size: clamp(1.18rem, 2vw, 1.45rem);
+}
+
+.chapter-index {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  overflow: hidden;
+  margin-bottom: clamp(4rem, 8vw, 7rem);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgb(251 250 247 / 78%);
+  box-shadow: 0 14px 38px rgb(55 48 39 / 5%);
+}
+
+.chapter-index a {
+  display: grid;
+  min-height: 102px;
+  align-content: center;
+  gap: 0.28rem;
+  padding: 1rem 1.05rem;
+  border-right: 1px solid var(--line);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 680;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.chapter-index a:last-child {
+  border-right: 0;
+}
+
+.chapter-index a:hover {
+  background: #fff;
+  color: var(--accent);
+}
+
+.chapter-index span {
+  color: var(--accent);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.tutorial-section {
+  padding: clamp(3.5rem, 7vw, 6.5rem) 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: var(--sticky-header-offset);
+}
+
+.tutorial-overview {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(2rem, 7vw, 6.5rem);
+}
+
+.tutorial-section-heading h2 {
+  max-width: 24ch;
+  margin-bottom: 0.8rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 650;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.tutorial-section-heading > p:not(.tutorial-section-number) {
+  max-width: 790px;
+  color: var(--muted);
+}
+
+.tutorial-prose {
+  max-width: 760px;
+  color: #34414d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.08rem, 1.7vw, 1.26rem);
+  line-height: 1.75;
+}
+
+.tutorial-figure {
+  margin: 0 0 clamp(3.5rem, 8vw, 7rem);
+  scroll-margin-top: var(--sticky-header-offset);
+}
+
+.tutorial-figure-link {
+  display: block;
+  overflow: hidden;
+  border: 1px solid rgb(213 218 219 / 90%);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 20px 58px rgb(43 51 55 / 10%);
+}
+
+.tutorial-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.tutorial-figure figcaption {
+  max-width: 980px;
+  margin: 1rem auto 0;
+  color: var(--muted);
+  font-size: 0.83rem;
+  line-height: 1.6;
+}
+
+.tutorial-table-section .tutorial-section-heading {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1.4fr) minmax(260px, 0.6fr);
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 1.6rem;
+}
+
+.tutorial-table-section .tutorial-section-heading h2 {
+  max-width: 28ch;
+  margin: 0;
+  font-size: clamp(1.72rem, 3vw, 2.55rem);
+}
+
+.tutorial-table-wrap {
+  overflow-x: auto;
+  border: 1px solid rgb(212 217 219 / 92%);
+  border-radius: 18px;
+  background: rgb(255 255 255 / 76%);
+  box-shadow: 0 17px 48px rgb(43 51 55 / 7%);
+  outline: none;
+}
+
+.tutorial-table-wrap:focus-visible {
+  outline: 3px solid rgb(27 95 145 / 28%);
+  outline-offset: 4px;
+}
+
+.tutorial-table {
+  width: 100%;
+  min-width: 1060px;
+  border-collapse: collapse;
+  color: #34414d;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.tutorial-table th,
+.tutorial-table td {
+  padding: 1rem 1.05rem;
+  border-right: 1px solid rgb(220 224 223 / 88%);
+  border-bottom: 1px solid rgb(220 224 223 / 88%);
+  vertical-align: middle;
+  text-align: left;
+}
+
+.tutorial-table tr:last-child th,
+.tutorial-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.tutorial-table th:last-child,
+.tutorial-table td:last-child {
+  border-right: 0;
+}
+
+.tutorial-table thead th {
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+  background: #1b4f73;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 760;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tutorial-table tbody th {
+  width: 168px;
+  background: rgb(241 244 243 / 78%);
+  color: var(--text);
+  font-size: 0.82rem;
+}
+
+.tutorial-table tbody th span {
+  display: block;
+  margin-bottom: 0.32rem;
+  color: var(--accent);
+  font-size: 0.67rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+.landscape-table td:nth-child(2) {
+  width: 242px;
+  padding: 0.65rem;
+  background: #fff;
+  text-align: center;
+}
+
+.landscape-table img {
+  display: block;
+  width: 218px;
+  height: 124px;
+  margin: 0 auto;
+  object-fit: contain;
+}
+
+.paradigm-table th:first-child {
+  width: 185px;
+}
+
+.paradigm-table th:nth-child(2),
+.paradigm-table td:nth-child(2) {
+  width: 26%;
+}
+
+.paradigm-table th:last-child,
+.paradigm-table td:last-child {
+  width: 76px;
+  text-align: center;
+}
+
+.tutorial-chapters {
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.chapter-preview-list {
+  display: grid;
+  gap: 0;
+  margin-top: 2rem;
+  border-top: 1px solid var(--line);
+}
+
+.chapter-preview {
+  display: grid;
+  grid-template-columns: 70px minmax(220px, 0.5fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: start;
+  padding: 1.7rem 0;
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: var(--sticky-header-offset);
+}
+
+.chapter-preview h3 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+  line-height: 1.16;
+}
+
+.chapter-preview p:last-child {
+  max-width: 700px;
+  margin: 0;
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .tutorial-hero {
+    grid-template-columns: minmax(0, 1fr) 280px;
+    gap: 2rem;
+  }
+
+  .chapter-index {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .chapter-index a {
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .chapter-index a:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .chapter-index a:last-child {
+    border-bottom: 0;
+  }
+
+  .tutorial-table-section .tutorial-section-heading {
+    grid-template-columns: 90px minmax(0, 1fr);
+  }
+
+  .tutorial-table-section .tutorial-section-heading > p:last-child {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 720px) {
+  .tutorial-header-inner,
+  .tutorial-shell {
+    width: min(calc(100% - 2rem), 1240px);
+  }
+
+  .tutorial-hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    min-height: 0;
+    padding: 3.5rem 0 3rem;
+  }
+
+  .tutorial-hero h1 {
+    font-size: clamp(2.7rem, 12vw, 4.4rem);
+  }
+
+  .tutorial-page-book-stage {
+    width: 100%;
+    min-height: 340px;
+  }
+
+  .tutorial-overview,
+  .tutorial-table-section .tutorial-section-heading {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .tutorial-table-section .tutorial-section-heading > p:last-child {
+    grid-column: auto;
+  }
+
+  .chapter-preview {
+    grid-template-columns: 50px minmax(0, 1fr);
+  }
+
+  .chapter-preview p:last-child {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 500px) {
+  .tutorial-title-nowrap {
+    white-space: normal;
+  }
+
+  .chapter-index {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-index a,
+  .chapter-index a:nth-child(2n) {
+    min-height: 78px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .tutorial-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .chapter-preview {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .chapter-preview p:last-child {
+    grid-column: auto;
+  }
+}
+
+@media print {
+  .tutorial-page {
+    background: #fff;
+  }
+
+  .tutorial-hero {
+    min-height: 0;
+  }
+
+  .chapter-index,
+  .tutorial-page-book-stage,
+  .tutorial-actions {
+    display: none;
+  }
+
+  .tutorial-table-wrap {
+    overflow: visible;
+  }
+}

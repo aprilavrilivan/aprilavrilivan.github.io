@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Self-made Tutorial: Evolution of Learning Based Humanoid Whole-body Control | Yifan Xu</title>
+    <meta name="author" content="Yifan Xu">
+    <meta
+      name="description"
+      content="Self-made Tutorial: Evolution of Learning Based Humanoid Whole-body Control"
+    >
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#f4f2ed">
+
+    <link rel="stylesheet" href="../../stylesheet.css?v=20260929-learning-wbc-tutorial">
+    <link rel="stylesheet" href="tutorial.css?v=20260929-first-layout">
+  </head>
+
+  <body class="tutorial-page">
+    <a class="skip-link" href="#tutorial-content">Skip to main content</a>
+
+    <header class="site-header subpage-header" id="top">
+      <div class="site-header-inner tutorial-header-inner">
+        <a class="site-mark" href="../../">Yifan Xu (Ivan)</a>
+        <nav class="site-nav" aria-label="Tutorial navigation">
+          <a href="#overview">Overview</a>
+          <a href="#figure-1">Fig. 1</a>
+          <a href="#table-1">Table 1</a>
+          <a href="#table-2">Table 2</a>
+          <a href="#chapters">L1–L5</a>
+          <a href="learning-based-whole-body-control.pdf">PDF</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="tutorial-shell">
+      <main id="tutorial-content">
+        <section class="tutorial-hero" aria-labelledby="tutorial-title">
+          <div class="tutorial-hero-copy">
+            <p class="tutorial-eyebrow">Self-made Tutorial</p>
+            <h1 id="tutorial-title">
+              Evolution of Learning Based Humanoid <span class="tutorial-title-nowrap">Whole-body Control</span>
+            </h1>
+            <p class="tutorial-lede">
+              Learning-based humanoid control has evolved from reward-defined task learning toward
+              open-world generalist control as data priors become increasingly diverse and expressive.
+            </p>
+            <div class="tutorial-actions">
+              <a class="work-link work-link-primary" href="#overview">
+                Start Reading <span aria-hidden="true">↓</span>
+              </a>
+              <a class="work-link" href="learning-based-whole-body-control.pdf">PDF</a>
+              <a class="work-link" href="../../#tutorials">Personal Website</a>
+            </div>
+          </div>
+
+          <div class="tutorial-book-stage tutorial-page-book-stage" aria-hidden="true">
+            <div class="tutorial-book tutorial-page-book">
+              <span class="tutorial-book-kicker">Self-made Tutorial</span>
+              <span class="tutorial-book-title">
+                Evolution of Learning Based Humanoid Whole-body Control
+              </span>
+              <span class="tutorial-book-levels">L1 · L2 · L3 · L4 · L5</span>
+            </div>
+          </div>
+        </section>
+
+        <nav class="chapter-index" aria-label="Learning paradigm chapters">
+          <a href="#l1"><span>L1</span>Robust Command Following</a>
+          <a href="#l2"><span>L2</span>Expressive Whole Body Motion</a>
+          <a href="#l3"><span>L3</span>Context-rich Interaction</a>
+          <a href="#l4"><span>L4</span>Multimodal task grounding</a>
+          <a href="#l5"><span>L5</span>Predictive Decision Making</a>
+        </nav>
+
+        <section class="tutorial-section tutorial-overview" id="overview">
+          <div class="tutorial-section-heading">
+            <p class="tutorial-section-number">Overview</p>
+            <h2>Learning-based Whole-body Control</h2>
+          </div>
+          <div class="tutorial-prose">
+            <p>
+              Learning-based humanoid control has evolved from reward-defined task learning toward
+              open-world generalist control as data priors become increasingly diverse and expressive.
+              As summarized in Fig. 1, this progression moves from self-generated simulation rollouts
+              to expressive motion imitation, real world interaction, multimodal reasoning, and
+              predictive world understanding, enabling a gradual shift from command following toward
+              general motion, physical interaction, semantic grounding, and future-aware decision making.
+            </p>
+          </div>
+        </section>
+
+        <figure class="tutorial-figure" id="figure-1">
+          <a
+            class="tutorial-figure-link"
+            href="../../assets/tutorials/learning-wbc/paradigm-overview.jpg"
+            aria-label="Open Figure 1 at full size"
+          >
+            <img
+              src="../../assets/tutorials/learning-wbc/paradigm-overview.jpg"
+              alt="Evolution of learning paradigms for humanoid whole-body control from L1 to L5"
+              width="1024"
+              height="343"
+            >
+          </a>
+          <figcaption>
+            <strong>Fig. 1.</strong> Evolution of learning paradigms for humanoid whole-body control
+            along the axis of data diversity and task generalization. Existing approaches progressively
+            evolve from reward-defined learning with simulator rollouts, through motion-conditioned and
+            context-grounded interaction learning, toward multimodal generalist control and predictive
+            world-action modeling. The transition reflects an increasing richness of task specification,
+            from manually designed objectives to multimodal intent and future consequence reasoning.
+          </figcaption>
+        </figure>
+
+        <section class="tutorial-section tutorial-table-section" id="table-1">
+          <div class="tutorial-section-heading">
+            <p class="tutorial-section-number">Table 1</p>
+            <h2>Literature landscape of learning-based humanoid whole-body control.</h2>
+            <p>
+              Studies cited throughout this chapter are organized by their dominant role in the
+              progression from robust command following to predictive world–action models; several
+              works naturally span multiple paradigms.
+            </p>
+          </div>
+
+          <div class="tutorial-table-wrap" tabindex="0" aria-label="Scrollable literature landscape table">
+            <table class="tutorial-table landscape-table">
+              <thead>
+                <tr>
+                  <th scope="col">Paradigm</th>
+                  <th scope="col">Illustration</th>
+                  <th scope="col">Literature covered in this chapter</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><span>L1</span>Robust command following</th>
+                  <td>
+                    <img
+                      src="../../assets/tutorials/learning-wbc/l1-beamdojo.png"
+                      alt="BeamDojo illustration"
+                      loading="lazy"
+                    >
+                  </td>
+                  <td>
+                    Real-World Humanoid Locomotion; 15-min Sim2Real Humanoid Locomotion;
+                    Humanoid Parkour; BeamDojo; Learning Humanoid Locomotion over Challenging
+                    Terrain; Learning Perceptive Humanoid Locomotion; Humanoid-Gym; Booster Gym;
+                    FastTD3; FlashSAC; PPO; ASAP; HOVER; FALCON; Memory-Based Bipedal Control;
+                    Rapid Motor Adaptation for Bipeds; Perceptive Internal Model.
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row"><span>L2</span>Expressive whole body motion</th>
+                  <td>
+                    <img
+                      src="../../assets/tutorials/learning-wbc/l2-exbody2.png"
+                      alt="ExBody2 illustration"
+                      loading="lazy"
+                    >
+                  </td>
+                  <td>
+                    AMASS; CMU MoCap; SFU MoCap; HumanPlus; H2O; OmniH2O; TWIST; TWIST2;
+                    RoboMirror; Retargeting Matters; Human2Humanoid; DeepMimic; HiLo; UniTracker;
+                    GMT; Adaptive Motion Tracking; KungfuBot; KungfuBot2; Expressive WBC; SONIC;
+                    Humanoid-GPT; AMP; NEAR; SMP; CMP; ADP; ASE; C·ASE; Universal Humanoid Motion
+                    Representations; Hybrid Motion Priors; Latent-Conditioned Loco-Manipulation;
+                    ExBody2; HoRD; VIRAL; From Experts to a Generalist; EAGLE; X-Loco;
+                    BeyondMimic; DAgger.
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row"><span>L3</span>Context-rich Interaction</th>
+                  <td>
+                    <img
+                      src="../../assets/tutorials/learning-wbc/l3-hdmi.png"
+                      alt="HDMI illustration"
+                      loading="lazy"
+                    >
+                  </td>
+                  <td>
+                    VideoMimic; HDMI; OKAMI; EgoHumanoid; Humanoid Manipulation Interface;
+                    Mobile-TeleVision; DemoHLM; OASIS; SIMPLE; HumanoidMimicGen; InterMimic;
+                    InterReal; ContactMimic; SceneBot; WoCoCo; ResMimic; InterPrior.
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row"><span>L4</span>Multimodal task grounding</th>
+                  <td>
+                    <img
+                      src="../../assets/tutorials/learning-wbc/l4-openhlm.png"
+                      alt="OpenHLM illustration"
+                      loading="lazy"
+                    >
+                  </td>
+                  <td>
+                    RT-2; π<sub>0</sub>; OpenVLA; WholeBodyVLA; GR00T N1; Ψ<sub>0</sub>;
+                    OpenHLM; Being-0; MetaWorld-X; Humanoid Policy ∼ Human Policy; Behavior
+                    Foundation Model; Scaling Behavior Foundation Model; Meta Motivo; TextOp;
+                    LeVERB; Commanding Humanoid by Free-form Language; TANGO; SENTINEL;
+                    LangWBC; ULTRA.
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row"><span>L5</span>Predictive decision making</th>
+                  <td>
+                    <img
+                      src="../../assets/tutorials/learning-wbc/l5-motionwam.png"
+                      alt="MotionWAM illustration"
+                      loading="lazy"
+                    >
+                  </td>
+                  <td>
+                    DreamDojo; UniT; DreamZero; World Action Planner; ω-0; MotionWAM;
+                    WholeBodyWAM (WBC-Grounded); WholeBodyWAM (Motion Priors).
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="tutorial-section tutorial-table-section" id="table-2">
+          <div class="tutorial-section-heading">
+            <p class="tutorial-section-number">Table 2</p>
+            <h2>
+              Summary of learning paradigms for humanoid whole-body control along increasing data
+              diversity and task generalization.
+            </h2>
+            <p>
+              The listed years indicate the approximate emergence of each paradigm in humanoid
+              control rather than the first appearance of the underlying techniques.
+            </p>
+          </div>
+
+          <div class="tutorial-table-wrap" tabindex="0" aria-label="Scrollable learning paradigms table">
+            <table class="tutorial-table paradigm-table">
+              <thead>
+                <tr>
+                  <th scope="col">Category</th>
+                  <th scope="col">Main methods</th>
+                  <th scope="col">Core ideas</th>
+                  <th scope="col">Year</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><span>L1</span>Reward-defined reactive control</th>
+                  <td>
+                    On-policy and (emerging) off-policy RL; massively parallel simulation,
+                    curriculum and privileged learning, and sim-to-real adaptation
+                  </td>
+                  <td>
+                    Learn task-specific feedback policies from self-generated interaction.
+                    Low-dimensional commands and hand-designed rewards specify success, while
+                    simulation provides scalable experience for robust closed-loop control.
+                  </td>
+                  <td>2016–</td>
+                </tr>
+                <tr>
+                  <th scope="row"><span>L2</span>Motion-conditioned control</th>
+                  <td>
+                    Reference collection; motion retargeting; RL grounding; policy distillation
+                  </td>
+                  <td>
+                    Use external human or robot motion data to specify desired behavior. Retargeting
+                    bridges embodiment gaps, while RL grounds reference trajectories, motion
+                    distributions, or latent motor priors in dynamically feasible closed-loop control.
+                  </td>
+                  <td>2018–</td>
+                </tr>
+                <tr>
+                  <th scope="row"><span>L3</span>Context-grounded physical interaction</th>
+                  <td>
+                    Demonstration collection; context-rich alignment; interaction-aware physical
+                    grounding
+                  </td>
+                  <td>
+                    Extend supervision from body motion to body–world relations by preserving object,
+                    scene, and contact context. The policy must realize both plausible whole-body
+                    motion and the intended physical interaction.
+                  </td>
+                  <td>2024–</td>
+                </tr>
+                <tr>
+                  <th scope="row"><span>L4</span>Multimodal generalist control</th>
+                  <td>
+                    Multimodal inference; robust real-world execution; skill, motion-latent, or
+                    direct-action coupling
+                  </td>
+                  <td>
+                    Infer open-ended task intent from vision and language input, and then couple robust
+                    executor to enable physics-grounded whole-body execution. Multimodal models specify
+                    what to do, while behavior foundation models preserve robust high-rate control.
+                  </td>
+                  <td>2025–</td>
+                </tr>
+                <tr>
+                  <th scope="row"><span>L5</span>Predictive world–action models</th>
+                  <td>
+                    Predictive experience modeling; action-conditioned foresight and planning;
+                    prediction–execution coupling
+                  </td>
+                  <td>
+                    Model how candidate actions change future observations, states, or latent world
+                    representations, adding explicit action-conditioned foresight. Prediction can
+                    guide a separate robust executor or be learned jointly with action generation.
+                  </td>
+                  <td>2026–</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="tutorial-section tutorial-chapters" id="chapters">
+          <div class="tutorial-section-heading">
+            <p class="tutorial-section-number">L1–L5</p>
+            <h2>Learning-based Whole-body Control</h2>
+          </div>
+
+          <div class="chapter-preview-list">
+            <article class="chapter-preview" id="l1">
+              <p class="chapter-level">L1</p>
+              <h3>Robust Command Following</h3>
+              <p>
+                Learn task-specific feedback policies from self-generated interaction. Low-dimensional
+                commands and hand-designed rewards specify success, while simulation provides scalable
+                experience for robust closed-loop control.
+              </p>
+            </article>
+            <article class="chapter-preview" id="l2">
+              <p class="chapter-level">L2</p>
+              <h3>Expressive Whole Body Motion</h3>
+              <p>
+                Use external human or robot motion data to specify desired behavior. Retargeting bridges
+                embodiment gaps, while RL grounds reference trajectories, motion distributions, or
+                latent motor priors in dynamically feasible closed-loop control.
+              </p>
+            </article>
+            <article class="chapter-preview" id="l3">
+              <p class="chapter-level">L3</p>
+              <h3>Context-rich Interaction</h3>
+              <p>
+                Extend supervision from body motion to body–world relations by preserving object,
+                scene, and contact context. The policy must realize both plausible whole-body motion
+                and the intended physical interaction.
+              </p>
+            </article>
+            <article class="chapter-preview" id="l4">
+              <p class="chapter-level">L4</p>
+              <h3>Multimodal task grounding</h3>
+              <p>
+                Infer open-ended task intent from vision and language input, and then couple robust
+                executor to enable physics-grounded whole-body execution. Multimodal models specify
+                what to do, while behavior foundation models preserve robust high-rate control.
+              </p>
+            </article>
+            <article class="chapter-preview" id="l5">
+              <p class="chapter-level">L5</p>
+              <h3>Predictive Decision Making</h3>
+              <p>
+                Model how candidate actions change future observations, states, or latent world
+                representations, adding explicit action-conditioned foresight. Prediction can guide
+                a separate robust executor or be learned jointly with action generation.
+              </p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>© Yifan Xu.</p>
+        <a href="#top">Back to top</a>
+      </footer>
+    </div>
+
+    <script src="../../site-navigation.js?v=20260817-compact-contact" defer></script>
+  </body>
+</html>
