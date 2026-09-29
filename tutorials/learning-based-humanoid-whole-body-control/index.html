@@ -1010,6 +1010,111 @@
               competence can be learned separately and then consolidated, enabling more stable data and
               capability scaling.
             </p>
+
+            <figure
+              class="policy-pathway-figure"
+              aria-label="Pathways from motion supervision and priors to executable humanoid policies and policy consolidation"
+            >
+              <div class="policy-pathway-sources">
+                <article class="policy-pathway-card policy-pathway-card--reference">
+                  <div class="policy-pathway-card-heading">
+                    <h4>Reference Targets</h4>
+                    <p>Reference-Tracking RL</p>
+                  </div>
+                  <ul class="policy-pathway-links" aria-label="Reference target papers">
+                    <li><a href="https://arxiv.org/pdf/1804.02717">DeepMimic</a></li>
+                    <li><a href="https://arxiv.org/pdf/2406.08858">OmniH2O</a></li>
+                    <li><a href="https://arxiv.org/pdf/2412.13196">ExBody2</a></li>
+                    <li><a href="https://arxiv.org/pdf/2507.07356">UniTracker</a></li>
+                  </ul>
+                </article>
+
+                <article class="policy-pathway-card policy-pathway-card--distribution">
+                  <div class="policy-pathway-card-heading">
+                    <h4>Motion Distribution</h4>
+                    <p>RL with Distributional Motion Priors</p>
+                  </div>
+                  <ul class="policy-pathway-links" aria-label="Motion distribution papers">
+                    <li><a href="https://arxiv.org/pdf/2104.02180">AMP</a></li>
+                    <li><a href="https://arxiv.org/pdf/2512.03028">SMP</a></li>
+                    <li><a href="https://arxiv.org/pdf/2608.03234">CMP</a></li>
+                    <li><a href="https://arxiv.org/pdf/2607.03454">ADP</a></li>
+                  </ul>
+                </article>
+
+                <article class="policy-pathway-card policy-pathway-card--latent">
+                  <div class="policy-pathway-card-heading">
+                    <h4>Latent Motor Interface</h4>
+                    <p>RL in Latent Motor Space</p>
+                  </div>
+                  <ul class="policy-pathway-links" aria-label="Latent motor interface papers">
+                    <li><a href="https://arxiv.org/pdf/2205.01906">ASE</a></li>
+                    <li><a href="https://arxiv.org/pdf/2305.02195">CALM</a></li>
+                    <li><a href="https://arxiv.org/pdf/2605.24592">MuGen</a></li>
+                    <li><a href="https://arxiv.org/pdf/2607.24083">HMP</a></li>
+                  </ul>
+                </article>
+
+                <article class="policy-pathway-card policy-pathway-card--parameter">
+                  <div class="policy-pathway-card-heading">
+                    <h4>Parameter Prior</h4>
+                    <p>Pretraining + RL Refinement</p>
+                  </div>
+                  <ul class="policy-pathway-links" aria-label="Parameter prior papers">
+                    <li><a href="https://arxiv.org/pdf/2601.12799">FRoM-W1</a></li>
+                    <li><a href="https://arxiv.org/pdf/2602.08594">Mosaic</a></li>
+                    <li><a href="https://arxiv.org/pdf/2510.05070">ResMimic</a></li>
+                  </ul>
+                </article>
+              </div>
+
+              <div class="policy-pathway-core">
+                <strong>Executable Humanoid Policies</strong>
+                <span>whole-body control policies grounded in physics and contact-rich execution</span>
+              </div>
+
+              <div class="policy-pathway-spine" aria-hidden="true"></div>
+
+              <section class="policy-pathway-distillation" aria-labelledby="policy-distillation-title">
+                <header>
+                  <h4 id="policy-distillation-title">Policy Distillation and Consolidation</h4>
+                  <p>Reverse transfer from RL teachers</p>
+                </header>
+
+                <div class="policy-pathway-distillation-grid">
+                  <article class="policy-pathway-transfer">
+                    <h5>Privileged <span aria-hidden="true">→</span> Deployable</h5>
+                    <p>privilege compression</p>
+                    <ul class="policy-pathway-links" aria-label="Privileged to deployable papers">
+                      <li><a href="https://arxiv.org/pdf/2406.08858">OmniH2O</a></li>
+                      <li><a href="https://arxiv.org/pdf/2412.13196">ExBody2</a></li>
+                      <li><a href="https://arxiv.org/pdf/2602.04412">HoRD</a></li>
+                      <li><a href="https://arxiv.org/pdf/2511.15200">VIRAL</a></li>
+                    </ul>
+                  </article>
+
+                  <article class="policy-pathway-transfer">
+                    <h5>Specialists <span aria-hidden="true">→</span> Generalist</h5>
+                    <p>behavioral / embodiment consolidation</p>
+                    <ul class="policy-pathway-links" aria-label="Specialists to generalist papers">
+                      <li><a href="https://arxiv.org/pdf/2506.12779">BumbleBee</a></li>
+                      <li><a href="https://arxiv.org/pdf/2602.02960">EAGLE</a></li>
+                      <li><a href="https://arxiv.org/pdf/2603.03733">X-Loco</a></li>
+                    </ul>
+                  </article>
+
+                  <article class="policy-pathway-transfer">
+                    <h5>Primitives <span aria-hidden="true">→</span> Unified</h5>
+                    <p>motor-prior transfer</p>
+                    <ul class="policy-pathway-links" aria-label="Primitives to unified papers">
+                      <li><a href="https://arxiv.org/pdf/2508.08241">BeyondMimic</a></li>
+                      <li><a href="https://arxiv.org/pdf/2406.00960">PDP</a></li>
+                      <li><a href="https://arxiv.org/pdf/2603.03279">ULTRA</a></li>
+                    </ul>
+                  </article>
+                </div>
+              </section>
+            </figure>
           </section>
 
           <section class="docs-section chapter-section" id="l3">
