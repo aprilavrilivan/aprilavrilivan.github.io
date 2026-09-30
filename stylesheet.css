@@ -4,6 +4,7 @@
   --surface: #fbfaf7;
   --surface-soft: #eef1f1;
   --text: #192431;
+  --body-copy: #34414d;
   --muted: #62707e;
   --line: #dcdedc;
   --accent: #1b5f91;
@@ -326,6 +327,10 @@ h3 {
   max-width: calc(100% - 82px);
 }
 
+#about .section-heading > div > p {
+  color: var(--body-copy);
+}
+
 .section-kicker {
   margin: 0.4rem 0 0;
 }
@@ -367,7 +372,7 @@ h3 {
 
 .research-thoughts {
   margin-top: 0.75rem;
-  color: #34414d;
+  color: var(--body-copy);
 }
 
 .research-thoughts-toggle {
@@ -626,7 +631,7 @@ h3 {
 
 .work-copy p {
   margin-bottom: 0.5rem;
-  color: var(--muted);
+  color: var(--body-copy);
 }
 
 .work-label {
