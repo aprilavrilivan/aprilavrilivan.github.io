@@ -613,7 +613,8 @@ h3 {
 }
 
 .publication-contribution,
-.project-description {
+.project-description,
+.blog-description {
   max-width: 64ch;
   margin-top: 0.65rem;
   margin-bottom: 0.15rem !important;
@@ -622,6 +623,12 @@ h3 {
   border-radius: 11px;
   background: rgb(238 241 241 / 76%);
   box-shadow: inset 3px 0 0 rgb(27 95 145 / 32%);
+}
+
+.blog-description {
+  width: fit-content;
+  max-width: 100%;
+  padding-inline: 0.82rem;
 }
 
 .work-visual-type {
