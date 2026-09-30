@@ -320,6 +320,12 @@ h3 {
   color: var(--muted);
 }
 
+#about .section-heading > div > p,
+#about .research-controls,
+#about .research-thoughts {
+  max-width: calc(100% - 82px);
+}
+
 .section-kicker {
   margin: 0.4rem 0 0;
 }
@@ -347,13 +353,24 @@ h3 {
   line-height: 1.2;
 }
 
+.research-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+}
+
+.research-controls .tag-list {
+  margin: 0;
+}
+
 .research-thoughts {
-  max-width: 680px;
-  margin-top: 0.55rem;
+  margin-top: 0.75rem;
   color: #34414d;
 }
 
-.research-thoughts summary {
+.research-thoughts-toggle {
   min-height: 38px;
   display: flex;
   align-items: center;
@@ -364,8 +381,8 @@ h3 {
   border-radius: 999px;
   background: var(--accent);
   color: #fff;
+  font-family: inherit;
   cursor: pointer;
-  list-style: none;
   font-size: 0.8rem;
   font-weight: 680;
   line-height: 1.25;
@@ -377,11 +394,7 @@ h3 {
     transform 160ms ease;
 }
 
-.research-thoughts summary::-webkit-details-marker {
-  display: none;
-}
-
-.research-thoughts summary::before {
+.research-thoughts-toggle::before {
   width: 0;
   height: 0;
   border-top: 0.27rem solid transparent;
@@ -391,18 +404,18 @@ h3 {
   transition: transform 160ms ease;
 }
 
-.research-thoughts[open] summary::before {
+.research-thoughts-toggle[aria-expanded="true"]::before {
   transform: rotate(90deg);
 }
 
-.research-thoughts[open] summary,
-.research-thoughts summary:hover {
+.research-thoughts-toggle[aria-expanded="true"],
+.research-thoughts-toggle:hover {
   border-color: var(--accent-dark);
   background: var(--accent-dark);
   color: #fff;
 }
 
-.research-thoughts summary:focus-visible {
+.research-thoughts-toggle:focus-visible {
   border-radius: 999px;
   outline: 3px solid rgb(27 95 145 / 28%);
   outline-offset: 4px;
@@ -1043,6 +1056,12 @@ h3 {
   .section-heading {
     grid-template-columns: 1fr;
     gap: 0.7rem;
+  }
+
+  #about .section-heading > div > p,
+  #about .research-controls,
+  #about .research-thoughts {
+    max-width: 100%;
   }
 
   .section-kicker {

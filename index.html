@@ -14,7 +14,7 @@
     <meta name="theme-color" content="#f7f6f2">
 
     <link rel="canonical" href="https://aprilavrilivan.github.io/">
-    <link rel="stylesheet" href="stylesheet.css?v=20260930-layout-polish-v2">
+    <link rel="stylesheet" href="stylesheet.css?v=20260930-layout-polish-v3">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Yifan Xu (Ivan) | Personal Website">
@@ -129,12 +129,27 @@
                 robot foundation models, and world models for generalizable and long-horizon robot
                 decision-making and control.
               </p>
-              <ul class="tag-list" aria-label="Research interests">
-                <li>Reinforcement Learning</li>
-                <li>Robot Foundation Models (VLA, BFM, WAM)</li>
-              </ul>
-              <details class="research-thoughts">
-                <summary>General thoughts (click to expand)</summary>
+              <div class="research-controls">
+                <button
+                  class="research-thoughts-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="research-thoughts-content"
+                  data-research-thoughts-toggle
+                >
+                  General thoughts (click to expand)
+                </button>
+                <ul class="tag-list" aria-label="Research interests">
+                  <li>Reinforcement Learning</li>
+                  <li>Robot Foundation Models (VLA, BFM, WAM)</li>
+                </ul>
+              </div>
+              <div
+                class="research-thoughts"
+                id="research-thoughts-content"
+                data-research-thoughts-content
+                hidden
+              >
                 <ul>
                   <li>
                     Recent multimodal foundation models (e.g., GPT-6) have shown striking
@@ -177,7 +192,7 @@
                     mechanism continuously adapts both to new environments.
                   </li>
                 </ul>
-              </details>
+              </div>
             </div>
           </div>
         </section>
@@ -607,6 +622,6 @@
         <a href="#top">Back to top</a>
       </footer>
     </div>
-    <script src="site-navigation.js?v=20260817-compact-contact" defer></script>
+    <script src="site-navigation.js?v=20260930-research-thoughts" defer></script>
   </body>
 </html>

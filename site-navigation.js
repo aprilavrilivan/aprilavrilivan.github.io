@@ -141,3 +141,18 @@
     });
   });
 })();
+
+(() => {
+  const toggle = document.querySelector("[data-research-thoughts-toggle]");
+  const content = document.querySelector("[data-research-thoughts-content]");
+
+  if (!toggle || !content) {
+    return;
+  }
+
+  toggle.addEventListener("click", () => {
+    const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!isExpanded));
+    content.hidden = isExpanded;
+  });
+})();
