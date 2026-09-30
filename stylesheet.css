@@ -354,21 +354,21 @@ h3 {
 }
 
 .research-thoughts summary {
-  min-height: 2.1rem;
+  min-height: 38px;
   display: flex;
   align-items: center;
-  gap: 0.48rem;
+  gap: 0.4rem;
   width: fit-content;
-  padding: 0.3rem 0.78rem;
-  border: 1px solid var(--line);
+  padding: 0.45rem 0.78rem;
+  border: 1px solid var(--accent);
   border-radius: 999px;
-  background: rgb(255 255 255 / 58%);
-  color: #40505e;
+  background: var(--accent);
+  color: #fff;
   cursor: pointer;
   list-style: none;
-  font-size: 0.86rem;
-  font-weight: 600;
-  line-height: 1.2;
+  font-size: 0.8rem;
+  font-weight: 680;
+  line-height: 1.25;
   transition:
     color 160ms ease,
     background-color 160ms ease,
@@ -395,12 +395,11 @@ h3 {
   transform: rotate(90deg);
 }
 
+.research-thoughts[open] summary,
 .research-thoughts summary:hover {
-  transform: translateY(-1px);
-  border-color: rgb(27 95 145 / 42%);
-  background: rgb(255 255 255 / 84%);
-  color: var(--accent);
-  box-shadow: 0 4px 12px rgb(27 95 145 / 8%);
+  border-color: var(--accent-dark);
+  background: var(--accent-dark);
+  color: #fff;
 }
 
 .research-thoughts summary:focus-visible {
@@ -882,21 +881,47 @@ h3 {
 
 /* CS 185/285 course directory */
 
+.course-directory-page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-directory-page > .page-shell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.course-directory-page #main-content {
+  display: flex;
+  flex: 1;
+}
+
 .subpage-header .site-mark {
   flex: 0 0 auto;
 }
 
 .course-directory {
-  padding: clamp(2.5rem, 6vw, 4.5rem) 0;
+  width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: clamp(3rem, 7vh, 5rem) 0 clamp(2rem, 4vh, 3rem);
 }
 
 .course-directory h1 {
-  max-width: 17ch;
+  max-width: none;
   margin-bottom: clamp(1.6rem, 4vw, 2.7rem);
   font-size: clamp(1.9rem, 4vw, 2.8rem);
+  white-space: normal;
 }
 
 .course-directory-list {
+  display: grid;
+  flex: 1;
+  grid-template-rows: repeat(7, minmax(4.5rem, 1fr));
   margin: 0;
   padding: 0;
   border-top: 1px solid var(--line);
@@ -908,7 +933,7 @@ h3 {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: 1.5rem;
-  padding: 0.9rem 0;
+  padding: clamp(0.9rem, 1.6vh, 1.25rem) 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -949,6 +974,25 @@ h3 {
 .course-directory-links a:hover {
   border-color: rgb(200 102 47 / 45%);
   background: #fffaf6;
+}
+
+@media (min-width: 900px) {
+  .course-directory-page > .page-shell {
+    flex: 0 0 calc(100vh - 61px);
+    flex-basis: calc(100svh - 61px);
+    height: calc(100vh - 61px);
+    height: calc(100svh - 61px);
+    min-height: 0;
+  }
+
+  .course-directory-page #main-content,
+  .course-directory-page .course-directory {
+    min-height: 0;
+  }
+
+  .course-directory h1 {
+    white-space: nowrap;
+  }
 }
 
 @media (max-width: 720px) {
