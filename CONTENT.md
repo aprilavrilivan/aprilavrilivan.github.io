@@ -46,7 +46,7 @@
 - Model-based, Learning-based, and Hybrid Whole-Body Control: a Taxonomic Survey of Two Paradigms and Their Convergence — work in progress; PDF and authors linked
 - CASC: Action Chunking Reinforcement Learning with a Single-action Critic — project summary and performance-comparison cover added; Dwait Bhatt and Yifan Xu are equal contributors
 - OmniPiano: Diverse Dexterous Piano-Playing Challenges for Standard, Robust, Safe, and Multi-Agent RL — official project website linked; cover image and complete author order added
-- AXIS: A Growable Community-Driven Data Engine for Scalable Robot Manipulation — OpenReview linked; listed as contributor
+- AXIS: A Growable Community-Driven Data Engine for Scalable Robot Manipulation — official project website and OpenReview linked; listed as contributor
 
 ## Selected course projects — added
 
