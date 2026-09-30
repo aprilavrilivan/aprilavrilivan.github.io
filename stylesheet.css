@@ -515,6 +515,16 @@ h3 {
   background: #fff;
 }
 
+.publication-visual--omnipiano,
+.publication-visual--omnipiano .publication-cover-image {
+  background: var(--surface);
+}
+
+.publication-visual--omnipiano .publication-cover-image {
+  object-fit: contain;
+  object-position: center;
+}
+
 .publication-visual--survey {
   background:
     linear-gradient(135deg, transparent 25%, rgb(255 255 255 / 14%) 25% 50%, transparent 50% 75%, rgb(255 255 255 / 14%) 75%),
