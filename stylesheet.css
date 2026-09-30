@@ -612,7 +612,8 @@ h3 {
   margin-bottom: 0;
 }
 
-.publication-contribution {
+.publication-contribution,
+.project-description {
   max-width: 64ch;
   margin-top: 0.65rem;
   margin-bottom: 0.15rem !important;
@@ -1006,6 +1007,12 @@ h3 {
 }
 
 @media (min-width: 900px) {
+  .project-title-single-line {
+    max-width: none !important;
+    white-space: nowrap;
+    font-size: clamp(1.16rem, 1.55vw, 1.36rem) !important;
+  }
+
   .course-directory-page > .page-shell {
     flex: 0 0 calc(100vh - 61px);
     flex-basis: calc(100svh - 61px);
