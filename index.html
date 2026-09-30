@@ -229,13 +229,17 @@
           <div class="work-list publication-list">
             <article class="work-card publication-card">
               <div
-                class="work-visual publication-visual publication-visual--action"
-                aria-hidden="true"
+                class="work-visual work-visual-frame publication-visual publication-visual--casc"
               >
-                <span class="work-visual-type">
-                  RL
-                  <small>CASC</small>
-                </span>
+                <img
+                  class="work-visual-image publication-cover-image publication-cover-image--diagram"
+                  src="assets/publications/casc-cover.png"
+                  alt="CASC performance comparison across five manipulation tasks and four action horizons"
+                  width="1619"
+                  height="971"
+                  loading="lazy"
+                  decoding="async"
+                >
               </div>
               <div class="work-copy">
                 <h3>CASC: Action Chunking Reinforcement Learning with a Single-action Critic</h3>
@@ -244,11 +248,13 @@
                   Luobin Wang, Henrik I Christensen, and Nikolay Atanasov
                 </p>
                 <p class="publication-note">* Equal contribution</p>
-                <div class="work-links" aria-label="CASC paper links">
-                  <a class="work-link" href="https://openreview.net/forum?id=Nxql3aWnQN">
-                    OpenReview Link <span aria-hidden="true">↗</span>
-                  </a>
-                </div>
+                <p class="publication-note publication-summary">
+                  Proposed an action-chunking RL algorithm that uses a single-action
+                  critic instead of a chunked critic. The algorithm also adapts the
+                  executed chunk size based on task stages, and introduces a unified
+                  consistent framework for execution, critic bootstrapping, and actor
+                  updates.
+                </p>
               </div>
             </article>
 

@@ -520,6 +520,16 @@ h3 {
   background: var(--surface);
 }
 
+.publication-visual--casc,
+.publication-visual--casc .publication-cover-image {
+  background: var(--surface);
+}
+
+.publication-visual--casc .publication-cover-image {
+  object-fit: contain;
+  object-position: center;
+}
+
 .publication-visual--omnipiano .publication-cover-image {
   object-fit: contain;
   object-position: center;
@@ -578,6 +588,11 @@ h3 {
 .publication-note {
   font-size: 0.8rem;
   line-height: 1.48;
+}
+
+.publication-summary {
+  max-width: 64ch;
+  margin-bottom: 0;
 }
 
 .work-visual-type {
