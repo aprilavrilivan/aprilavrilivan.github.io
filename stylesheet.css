@@ -625,6 +625,12 @@ h3 {
   box-shadow: inset 3px 0 0 rgb(27 95 145 / 32%);
 }
 
+.publication-contribution--blue {
+  border-color: rgb(27 95 145 / 20%);
+  background: rgb(222 238 249 / 82%);
+  box-shadow: inset 3px 0 0 rgb(27 95 145 / 68%);
+}
+
 .blog-description {
   width: fit-content;
   max-width: 100%;
