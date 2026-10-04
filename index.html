@@ -14,7 +14,7 @@
     <meta name="theme-color" content="#f7f6f2">
 
     <link rel="canonical" href="https://aprilavrilivan.github.io/">
-    <link rel="stylesheet" href="stylesheet.css?v=20261004-publication-copy-v9">
+    <link rel="stylesheet" href="stylesheet.css?v=20261005-research-interests-v10">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="Yifan Xu (Ivan) | Personal Website">
@@ -125,9 +125,10 @@
             <div>
               <h2 id="about-title">Research Interests</h2>
               <p>
-                I am broadly interested in robot learning, with a focus on reinforcement learning,
-                robot foundation models, and world models for generalizable and long-horizon robot
-                decision-making and control.
+                I am broadly interested in robot learning, with a focus on
+                <mark class="research-highlight">reinforcement learning</mark> and
+                <mark class="research-highlight">robot foundation models (WAM, VLA, BFM)</mark>
+                for generalizable and long-horizon robot decision-making and control.
               </p>
               <div class="research-controls">
                 <button
@@ -139,10 +140,6 @@
                 >
                   General thoughts (click to expand)
                 </button>
-                <ul class="tag-list" aria-label="Research interests">
-                  <li>Reinforcement Learning</li>
-                  <li>Robot Foundation Models (VLA, BFM, WAM)</li>
-                </ul>
               </div>
               <div
                 class="research-thoughts"
@@ -150,48 +147,37 @@
                 data-research-thoughts-content
                 hidden
               >
+                <p>
+                  Although recent multimodal foundation models have shown striking capabilities in
+                  robot control, I believe there is still a long way to go before this goal can be
+                  achieved.
+                </p>
                 <ul>
                   <li>
-                    Recent multimodal foundation models (e.g., GPT-6) have shown striking
-                    capabilities in robot control, especially in multimodal reasoning. However, beyond multimodal reasoning,
-                    there is still a long way to go before robots can truly become part of everyday life.
+                    <strong>Firstly,</strong> despite their extraordinary multimodal reasoning
+                    capabilities, they lack a precise understanding of how the physical world evolves.
+                    We therefore need to train foundation models that can reason about the consequences
+                    of specific actions and choose reasonable next actions.
                   </li>
                   <li>
-                    <strong>(1) Physical understanding.</strong> Current SOTA models still lack reliable,
-                    action-conditioned understanding of how the physical world evolves.
+                    <strong>Secondly,</strong> multimodal foundation models are good at reading the
+                    world, but often fail to generate robust, execution-ready behaviors across different
+                    robot morphologies and under challenging real-world scenarios. We need to train
+                    generalizable Behavior Foundation Models that can translate multimodal intents into
+                    robust, high-frequency robot control signals during real-world deployment.
                   </li>
                   <li>
-                    <strong>(2) Motor grounding.</strong> High-level reasoning provides accurate intent, but it remains difficult
-                    to translate that intent into robust, high-frequency, closed-loop behavior
-                    under real-world contact and dynamics.
-                  </li>
-                  <li>
-                    <strong>(3) Adaptation.</strong> Sim2real gaps and distribution shifts require
-                    embodied agents to learn efficiently from sparse deployment experience. Scaling laws can provide a strong prior,
-                    but remain insufficient for real-world adaptation (and scaling laws themselves are still in their early stages
-                    in embodied AI).
-                  </li>
-                  <li>
-                    <strong>For (1):</strong> World-action models can provide predictive,
-                    action-conditioned representations of physical dynamics. Research on WAMs is promising for developing
-                    better multimodal understanding and reasoning.
-                  </li>
-                  <li>
-                    <strong>For (2):</strong> Behavior foundation models (e.g., SONIC) are a useful tool for bridging high-level
-                    multimodal intent and physically grounded, plausible motor behavior. Beyond multimodal models, BFMs also provide
-                    a setting where scaling laws may emerge.
-                  </li>
-                  <li>
-                    <strong>For (3):</strong> Efficient real-world RL algorithms can enable rapid adaptation
-                    from failures, corrections, and limited interaction, while recursive self-improvement (RSI) provides another efficient way
-                    to learn from experience.
-                  </li>
-                  <li>
-                    <strong>Ideal Case:</strong> a predictive brain proposes and evaluates action intent;
-                    a robust cerebellum grounds it into plausible physical behavior; an efficient learning
-                    mechanism continuously adapts both to new environments.
+                    <strong>Thirdly,</strong> although scaling laws apply to both the multimodal brain and
+                    behavior cerebellum, out-of-distribution problems remain inevitable in an ever-changing
+                    real world. We therefore need to develop sample-efficient Reinforcement Learning
+                    algorithms or self-improvement mechanisms for rapid real-world adaptation.
                   </li>
                 </ul>
+                <p class="research-ideal-case">
+                  <strong>Ideal Case:</strong> a predictive brain proposes and evaluates action intent;
+                  a robust cerebellum grounds it into plausible physical behavior; an efficient learning
+                  mechanism continuously adapts both to new environments.
+                </p>
               </div>
             </div>
           </div>
